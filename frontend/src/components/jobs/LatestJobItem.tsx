@@ -19,7 +19,6 @@ export const LatestJobItem = ({ logo, title, company, location, type, tags }: La
             src={logo} 
             alt={`${company} logo`} 
             className="w-full h-full object-contain"
-            onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
         </div>
         

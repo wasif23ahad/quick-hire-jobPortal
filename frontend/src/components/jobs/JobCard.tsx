@@ -19,7 +19,6 @@ export const JobCard = ({ logo, type, title, company, location, description, tag
           src={logo} 
           alt={`${company} logo`} 
           className="w-12 h-12 object-contain"
-          onError={(e) => { e.currentTarget.style.display = 'none'; }}
         />
         <span className="text-primary bg-primary/10 px-3 py-1 rounded-sm text-sm font-bold border border-primary/20">
           {type}

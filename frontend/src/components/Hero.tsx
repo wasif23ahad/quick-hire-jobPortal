@@ -18,8 +18,6 @@ export const Hero = () => {
             src="/hero-underline.svg" 
             alt="underline" 
             className="w-48 xl:w-64 -mt-8 ml-2 xl:ml-8 hidden md:block opacity-50 text-accent-blue" 
-            // Fallback since we don't have the exact svg
-            onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
 
           <p className="text-body text-lg lg:text-xl font-medium max-w-lg mt-2">
