@@ -21,6 +21,19 @@ app.use(express.json());
 app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
 
+// Root route
+app.get("/", (_req, res) => {
+  res.json({
+    success: true,
+    message: "🚀 QuickHire Backend API is running!",
+    endpoints: {
+      health: "/api/health",
+      jobs: "/api/jobs",
+      applications: "/api/applications",
+    },
+  });
+});
+
 // Health check
 app.get("/api/health", (_req, res) => {
   res.json({ success: true, message: "QuickHire API is running" });
