@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   keywords: ["jobs", "career", "hiring", "job board", "recruitment"],
 };
 
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,8 +31,12 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${epilogue.variable} antialiased`}>
-        {children}
+      <body className={`${epilogue.variable} antialiased flex flex-col min-h-screen`}>
+        <Navbar />
+        <div className="flex-1">
+          {children}
+        </div>
+        <Footer />
       </body>
     </html>
   );
