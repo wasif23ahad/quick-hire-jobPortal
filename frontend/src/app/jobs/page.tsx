@@ -66,6 +66,7 @@ export default async function JobsPage({
                 {jobs.map((job) => (
                   <JobCard
                     key={job.id}
+                    id={job.id}
                     logo={job.companyLogo || "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"} // Fallback
                     title={job.title}
                     company={job.company}

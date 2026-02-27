@@ -1,7 +1,9 @@
 import React from "react";
+import Link from "next/link";
 import { Badge } from "../ui/Badge";
 
 interface JobCardProps {
+  id?: string;
   logo: string;
   type: string;
   title: string;
@@ -11,9 +13,9 @@ interface JobCardProps {
   tags: { name: string; variant: any }[];
 }
 
-export const JobCard = ({ logo, type, title, company, location, description, tags }: JobCardProps) => {
+export const JobCard = ({ id, logo, type, title, company, location, description, tags }: JobCardProps) => {
   return (
-    <div className="border border-border bg-white p-6 rounded-xl hover:shadow-xl hover:border-primary transition-all duration-300 flex flex-col gap-4 cursor-pointer group">
+    <Link href={`/jobs/${id || '#'}`} className="border border-border bg-white p-6 rounded-xl hover:shadow-xl hover:border-primary transition-all duration-300 flex flex-col gap-4 cursor-pointer group">
       <div className="flex justify-between items-start">
         <img 
           src={logo} 
@@ -45,6 +47,6 @@ export const JobCard = ({ logo, type, title, company, location, description, tag
           </Badge>
         ))}
       </div>
-    </div>
+    </Link>
   );
 };
