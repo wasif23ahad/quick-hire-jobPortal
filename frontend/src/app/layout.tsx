@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
-import { Epilogue } from "next/font/google";
+import { Epilogue, Inter, Red_Hat_Display } from "next/font/google";
 import "./globals.css";
 
 const epilogue = Epilogue({
   subsets: ["latin"],
   variable: "--font-epilogue",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const redHatDisplay = Red_Hat_Display({
+  subsets: ["latin"],
+  variable: "--font-redhat-display",
   display: "swap",
 });
 
@@ -31,7 +43,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${epilogue.variable} antialiased flex flex-col min-h-screen`}>
+      <body className={`${epilogue.variable} ${inter.variable} ${redHatDisplay.variable} antialiased flex flex-col min-h-screen`}>
         <Navbar />
         <div className="flex-1">
           {children}

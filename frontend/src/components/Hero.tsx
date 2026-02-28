@@ -1,82 +1,264 @@
 import React from "react";
-import { FiSearch, FiMapPin } from "react-icons/fi";
+import { FiSearch, FiMapPin, FiChevronDown } from "react-icons/fi";
 
 export const Hero = () => {
   return (
-    <section className="bg-bg-light relative overflow-hidden py-20 lg:py-32">
-      <div className="container mx-auto px-6 max-w-7xl flex flex-col lg:flex-row items-center justify-between">
-        
-        {/* Left Content */}
-        <div className="lg:w-1/2 z-10 flex flex-col gap-6">
-          <h1 className="text-5xl lg:text-7xl font-bold font-clash text-heading leading-tight">
-            Discover <br/>
-            more than <br/>
-            <span className="text-primary">5000+ Jobs</span>
-          </h1>
-          
-          <img 
-            src="/hero-underline.svg" 
-            alt="underline" 
-            className="w-48 xl:w-64 -mt-8 ml-2 xl:ml-8 hidden md:block opacity-50 text-accent-blue" 
-          />
+    <section 
+      style={{ 
+        width: '100%', 
+        backgroundColor: '#F8F8FD', 
+        display: 'flex', 
+        justifyContent: 'center',
+        overflow: 'hidden'
+      }}
+    >
+      {/* 1440px Fixed Width Container */}
+      <div 
+        style={{ 
+          width: '1440px', 
+          height: '787px', // Approximated height based on design
+          position: 'relative',
+          backgroundColor: '#F8F8FD'
+        }}
+      >
+        {/* Title Content — 629px wide, left 125px, top 160px */}
+        <div 
+          style={{ 
+            position: 'absolute',
+            width: '629px',
+            height: '530.58px',
+            left: '125px',
+            top: '160px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '23px'
+          }}
+        >
+          {/* Main Title Heading — Clash Display 600, 72px */}
+          <div style={{ position: 'relative', width: '533px', height: '289.58px' }}>
+            <h1 
+              style={{ 
+                fontFamily: 'var(--font-clash-display)',
+                fontWeight: 600,
+                fontSize: '72px',
+                lineHeight: '110%',
+                color: '#25324B',
+                margin: 0
+              }}
+            >
+              Discover<br />
+              more than<br />
+              <span style={{ color: '#26A4FF' }}>5000+ Jobs</span>
+            </h1>
 
-          <p className="text-body text-lg lg:text-xl font-medium max-w-lg mt-2">
+            {/* Underline Vector 1 */}
+            <div 
+              style={{ 
+                position: 'absolute',
+                left: '0%',
+                right: '27.66%',
+                top: '88%',
+                height: '6px',
+                background: '#26A4FF',
+                borderRadius: '3px'
+              }}
+            />
+            {/* Underline Vector 2 */}
+            <div 
+              style={{ 
+                position: 'absolute',
+                left: '5.45%',
+                right: '60%',
+                top: '94%',
+                height: '4px',
+                background: '#26A4FF',
+                borderRadius: '2px'
+              }}
+            />
+          </div>
+
+          {/* Description — Epilogue 400, 20px, #515B6F */}
+          <p 
+            style={{ 
+              width: '521px',
+              fontFamily: 'var(--font-epilogue)',
+              fontWeight: 400,
+              fontSize: '20px',
+              lineHeight: '160%',
+              color: '#515B6F',
+              opacity: 0.7,
+              margin: 0
+            }}
+          >
             Great platform for the job seeker that searching for new career heights and passionate about startups.
           </p>
 
-          {/* Search Bar */}
-          <div className="bg-white p-3 md:p-4 rounded-xl shadow-lg border border-border flex flex-col md:flex-row gap-3 w-full max-w-2xl mt-4">
-            <div className="flex-1 flex items-center px-4 md:border-r border-border gap-3">
-              <FiSearch className="text-muted text-xl shrink-0" />
+          {/* Search Bar — 852x89px, white, complex shadow */}
+          <div 
+            style={{ 
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              padding: '16px',
+              width: '852px',
+              height: '89px',
+              background: '#FFFFFF',
+              boxShadow: '0px 79px 128px rgba(192, 192, 192, 0.09), 0px 28.8363px 46.7221px rgba(192, 192, 192, 0.0598508), 0px 13.9995px 22.6827px rgba(192, 192, 192, 0.0475723), 0px 6.86281px 11.1195px rgba(192, 192, 192, 0.0380675), 0px 2.71357px 4.39666px rgba(192, 192, 192, 0.0270615)',
+              zIndex: 10
+            }}
+          >
+            {/* Job Title Field */}
+            <div 
+              style={{ 
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: '0 16px',
+                gap: '16px',
+                flex: 1,
+                alignSelf: 'stretch',
+                borderBottom: '1px solid #D6DDEB'
+              }}
+            >
+              <FiSearch style={{ width: '24px', height: '24px', color: '#25324B', flexShrink: 0 }} />
               <input 
                 type="text" 
                 placeholder="Job title or keyword" 
-                className="w-full bg-transparent focus:outline-none text-heading placeholder:text-muted"
+                style={{ 
+                  width: '100%',
+                  background: 'transparent',
+                  border: 'none',
+                  outline: 'none',
+                  fontFamily: 'var(--font-epilogue)',
+                  fontWeight: 400,
+                  fontSize: '16px',
+                  lineHeight: '160%',
+                  color: '#25324B'
+                }}
               />
             </div>
-            
-            <div className="flex-1 flex items-center px-4 gap-3">
-              <FiMapPin className="text-muted text-xl shrink-0" />
-              <input 
-                type="text" 
-                placeholder="Florence, Italy" 
-                className="w-full bg-transparent focus:outline-none text-heading placeholder:text-muted"
-              />
+
+            {/* Location Field */}
+            <div 
+              style={{ 
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: '0 24px 0 8px',
+                gap: '16px',
+                flex: 1,
+                alignSelf: 'stretch',
+                borderBottom: '1px solid #D6DDEB'
+              }}
+            >
+              <FiMapPin style={{ width: '24px', height: '24px', color: '#25324B', flexShrink: 0 }} />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flex: 1 }}>
+                <span 
+                  style={{ 
+                    fontFamily: 'var(--font-epilogue)',
+                    fontWeight: 400,
+                    fontSize: '16px',
+                    lineHeight: '160%',
+                    color: '#25324B',
+                    opacity: 0.9,
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  Florence, Italy
+                </span>
+                <FiChevronDown style={{ width: '16px', height: '16px', color: '#7C8493' }} />
+              </div>
             </div>
-            
-            <button className="bg-primary hover:bg-primary-dark transition-colors text-white px-8 py-3 rounded-lg font-bold">
+
+            {/* Search Button — 209x57px */}
+            <button 
+              style={{ 
+                width: '209px',
+                height: '57px',
+                background: '#4640DE',
+                fontFamily: 'var(--font-epilogue)',
+                fontWeight: 700,
+                fontSize: '18px',
+                lineHeight: '160%',
+                color: '#FFFFFF',
+                border: 'none',
+                cursor: 'pointer',
+                flexShrink: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
               Search my job
             </button>
           </div>
 
-          {/* Popular Searches */}
-          <div className="text-sm font-medium mt-2">
-            <span className="text-body mr-2">Popular :</span>
-            <span className="text-heading hover:text-primary cursor-pointer transition-colors">UI Designer</span>,{" "}
-            <span className="text-heading hover:text-primary cursor-pointer transition-colors">UX Researcher</span>,{" "}
-            <span className="text-heading hover:text-primary cursor-pointer transition-colors">Android</span>,{" "}
-            <span className="text-heading hover:text-primary cursor-pointer transition-colors">Admin</span>
+          {/* Popular Tag Line */}
+          <div 
+            style={{ 
+              display: 'flex',
+              alignItems: 'center',
+              width: '412px',
+              fontFamily: 'var(--font-epilogue)',
+              fontWeight: 400,
+              fontSize: '16px',
+              lineHeight: '160%',
+              color: '#202430',
+              opacity: 0.7
+            }}
+          >
+            Popular : UI Designer, UX Researcher, Android, Admin
           </div>
         </div>
 
-        {/* Right Content - Abstract Image */}
-        <div className="lg:w-1/2 mt-16 lg:mt-0 right-0 lg:absolute lg:right-0 lg:top-0 h-full flex justify-end">
-          <div className="relative w-full max-w-lg lg:max-w-none lg:w-[800px] aspect-square lg:aspect-auto h-full">
-            {/* Using a placeholder gradient pattern since we don't have the explicit Figma assets */}
-            <div className="absolute inset-0 bg-linear-to-tr from-primary/10 to-accent-blue/10 rounded-full lg:rounded-none blur-3xl lg:blur-none opacity-50 lg:opacity-100 mix-blend-multiply" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <img 
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop"
-                alt="Happy diverse team working" 
-                className="object-cover rounded-2xl shadow-2xl w-full h-[400px] lg:h-[600px] border-8 border-white object-center"
-              />
-               {/* Decorative dots / abstract shapes */}
-               <div className="absolute -top-6 -left-6 w-24 h-24 bg-accent-yellow rounded-full opacity-20 blur-xl" />
-               <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-primary rounded-full opacity-20 blur-xl" />
-            </div>
+        {/* Hero Image Section — absolute right:0, top:87px */}
+        <div 
+          style={{ 
+            position: 'absolute',
+            width: '837.99px',
+            height: '1036.69px',
+            left: '812px', // In Figma 812px from left
+            top: '87px',
+            zIndex: 1
+          }}
+        >
+          {/* Person Image Container */}
+          <div 
+            style={{ 
+              position: 'absolute',
+              width: '501px',
+              height: '707px',
+              left: '0',
+              top: '0',
+              overflow: 'hidden'
+            }}
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800&auto=format&fit=crop"
+              alt="Person"
+              style={{ 
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'top'
+              }}
+            />
           </div>
-        </div>
 
+          {/* White cutout rectangle — rotated 64deg */}
+          <div 
+            style={{ 
+              position: 'absolute',
+              width: '283.38px',
+              height: '716.25px',
+              left: '70px', // Relative to container left 812px
+              top: '468px',
+              background: '#FFFFFF',
+              transform: 'rotate(64deg)',
+              zIndex: 2
+            }}
+          />
+        </div>
       </div>
     </section>
   );

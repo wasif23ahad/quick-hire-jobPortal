@@ -1,57 +1,144 @@
 import React from "react";
 import Link from "next/link";
-import { HiOutlineArrowRight } from "react-icons/hi";
 
 export const CTABanner = () => {
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-6 max-w-7xl">
-        <div className="bg-primary rounded-3xl overflow-hidden relative flex flex-col lg:flex-row items-center justify-between p-10 lg:p-16">
-          
-          {/* Background decorative elements */}
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-accent-blue opacity-20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-          
-          {/* Content */}
-          <div className="lg:w-1/2 relative z-10 text-white space-y-6">
-            <h2 className="text-4xl lg:text-5xl font-bold font-clash leading-tight max-w-lg">
-              Start posting<br />jobs today
+    <section 
+      style={{ 
+        width: '100%', 
+        backgroundColor: '#FFFFFF', 
+        display: 'flex', 
+        justifyContent: 'center',
+        paddingTop: '40px',
+        paddingBottom: '80px'
+      }}
+    >
+      <div 
+        style={{ 
+          width: '1440px', 
+          height: '474px', 
+          position: 'relative'
+        }}
+      >
+        {/* Banner Box — 1190px wide, absolute centered */}
+        <div 
+          style={{ 
+            position: 'absolute',
+            left: '125px',
+            top: '0px',
+            width: '1190px',
+            height: '474px',
+            background: '#4640DE',
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: '0 80px'
+          }}
+        >
+          {/* Left Content */}
+          <div style={{ width: '450px', zIndex: 2 }}>
+            <h2 
+              style={{ 
+                fontFamily: 'var(--font-clash-display)',
+                fontWeight: 600,
+                fontSize: '48px',
+                lineHeight: '120%',
+                color: '#FFFFFF',
+                margin: '0 0 16px 0'
+              }}
+            >
+              Start posting<br />
+              jobs today
             </h2>
-            <p className="text-white/80 text-lg">
+            <p 
+              style={{ 
+                fontFamily: 'var(--font-epilogue)',
+                fontWeight: 400,
+                fontSize: '18px',
+                lineHeight: '160%',
+                color: '#FFFFFF',
+                opacity: 0.8,
+                margin: '0 0 32px 0'
+              }}
+            >
               Start posting jobs for only $10.
             </p>
             <Link 
-              href="/admin/create" 
-              className="inline-block bg-white text-primary hover:bg-bg-light px-8 py-3 rounded-lg font-bold transition-colors mt-4"
+              href="/admin/create"
+              style={{ 
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '202px',
+                height: '57px',
+                background: '#FFFFFF',
+                fontFamily: 'var(--font-epilogue)',
+                fontWeight: 700,
+                fontSize: '18px',
+                color: '#4640DE',
+                textDecoration: 'none',
+                cursor: 'pointer'
+              }}
             >
               Sign Up For Free
             </Link>
           </div>
 
-          {/* Image mockup representation */}
-          <div className="lg:w-1/2 relative z-10 mt-12 lg:mt-0 flex justify-center lg:justify-end w-full">
-            <div className="w-full max-w-md bg-white rounded-xl shadow-2xl p-6 rotate-3 border-4 border-white/20">
-              <div className="flex items-center gap-3 border-b border-border pb-4 mb-4">
-                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <span className="text-primary font-bold">Q</span>
+          {/* Right Mockup — Absolute positioned within the banner box */}
+          <div 
+            style={{ 
+              position: 'absolute',
+              right: '0',
+              top: '50px',
+              width: '600px',
+              height: '400px',
+              background: '#FFFFFF',
+              borderRadius: '8px 0 0 0',
+              boxShadow: '-20px 20px 50px rgba(0,0,0,0.1)',
+              overflow: 'hidden',
+              zIndex: 1
+            }}
+          >
+            {/* Dashboard Mockup Header */}
+            <div 
+              style={{ 
+                height: '48px',
+                background: '#F8F8FD',
+                borderBottom: '1px solid #D6DDEB',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '0 24px',
+                gap: '12px'
+              }}
+            >
+              <div style={{ width: '24px', height: '24px', background: '#4640DE', borderRadius: '4px' }} />
+              <div style={{ width: '100px', height: '8px', background: '#D6DDEB', borderRadius: '4px' }} />
+            </div>
+            
+            {/* Dashboard Content Mockup */}
+            <div style={{ padding: '24px' }}>
+              <div style={{ display: 'flex', gap: '16px', marginBottom: '24px' }}>
+                <div style={{ flex: 1, height: '100px', background: '#4640DE', borderRadius: '8px', padding: '16px', color: '#FFF' }}>
+                  <div style={{ fontSize: '24px', fontWeight: 700 }}>76</div>
+                  <div style={{ fontSize: '12px', opacity: 0.8 }}>New candidates</div>
                 </div>
-                <div>
-                  <h4 className="font-bold text-heading">QuickHire Dashboard</h4>
-                  <p className="text-xs text-muted">Job Management</p>
+                <div style={{ flex: 1, height: '100px', background: '#56CDAD', borderRadius: '8px', padding: '16px', color: '#FFF' }}>
+                  <div style={{ fontSize: '24px', fontWeight: 700 }}>3</div>
+                  <div style={{ fontSize: '12px', opacity: 0.8 }}>Schedule for today</div>
                 </div>
               </div>
-              <div className="space-y-3">
-                <div className="h-4 bg-border rounded-full w-3/4" />
-                <div className="h-4 bg-border rounded-full w-1/2" />
-                <div className="h-4 bg-border rounded-full w-5/6" />
-                <div className="flex justify-between mt-6 pt-4 border-t border-border">
-                  <div className="h-8 bg-primary/20 rounded-md w-24" />
-                  <div className="h-8 bg-primary rounded-md w-24" />
+              
+              <div style={{ height: '150px', background: '#F8F8FD', borderRadius: '8px', padding: '24px' }}>
+                <div style={{ width: '150px', height: '12px', background: '#D6DDEB', borderRadius: '6px', marginBottom: '16px' }} />
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '80px' }}>
+                  {[40, 70, 45, 90, 60, 80, 50, 85].map((h, i) => (
+                    <div key={i} style={{ flex: 1, height: `${h}%`, background: '#4640DE', borderRadius: '2px' }} />
+                  ))}
                 </div>
               </div>
             </div>
           </div>
-          
         </div>
       </div>
     </section>

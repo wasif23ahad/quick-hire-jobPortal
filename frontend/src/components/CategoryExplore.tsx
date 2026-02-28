@@ -1,75 +1,162 @@
 import React from "react";
-import Link from "next/link";
 import { 
+  FiChevronRight, 
   FiPenTool, 
-  FiBarChart2, 
-  FiVolume2, 
-  FiDollarSign, 
-  FiMonitor, 
-  FiCpu, 
+  FiTrendingUp, 
+  FiVolume2,   // changed from FiMegaphone
   FiBriefcase, 
-  FiUsers 
+  FiCode, 
+  FiCpu, 
+  FiUsers,
+  FiCrosshair  // optional: better replacement for FiTarget
 } from "react-icons/fi";
-import { HiOutlineArrowRight } from "react-icons/hi";
+import Link from "next/link";
 
 const categories = [
-  { name: "Design", icon: FiPenTool, count: 235 },
-  { name: "Sales", icon: FiBarChart2, count: 756 },
-  { name: "Marketing", icon: FiVolume2, count: 140, active: true },
-  { name: "Finance", icon: FiDollarSign, count: 325 },
-  { name: "Technology", icon: FiMonitor, count: 436 },
-  { name: "Engineering", icon: FiCpu, count: 542 },
-  { name: "Business", icon: FiBriefcase, count: 211 },
-  { name: "Human Resources", icon: FiUsers, count: 346 },
+  { name: "Design", jobs: "235 jobs available", Icon: FiPenTool, active: false },
+  { name: "Sales", jobs: "756 jobs available", Icon: FiTrendingUp, active: false },
+  { name: "Marketing", jobs: "140 jobs available", Icon: FiVolume2, active: true }, // changed
+  { name: "Finance", jobs: "325 jobs available", Icon: FiCrosshair, active: false }, // changed
+  { name: "Technology", jobs: "436 jobs available", Icon: FiCpu, active: false },
+  { name: "Engineering", jobs: "542 jobs available", Icon: FiCode, active: false },
+  { name: "Business", jobs: "211 jobs available", Icon: FiBriefcase, active: false },
+  { name: "Human Resource", jobs: "346 jobs available", Icon: FiUsers, active: false },
 ];
+
+function FiTarget(props: any) {
+  return <FiTrendingUp {...props} />; // Placeholder as react-icons FiTarget might need different import
+}
 
 export const CategoryExplore = () => {
   return (
-    <section className="py-20 bg-background">
-      <div className="container mx-auto px-6 max-w-7xl">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12">
-          <h2 className="text-4xl lg:text-5xl font-bold font-clash text-heading">
-            Explore by <span className="text-accent-blue">category</span>
-          </h2>
-          <Link 
-            href="/jobs" 
-            className="text-primary font-bold flex items-center gap-2 mt-4 md:mt-0 hover:text-primary-dark transition-colors"
+    <section 
+      style={{ 
+        width: '100%', 
+        backgroundColor: '#FFFFFF', 
+        display: 'flex', 
+        justifyContent: 'center',
+        paddingTop: '80px',
+        paddingBottom: '80px'
+      }}
+    >
+      <div 
+        style={{ 
+          width: '1440px', 
+          height: '680px', 
+          position: 'relative'
+        }}
+      >
+        {/* Title Content */}
+        <div 
+          style={{ 
+            position: 'absolute',
+            left: '125px',
+            top: '0px',
+            width: '1190px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
+        >
+          <h2 
+            style={{ 
+              fontFamily: 'var(--font-clash-display)',
+              fontWeight: 600,
+              fontSize: '48px',
+              lineHeight: '120%',
+              color: '#202430',
+              margin: 0
+            }}
           >
-            Show all jobs <HiOutlineArrowRight />
+            Explore by <span style={{ color: '#26A4FF' }}>category</span>
+          </h2>
+          
+          <Link 
+            href="/jobs"
+            style={{ 
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              fontFamily: 'var(--font-epilogue)',
+              fontWeight: 600,
+              fontSize: '16px',
+              color: '#4640DE',
+              textDecoration: 'none'
+            }}
+          >
+            Show all jobs <FiChevronRight />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {categories.map((cat) => {
-            const Icon = cat.icon;
-            return (
-              <Link 
-                href={`/jobs?category=${encodeURIComponent(cat.name)}`}
-                key={cat.name}
+        {/* Grid Container — 4 cols, 2 rows */}
+        <div 
+          style={{ 
+            position: 'absolute',
+            left: '125px',
+            top: '96px',
+            width: '1190px',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '32px'
+          }}
+        >
+          {categories.map((cat, index) => (
+            <div 
+              key={cat.name}
+              style={{ 
+                height: '240px',
+                padding: '32px',
+                border: cat.active ? 'none' : '1px solid #D6DDEB',
+                background: cat.active ? '#4640DE' : '#FFFFFF',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between'
+              }}
+            >
+              <div 
+                style={{ 
+                  width: '48px',
+                  height: '48px',
+                  color: cat.active ? '#FFFFFF' : '#4640DE',
+                  fontSize: '32px'
+                }}
               >
-                <div 
-                  className={`border transition-all duration-300 p-8 rounded-xl flex flex-col gap-6 group cursor-pointer h-full
-                    ${cat.active 
-                      ? 'bg-primary text-white border-primary shadow-xl shadow-primary/20' 
-                      : 'bg-white border-border hover:border-primary hover:shadow-lg text-heading'
-                    }`}
+                <cat.Icon size={40} />
+              </div>
+              
+              <div>
+                <h3 
+                  style={{ 
+                    fontFamily: 'var(--font-clash-display)',
+                    fontWeight: 600,
+                    fontSize: '24px',
+                    color: cat.active ? '#FFFFFF' : '#202430',
+                    margin: '0 0 12px 0'
+                  }}
                 >
-                  <div className={`text-4xl ${cat.active ? 'text-white' : 'text-primary'}`}>
-                    <Icon />
-                  </div>
-                  
-                  <div>
-                    <h3 className={`text-2xl font-bold font-clash mb-2 ${cat.active ? 'text-white' : 'text-heading group-hover:text-primary transition-colors'}`}>
-                      {cat.name}
-                    </h3>
-                    <p className={`flex items-center gap-2 ${cat.active ? 'text-white/80' : 'text-muted'}`}>
-                      {cat.count} jobs available <HiOutlineArrowRight className={cat.active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 transition-opacity'}/>
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
+                  {cat.name}
+                </h3>
+                <p 
+                  style={{ 
+                    fontFamily: 'var(--font-epilogue)',
+                    fontWeight: 400,
+                    fontSize: '18px',
+                    color: cat.active ? '#FFFFFF' : '#7C8493',
+                    opacity: cat.active ? 0.8 : 1,
+                    margin: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  {cat.jobs} 
+                  <FiChevronRight style={{ color: cat.active ? '#FFFFFF' : '#202430' }} />
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

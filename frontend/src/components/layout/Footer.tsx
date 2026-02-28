@@ -1,115 +1,175 @@
 import React from "react";
 import Link from "next/link";
-import { FiFacebook, FiTwitter, FiInstagram, FiLinkedin, FiArrowRight } from "react-icons/fi";
-
-const footerLinks = {
-  about: [
-    { name: "Companies", href: "#" },
-    { name: "Pricing", href: "#" },
-    { name: "Terms", href: "#" },
-    { name: "Advice", href: "#" },
-    { name: "Privacy Policy", href: "#" },
-  ],
-  resources: [
-    { name: "Help Docs", href: "#" },
-    { name: "Guide", href: "#" },
-    { name: "Updates", href: "#" },
-    { name: "Contact Us", href: "#" },
-  ]
-};
+import { 
+  FiFacebook, 
+  FiInstagram, 
+  FiLinkedin, 
+  FiTwitter,
+  FiDribbble
+} from "react-icons/fi";
 
 export const Footer = () => {
   return (
-    <footer className="bg-dark-navy text-white pt-20 pb-10">
-      <div className="container mx-auto px-6 max-w-7xl">
-        
-        {/* Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          
-          {/* Brand Col */}
-          <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
-                <div className="w-4 h-4 rounded-full bg-primary relative">
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white" />
-                </div>
-              </div>
-              <span className="font-bold text-2xl tracking-tight font-clash">Quick<span className="text-white/70 font-normal">Hire</span></span>
-            </Link>
-            <p className="text-white/70 text-sm leading-relaxed max-w-xs">
-              Great platform for the job seeker that passionate about startups. Find your dream job easier.
-            </p>
+    <footer 
+      style={{ 
+        width: '100%', 
+        backgroundColor: '#202430', 
+        display: 'flex', 
+        justifyContent: 'center',
+        paddingTop: '80px',
+        paddingBottom: '40px'
+      }}
+    >
+      <div 
+        style={{ 
+          width: '1440px', 
+          height: '450px', 
+          position: 'relative',
+          color: '#FFFFFF'
+        }}
+      >
+        {/* Brand Section */}
+        <div 
+          style={{ 
+            position: 'absolute',
+            left: '125px',
+            top: '0px',
+            width: '376px'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '32px' }}>
+            <div style={{ width: '32px', height: '32px', background: '#4640DE', borderRadius: '50%' }} />
+            <span style={{ fontFamily: 'var(--font-clash-display)', fontWeight: 700, fontSize: '24px' }}>QuickHire</span>
           </div>
+          <p 
+            style={{ 
+              fontFamily: 'var(--font-epilogue)',
+              fontWeight: 400,
+              fontSize: '16px',
+              lineHeight: '160%',
+              color: '#D6DDEB',
+              opacity: 0.7,
+              margin: 0
+            }}
+          >
+            Great platform for the job seeker that passionate about startups. Find your dream job easier.
+          </p>
+        </div>
 
-          {/* About Links */}
-          <div>
-            <h4 className="font-bold text-lg mb-6 font-clash">About</h4>
-            <ul className="space-y-4 text-white/70 text-sm">
-              {footerLinks.about.map((link) => (
-                <li key={link.name}>
-                  <Link href={link.href} className="hover:text-white transition-colors">
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        {/* Links: About */}
+        <div 
+          style={{ 
+            position: 'absolute',
+            left: '581px',
+            top: '0px'
+          }}
+        >
+          <h3 style={{ fontFamily: 'var(--font-epilogue)', fontWeight: 600, fontSize: '18px', margin: '0 0 24px 0' }}>About</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {['Companies', 'Pricing', 'Terms', 'Advice', 'Privacy Policy'].map(item => (
+              <Link key={item} href="#" style={{ color: '#D6DDEB', textDecoration: 'none', opacity: 0.8, fontFamily: 'var(--font-epilogue)', fontSize: '16px' }}>{item}</Link>
+            ))}
           </div>
+        </div>
 
-          {/* Resources Links */}
-          <div>
-            <h4 className="font-bold text-lg mb-6 font-clash">Resources</h4>
-            <ul className="space-y-4 text-white/70 text-sm">
-              {footerLinks.resources.map((link) => (
-                <li key={link.name}>
-                  <Link href={link.href} className="hover:text-white transition-colors">
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        {/* Links: Resources */}
+        <div 
+          style={{ 
+            position: 'absolute',
+            left: '739px',
+            top: '0px'
+          }}
+        >
+          <h3 style={{ fontFamily: 'var(--font-epilogue)', fontWeight: 600, fontSize: '18px', margin: '0 0 24px 0' }}>Resources</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {['Help Docs', 'Guide', 'Updates', 'Contact Us'].map(item => (
+              <Link key={item} href="#" style={{ color: '#D6DDEB', textDecoration: 'none', opacity: 0.8, fontFamily: 'var(--font-epilogue)', fontSize: '16px' }}>{item}</Link>
+            ))}
           </div>
+        </div>
 
-          {/* Subscribe Col */}
-          <div>
-            <h4 className="font-bold text-lg mb-6 font-clash">Get job notifications</h4>
-            <p className="text-white/70 text-sm leading-relaxed mb-6">
-              The latest job news, articles, sent to your inbox weekly.
-            </p>
-            <div className="flex gap-2">
-              <input 
-                type="email" 
-                placeholder="Email Address" 
-                className="bg-white/10 border border-white/20 text-white placeholder:text-white/50 px-4 py-2.5 rounded-lg w-full focus:outline-none focus:border-white transition-colors"
-              />
-              <button className="bg-primary hover:bg-primary-dark transition-colors px-4 py-2.5 rounded-lg text-white font-bold flex items-center justify-center">
-                <FiArrowRight />
-              </button>
-            </div>
+        {/* Newsletter */}
+        <div 
+          style={{ 
+            position: 'absolute',
+            left: '921px',
+            top: '0px',
+            width: '394px'
+          }}
+        >
+          <h3 style={{ fontFamily: 'var(--font-epilogue)', fontWeight: 600, fontSize: '18px', margin: '0 0 24px 0' }}>Get job notifications</h3>
+          <p 
+            style={{ 
+              fontFamily: 'var(--font-epilogue)',
+              fontWeight: 400,
+              fontSize: '16px',
+              lineHeight: '160%',
+              color: '#D6DDEB',
+              opacity: 0.8,
+              margin: '0 0 24px 0'
+            }}
+          >
+            The latest job news, articles, sent to your inbox weekly.
+          </p>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <input 
+              type="text" 
+              placeholder="Email Address" 
+              style={{ 
+                flex: 1,
+                height: '50px',
+                padding: '0 16px',
+                border: 'none',
+                fontFamily: 'var(--font-epilogue)',
+                fontSize: '16px',
+                outline: 'none'
+              }}
+            />
+            <button 
+              style={{ 
+                height: '50px',
+                padding: '0 24px',
+                background: '#4640DE',
+                color: '#FFFFFF',
+                border: 'none',
+                fontFamily: 'var(--font-epilogue)',
+                fontWeight: 700,
+                fontSize: '16px',
+                cursor: 'pointer'
+              }}
+            >
+              Subscribe
+            </button>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-white/50 text-sm">
-            2026 @ QuickHire. All rights reserved.
-          </p>
-          
-          <div className="flex items-center gap-4 text-white/50">
-            <a href="#" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
-              <FiFacebook size={18} />
-            </a>
-            <a href="#" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
-              <FiInstagram size={18} />
-            </a>
-            <a href="#" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
-              <FiTwitter size={18} />
-            </a>
-            <a href="#" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
-              <FiLinkedin size={18} />
-            </a>
+        <div 
+          style={{ 
+            position: 'absolute',
+            left: '125px',
+            bottom: '0px',
+            width: '1190px',
+            paddingTop: '40px',
+            borderTop: '1px solid rgba(255,255,255,0.1)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            fontFamily: 'var(--font-epilogue)',
+            fontSize: '14px',
+            color: '#D6DDEB',
+            opacity: 0.5
+          }}
+        >
+          <p>2021 @ QuickHire. All rights reserved.</p>
+          <div style={{ display: 'flex', gap: '24px' }}>
+            <FiFacebook style={{ fontSize: '20px', cursor: 'pointer' }} />
+            <FiInstagram style={{ fontSize: '20px', cursor: 'pointer' }} />
+            <FiDribbble style={{ fontSize: '20px', cursor: 'pointer' }} />
+            <FiLinkedin style={{ fontSize: '20px', cursor: 'pointer' }} />
+            <FiTwitter style={{ fontSize: '20px', cursor: 'pointer' }} />
           </div>
         </div>
-        
       </div>
     </footer>
   );

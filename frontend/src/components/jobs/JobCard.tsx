@@ -1,51 +1,144 @@
 import React from "react";
 import Link from "next/link";
-import { Badge } from "../ui/Badge";
 
 interface JobCardProps {
   id?: string;
-  logo: string;
-  type: string;
+  logo?: string;
+  type?: string;
   title: string;
   company: string;
   location: string;
-  description: string;
-  tags: { name: string; variant: any }[];
+  description?: string;
+  tags?: { name: string; color: string; bgColor: string; borderColor: string }[];
 }
 
-export const JobCard = ({ id, logo, type, title, company, location, description, tags }: JobCardProps) => {
+export const JobCard = ({ id, title, company, location, description, tags }: JobCardProps) => {
   return (
-    <Link href={`/jobs/${id || '#'}`} className="border border-border bg-white p-6 rounded-xl hover:shadow-xl hover:border-primary transition-all duration-300 flex flex-col gap-4 cursor-pointer group">
-      <div className="flex justify-between items-start">
-        <img 
-          src={logo} 
-          alt={`${company} logo`} 
-          className="w-12 h-12 object-contain"
-        />
-        <span className="text-primary bg-primary/10 px-3 py-1 rounded-sm text-sm font-bold border border-primary/20">
-          {type}
-        </span>
+    <Link
+      href={`/jobs/${id || '#'}`}
+      style={{ 
+        display: 'block',
+        width: '273.5px', // Exact width for 4-col in 1190px with 32px gaps
+        height: '350px',
+        padding: '24px',
+        border: '1px solid #D6DDEB',
+        background: '#FFFFFF',
+        textDecoration: 'none',
+        transition: 'all 0.2s ease',
+        position: 'relative',
+        overflow: 'hidden'
+      }}
+    >
+      {/* Type Badge — Top right absolute */}
+      <div 
+        style={{ 
+          position: 'absolute',
+          right: '24px',
+          top: '24px',
+          padding: '4px 12px',
+          border: '1px solid #4640DE',
+          color: '#4640DE',
+          fontFamily: 'var(--font-epilogue)',
+          fontWeight: 600,
+          fontSize: '14px'
+        }}
+      >
+        Full Time
       </div>
 
-      <div>
-        <h3 className="text-xl font-bold font-clash text-heading group-hover:text-primary transition-colors">
-          {title}
-        </h3>
-        <p className="text-muted text-sm mt-1">
-          {company} • {location}
-        </p>
+      {/* Logo — Square container with initial */}
+      <div 
+        style={{ 
+          width: '48px',
+          height: '48px',
+          background: '#F8F8FD',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontFamily: 'var(--font-clash-display)',
+          fontWeight: 700,
+          fontSize: '24px',
+          color: '#202430',
+          marginBottom: '24px'
+        }}
+      >
+        {company[0]}
       </div>
 
-      <p className="text-body flex-1 text-sm line-clamp-3">
-        {description}
+      {/* Title & Company */}
+      <h3 
+        style={{ 
+          fontFamily: 'var(--font-clash-display)',
+          fontWeight: 600,
+          fontSize: '20px',
+          lineHeight: '120%',
+          color: '#202430',
+          margin: '0 0 8px 0'
+        }}
+      >
+        {title}
+      </h3>
+      <p 
+        style={{ 
+          fontFamily: 'var(--font-epilogue)',
+          fontWeight: 400,
+          fontSize: '16px',
+          lineHeight: '160%',
+          color: '#515B6F',
+          margin: '0 0 16px 0'
+        }}
+      >
+        {company} • {location}
       </p>
 
-      <div className="flex flex-wrap gap-2 mt-2">
-        {tags.map((tag) => (
-          <Badge key={tag.name} variant={tag.variant}>
+      {/* Description */}
+      <p 
+        style={{ 
+          fontFamily: 'var(--font-epilogue)',
+          fontWeight: 400,
+          fontSize: '14px',
+          lineHeight: '160%',
+          color: '#7C8493',
+          margin: '0 0 24px 0',
+          display: '-webkit-box',
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden'
+        }}
+      >
+        {description || "Help us create the next generation of visual experiences for our users."}
+      </p>
+
+      {/* Tags */}
+      <div 
+        style={{ 
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '8px'
+        }}
+      >
+        {tags?.map((tag) => (
+          <span 
+            key={tag.name}
+            style={{ 
+              padding: '4px 12px',
+              borderRadius: '80px',
+              background: tag.bgColor,
+              border: `1px solid ${tag.borderColor}`,
+              color: tag.color,
+              fontFamily: 'var(--font-epilogue)',
+              fontWeight: 600,
+              fontSize: '12px'
+            }}
+          >
             {tag.name}
-          </Badge>
-        ))}
+          </span>
+        )) || (
+          <>
+            <span style={{ padding: '4px 12px', borderRadius: '80px', background: 'rgba(86, 205, 173, 0.1)', border: '1px solid #56CDAD', color: '#56CDAD', fontFamily: 'var(--font-epilogue)', fontWeight: 600, fontSize: '12px' }}>Marketing</span>
+            <span style={{ padding: '4px 12px', borderRadius: '80px', background: 'rgba(70, 64, 222, 0.1)', border: '1px solid #4640DE', color: '#4640DE', fontFamily: 'var(--font-epilogue)', fontWeight: 600, fontSize: '12px' }}>Design</span>
+          </>
+        )}
       </div>
     </Link>
   );

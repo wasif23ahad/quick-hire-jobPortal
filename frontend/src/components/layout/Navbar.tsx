@@ -1,43 +1,96 @@
 import React from "react";
 import Link from "next/link";
-import { FiMenu } from "react-icons/fi";
 
 export const Navbar = () => {
   return (
-    <nav className="bg-bg-light py-4 xl:py-6 border-b border-border sticky top-0 z-50">
-      <div className="container mx-auto px-6 max-w-7xl flex items-center justify-between">
-        
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-            <div className="w-4 h-4 rounded-full bg-white relative">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary" />
-            </div>
-          </div>
-          <span className="font-bold text-2xl tracking-tight text-heading font-clash">Quick<span className="text-primary font-normal">Hire</span></span>
+    <nav 
+      style={{ 
+        width: '100%', 
+        backgroundColor: '#F8F8FD', 
+        display: 'flex', 
+        justifyContent: 'center',
+        height: '78px',
+        borderBottom: '1px solid #D6DDEB'
+      }}
+    >
+      <div 
+        style={{ 
+          width: '1440px', 
+          height: '78px', 
+          position: 'relative',
+          padding: '0 124px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}
+      >
+        {/* Logo Section */}
+        <Link 
+          href="/" 
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px',
+            textDecoration: 'none',
+            color: '#202430'
+          }}
+        >
+          <div style={{ width: '32px', height: '32px', background: '#4640DE', borderRadius: '50%' }} />
+          <span style={{ fontFamily: 'var(--font-clash-display)', fontWeight: 700, fontSize: '24px' }}>QuickHire</span>
         </Link>
 
-        {/* Desktop Links */}
-        <div className="hidden lg:flex items-center gap-8 font-medium text-body">
-          <Link href="/jobs" className="hover:text-primary transition-colors">Find Jobs</Link>
-          <Link href="#" className="hover:text-primary transition-colors">Browse Companies</Link>
+        {/* Menu Section — Centered roughly with margin: 0 auto logic */}
+        <div 
+          style={{ 
+            display: 'flex', 
+            gap: '48px',
+            fontFamily: 'var(--font-epilogue)',
+            fontWeight: 500,
+            fontSize: '16px'
+          }}
+        >
+          <Link href="/jobs" style={{ color: '#4640DE', textDecoration: 'none', borderBottom: '2px solid #4640DE', paddingBottom: '27px' }}>Find Jobs</Link>
+          <Link href="#" style={{ color: '#515B6F', textDecoration: 'none', opacity: 0.8 }}>Browse Companies</Link>
         </div>
 
-        {/* Auth Buttons Desktop */}
-        <div className="hidden lg:flex items-center gap-4">
-          <Link href="#" className="font-bold text-primary hover:text-primary-dark transition-colors px-4 py-2">
+        {/* Auth Section */}
+        <div 
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '16px'
+          }}
+        >
+          <Link 
+            href="#" 
+            style={{ 
+              fontFamily: 'var(--font-epilogue)',
+              fontWeight: 700,
+              fontSize: '16px',
+              color: '#4640DE',
+              textDecoration: 'none',
+              padding: '12px 24px'
+            }}
+          >
             Login
           </Link>
-          <div className="h-6 w-px bg-border" />
-          <Link href="/admin/create" className="font-bold text-white bg-primary hover:bg-primary-dark transition-colors px-6 py-3 rounded-lg">
+          <div style={{ width: '1px', height: '24px', background: '#D6DDEB' }} />
+          <Link 
+            href="/admin/create" 
+            style={{ 
+              fontFamily: 'var(--font-epilogue)',
+              fontWeight: 700,
+              fontSize: '16px',
+              color: '#FFFFFF',
+              background: '#4640DE',
+              textDecoration: 'none',
+              padding: '12px 24px',
+              borderRadius: '0px' // Figma buttons are often sharp or specific radius
+            }}
+          >
             Sign Up
           </Link>
         </div>
-
-        {/* Mobile Menu Button */}
-        <button className="lg:hidden text-heading text-2xl p-2">
-          <FiMenu />
-        </button>
       </div>
     </nav>
   );

@@ -1,29 +1,78 @@
 import React from "react";
 
 const companies = [
-  { name: "Vodafone", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Vodafone_icon.svg" },
-  { name: "Intel", logo: "https://upload.wikimedia.org/wikipedia/commons/c/c9/Intel-logo.svg" },
-  { name: "Tesla", logo: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Tesla_logo.png" },
-  { name: "AMD", logo: "https://upload.wikimedia.org/wikipedia/commons/7/7c/AMD_Logo.svg" },
-  { name: "Talkit", logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" }, // Proxy logo since Talkit is fictional
+  { name: "vodafone", width: '147px', height: '36px' },
+  { name: "intel", width: '85px', height: '36px' },
+  { name: "TESLA", width: '133px', height: '17px' },
+  { name: "AMD", width: '109px', height: '34px' },
+  { name: "Talkit", width: '133px', height: '40px' }
 ];
 
 export const CompanyLogos = () => {
   return (
-    <section className="py-12 bg-white border-y border-border">
-      <div className="container mx-auto px-6 max-w-7xl">
-        <p className="text-muted text-base font-medium mb-8">
+    <section 
+      style={{ 
+        width: '100%', 
+        backgroundColor: '#F8F8FD', 
+        display: 'flex', 
+        justifyContent: 'center',
+        paddingTop: '40px',
+        paddingBottom: '80px'
+      }}
+    >
+      <div 
+        style={{ 
+          width: '1440px', 
+          height: '150px', 
+          position: 'relative'
+        }}
+      >
+        {/* "Companies we helped grow" text */}
+        <p 
+          style={{ 
+            position: 'absolute',
+            left: '125px',
+            top: '0px',
+            fontFamily: 'var(--font-epilogue)',
+            fontWeight: 400,
+            fontSize: '18px',
+            lineHeight: '160%',
+            color: '#202430',
+            opacity: 0.5,
+            margin: 0
+          }}
+        >
           Companies we helped grow
         </p>
-        
-        <div className="flex flex-wrap justify-between items-center gap-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+
+        {/* Logo Container — 1190px wide, centered roughly */}
+        <div 
+          style={{ 
+            position: 'absolute',
+            width: '1190px',
+            height: '40px',
+            left: '125px',
+            top: '64px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
+        >
           {companies.map((company) => (
-            <div key={company.name} className="flex items-center justify-center h-12 w-32 relative">
-              <img 
-                src={company.logo} 
-                alt={`${company.name} logo`} 
-                className="max-h-8 max-w-full object-contain"
-              />
+            <div 
+              key={company.name}
+              style={{ 
+                fontFamily: 'var(--font-clash-display)',
+                fontWeight: 600,
+                fontSize: '32px',
+                color: '#202430',
+                opacity: 0.3,
+                textTransform: company.name === 'TESLA' || company.name === 'AMD' ? 'uppercase' : 'none',
+                letterSpacing: company.name === 'TESLA' ? '0.2em' : 'normal'
+              }}
+            >
+              {company.name}
             </div>
           ))}
         </div>
