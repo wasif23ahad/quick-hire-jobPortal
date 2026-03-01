@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -10,6 +10,26 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        if (user.role === "EMPLOYER") {
+          router.push("/employer/dashboard");
+        } else if (user.role === "ADMIN") {
+          router.push("/admin/dashboard");
+        } else {
+          router.push("/dashboard");
+        }
+      } catch {
+        // Clear if invalid
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+      }
+    }
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

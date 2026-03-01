@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -10,6 +10,25 @@ export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        if (user.role === "EMPLOYER") {
+          router.push("/employer/dashboard");
+        } else if (user.role === "ADMIN") {
+          router.push("/admin/dashboard");
+        } else {
+          router.push("/dashboard");
+        }
+      } catch {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+      }
+    }
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -281,6 +300,36 @@ export default function SignUpPage() {
               Login
             </Link>
           </p>
+
+          <div
+            style={{
+              marginTop: "16px",
+              paddingTop: "16px",
+              borderTop: "1px solid #D6DDEB",
+              textAlign: "center"
+            }}
+          >
+             <p
+              style={{
+                fontFamily: "var(--font-epilogue)",
+                fontSize: "14px",
+                color: "#7C8493",
+                margin: 0
+              }}
+            >
+              Are you an employer?{" "}
+              <Link
+                href="/employer/register"
+                style={{
+                  color: "#4640DE",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                }}
+              >
+                Sign up as Employer
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </main>

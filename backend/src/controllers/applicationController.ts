@@ -96,3 +96,41 @@ export const getAllApplications = async (
     next(error);
   }
 };
+
+// GET /api/applications/employer/me — Get applications for all jobs posted by the current employer
+export const getEmployerApplications = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = (req as any).user?.id;
+    if (!userId) return res.status(401).json({ success: false, message: "Unauthorized" });
+
+    const applications = await prisma.application.findMany({
+      where: {
+        job: {
+          postedById: userId
+        }
+      },
+      orderBy: { createdAt: "desc" },
+      include: {
+        job: {
+          select: {
+            id: true,
+            title: true,
+            company: true,
+          },
+        },
+      },
+    });
+
+    res.json({
+      success: true,
+      data: applications,
+      message: `Found ${applications.length} applications for your jobs`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

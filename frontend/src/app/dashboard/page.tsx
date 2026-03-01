@@ -54,13 +54,27 @@ export default function DashboardPage() {
         if (!res.ok) {
           localStorage.removeItem("token");
           localStorage.removeItem("user");
+          window.dispatchEvent(new Event("storage"));
           router.push("/login");
           return;
         }
 
         const data = await res.json();
+        
+        // Role check
+        if (data.data.role === "EMPLOYER") {
+          router.push("/employer/dashboard");
+          return;
+        } else if (data.data.role === "ADMIN") {
+          router.push("/admin/dashboard");
+          return;
+        }
+
         setUser(data.data);
       } catch {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.dispatchEvent(new Event("storage"));
         router.push("/login");
       } finally {
         setIsLoading(false);
