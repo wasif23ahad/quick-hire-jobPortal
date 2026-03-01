@@ -40,7 +40,8 @@ export const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
     setErrors({});
     
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+      const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+      const API_URL = rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl.replace(/\/$/, '')}/api`;
       const token = localStorage.getItem("token");
       
       const headers: Record<string, string> = { 'Content-Type': 'application/json' };

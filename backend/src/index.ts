@@ -13,7 +13,20 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
+  origin: function (origin, callback) {
+    const allowed = [
+      process.env.FRONTEND_URL,
+      `${process.env.FRONTEND_URL}/`,
+      "http://localhost:3000",
+      "https://quick-hire-job-portal-frontend.vercel.app",
+      "https://quick-hire-job-portal-frontend.vercel.app/"
+    ];
+    if (!origin || allowed.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 app.use(express.json());
