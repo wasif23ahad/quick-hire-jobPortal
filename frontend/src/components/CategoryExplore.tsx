@@ -97,40 +97,44 @@ export const CategoryExplore = () => {
               >
                 <div 
                   className={`
-                    flex flex-row sm:flex-col items-center sm:items-start justify-between sm:justify-between
-                    p-4 sm:p-[clamp(20px,3vw,32px)] sm:min-h-[180px]
-                    transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
-                    ${isActive ? 'bg-[#4640DE] border-[#4640DE] sm:translate-y-[-6px] sm:shadow-[0_12px_24px_rgba(70,64,222,0.3)]' : 'bg-white border-[#D6DDEB]'}
+                    relative box-border flex flex-row sm:flex-col items-center sm:items-start justify-between sm:justify-start
+                    w-full sm:w-[274px] h-auto sm:h-[214px] 
+                    px-[8px] py-[16px] sm:p-[32px]
+                    rounded-[16px] sm:rounded-none
+                    transition-all duration-300 ease-in-out
+                    ${isActive ? 'bg-[#4640DE] border-[#4640DE] sm:-translate-y-1 sm:shadow-[0_12px_24px_rgba(70,64,222,0.3)]' : 'bg-white border-[#D6DDEB]'}
                     border
                   `}
                   style={{ cursor: 'pointer' }}
                 >
-                  <div className="flex items-center sm:items-start sm:flex-col gap-4 sm:gap-0 flex-1 sm:h-full w-full">
+                  <div className="flex items-center sm:items-start sm:flex-col gap-4 sm:gap-[32px] flex-1 sm:h-full w-full">
+                    {/* Icon Container */}
                     <div 
                       style={{ 
-                        width: '48px',
-                        height: '48px',
                         color: isActive ? '#FFFFFF' : '#4640DE',
-                        fontSize: '32px',
                         transition: 'color 0.3s ease, transform 0.3s ease',
                         transform: isActive ? 'scale(1.1)' : 'scale(1)',
                       }}
-                      className="flex-shrink-0 flex items-center justify-center sm:block"
+                      className="shrink-0 flex items-center justify-center p-2 sm:p-0"
                     >
-                      <cat.Icon size={40} className="w-8 h-8 sm:w-10 sm:h-10" />
+                      <cat.Icon className="w-8 h-8 sm:w-[48px] sm:h-[48px]" />
                     </div>
                     
-                    <div className="flex flex-col sm:mt-auto flex-1">
+                    {/* Text Container */}
+                    <div className="flex flex-col flex-1 w-full relative h-full justify-center sm:justify-start">
                       <h3 
                         style={{ 
                           fontFamily: 'var(--font-clash-display)',
                           fontWeight: 600,
-                          fontSize: 'clamp(18px, 2vw, 24px)',
+                          fontSize: '24px',
+                          lineHeight: '120%',
                           color: isActive ? '#FFFFFF' : '#202430',
                           margin: '0 0 4px 0',
                           transition: 'color 0.3s ease',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis'
                         }}
-                        className="sm:mb-3"
                       >
                         {cat.name}
                       </h3>
@@ -138,17 +142,19 @@ export const CategoryExplore = () => {
                         style={{ 
                           fontFamily: 'var(--font-epilogue)',
                           fontWeight: 400,
-                          fontSize: 'clamp(14px, 1.5vw, 18px)',
+                          fontSize: '18px',
+                          lineHeight: '160%',
                           color: isActive ? '#FFFFFF' : '#7C8493',
                           opacity: isActive ? 0.8 : 1,
                           margin: 0,
                           transition: 'color 0.3s ease, opacity 0.3s ease',
                         }}
-                        className="flex items-center justify-between sm:justify-start gap-2 w-full"
+                        className="flex items-center justify-between sm:justify-start gap-2 w-full mt-auto"
                       >
-                        <span>{cat.jobs}</span>
+                        <span className="whitespace-nowrap">{cat.jobs}</span>
+                        {/* Mobile arrow */}
                         <FiChevronRight 
-                          className="sm:hidden"
+                          className="sm:hidden shrink-0"
                           style={{ 
                             color: isActive ? '#FFFFFF' : '#202430',
                             transition: 'color 0.3s ease, transform 0.3s ease',
@@ -156,18 +162,20 @@ export const CategoryExplore = () => {
                           }} 
                         />
                       </p>
+                      
+                      {/* Desktop arrow */}
+                      <FiChevronRight 
+                        className="hidden sm:block absolute right-0 bottom-0"
+                        style={{ 
+                          color: isActive ? '#FFFFFF' : '#202430',
+                          transition: 'color 0.3s ease, transform 0.3s ease',
+                          transform: isActive ? 'translateX(4px)' : 'translateX(0)',
+                          width: '24px',
+                          height: '24px'
+                        }} 
+                      />
                     </div>
                   </div>
-                  
-                  {/* Desktop arrow (hidden on mobile, shown on right on desktop) */}
-                  <FiChevronRight 
-                    className="hidden sm:block absolute bottom-8 right-8"
-                    style={{ 
-                      color: isActive ? '#FFFFFF' : '#202430',
-                      transition: 'color 0.3s ease, transform 0.3s ease',
-                      transform: isActive ? 'translateX(4px)' : 'translateX(0)',
-                    }} 
-                  />
                 </div>
               </Link>
             );

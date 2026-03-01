@@ -108,13 +108,14 @@ export const Hero = () => {
           <div className="w-full">
             <form
               onSubmit={handleSearch}
-              className="flex flex-col sm:flex-row w-full max-w-[852px] items-stretch sm:items-center justify-center p-3 sm:p-4 bg-color-white shadow-shadow gap-2 sm:gap-0"
+              className="flex flex-col sm:flex-row w-full max-w-[852px] sm:h-[89px] items-stretch sm:items-center justify-between bg-white shadow-sm gap-4 sm:gap-0 relative z-30"
+              style={{ padding: '16px' }}
               role="search"
               aria-label="Job search form"
             >
-              <div className="flex items-center gap-3 sm:gap-4 px-3 sm:px-4 py-2 sm:py-0 flex-1">
-                <FiSearch className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] font-bold flex-shrink-0" aria-hidden="true" />
-                <div className="flex flex-col items-start justify-between pt-2 sm:pt-5 pb-0 px-0 flex-1">
+              <div className="flex items-center gap-3 sm:gap-4 px-2 sm:px-4 flex-1 h-full relative">
+                <FiSearch className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] flex-shrink-0 mb-2 sm:mb-0" aria-hidden="true" />
+                <div className="flex flex-col justify-center flex-1 h-full w-full relative">
                   <label htmlFor="job-title-input" className="sr-only">
                     Job title or keyword
                   </label>
@@ -124,20 +125,23 @@ export const Hero = () => {
                     value={jobTitle}
                     onChange={(e) => setJobTitle(e.target.value)}
                     placeholder="Job title or keyword"
-                    className="relative w-full mt-[-1.00px] opacity-50 font-body-normal-regular font-[number:var(--body-normal-regular-font-weight)] text-neutrals-60 text-[length:var(--body-normal-regular-font-size)] tracking-[var(--body-normal-regular-letter-spacing)] leading-[var(--body-normal-regular-line-height)] [font-style:var(--body-normal-regular-font-style)] focus:opacity-100 focus:text-neutrals-100 placeholder:text-neutrals-60 bg-transparent border-none outline-none"
+                    className="w-full font-epilogue text-[16px] text-[#25324B] placeholder:text-[#A8ADB7] bg-transparent border-none outline-none pb-2"
                     aria-label="Job title or keyword"
                   />
-                  <div className="relative self-stretch w-full h-px bg-neutrals-20" />
+                  <div className="absolute bottom-[4px] sm:bottom-[15px] left-0 right-0 h-[1px] bg-[#D6DDEB]" />
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 sm:gap-4 px-3 sm:pl-2 sm:pr-6 py-2 sm:py-0 flex-1">
+              {/* Vertical Divider line between search segments (desktop only) */}
+              <div className="hidden sm:block w-px h-[57px] bg-[#D6DDEB] mx-2" />
+
+              <div className="flex items-center gap-3 sm:gap-4 px-2 sm:px-4 flex-1 h-full relative">
                 <FiMapPin
-                  className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] font-bold flex-shrink-0"
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] flex-shrink-0 mb-2 sm:mb-0"
                   aria-hidden="true"
                 />
-                <div className="flex flex-col items-start justify-between pt-2 sm:pt-5 pb-0 px-0 flex-1 relative">
-                  <div className="flex items-center justify-between self-stretch w-full">
+                <div className="flex flex-col justify-center flex-1 h-full w-full relative">
+                  <div className="flex items-center justify-between w-full pb-2">
                     <input
                       id="location-input"
                       type="text"
@@ -148,26 +152,26 @@ export const Hero = () => {
                       }}
                       onFocus={() => setIsLocationOpen(true)}
                       onBlur={() => setTimeout(() => setIsLocationOpen(false), 200)}
-                      placeholder="City, state, or country"
-                      className="relative w-full mt-[-1.00px] opacity-90 font-body-normal-regular font-[number:var(--body-normal-regular-font-weight)] text-neutrals-100 text-[length:var(--body-normal-regular-font-size)] tracking-[var(--body-normal-regular-letter-spacing)] leading-[var(--body-normal-regular-line-height)] [font-style:var(--body-normal-regular-font-style)] focus:opacity-100 bg-transparent border-none outline-none"
+                      placeholder="Florence, Italy"
+                      className="w-full font-epilogue text-[16px] text-[#25324B] placeholder:text-[#A8ADB7] bg-transparent border-none outline-none"
                       aria-label="Location"
                       autoComplete="off"
                     />
                     <FiChevronDown 
-                      className="w-4 h-4 text-neutrals-60 cursor-pointer hover:text-[#25324b] transition-colors flex-shrink-0" 
+                      className="w-4 h-4 text-[#25324B] cursor-pointer hover:text-[#4640DE] transition-colors flex-shrink-0" 
                       aria-hidden="true" 
                       onClick={() => setIsLocationOpen((prev) => !prev)}
                     />
                   </div>
-                  <div className="self-stretch w-full h-px bg-neutrals-20" />
+                  <div className="absolute bottom-[4px] sm:bottom-[15px] left-0 right-0 h-[1px] bg-[#D6DDEB]" />
                   
                   {/* Autocomplete Dropdown */}
                   {isLocationOpen && filteredLocations.length > 0 && (
-                    <ul className="absolute top-full left-0 w-full mt-2 bg-white border border-neutrals-20 rounded shadow-shadow z-50 max-h-48 overflow-y-auto list-none p-0 m-0">
+                    <ul className="absolute top-full left-0 w-full mt-4 bg-white border border-[#D6DDEB] rounded shadow-sm z-[100] max-h-48 overflow-y-auto list-none p-0 m-0">
                       {filteredLocations.map((loc, idx) => (
                         <li
                           key={idx}
-                          className="px-4 py-3 hover:bg-lightsgray hover:text-[#4640de] transition-colors cursor-pointer text-neutrals-80 font-body-normal-regular text-[length:var(--body-normal-regular-font-size)] border-b border-neutrals-20 last:border-b-0"
+                          className="px-4 py-3 hover:bg-[#F8F8FD] hover:text-[#4640DE] transition-colors cursor-pointer text-[#515B6F] font-epilogue text-[16px] border-b border-[#D6DDEB] last:border-b-0"
                           onClick={() => {
                             setLocation(loc);
                             setIsLocationOpen(false);
@@ -183,20 +187,20 @@ export const Hero = () => {
 
               <button
                 type="submit"
-                className="cursor-pointer all-[unset] box-border flex w-full sm:w-[209px] items-center justify-center gap-2.5 px-[27px] py-3.5 bg-brandsprimary flex-shrink-0"
+                className="w-full sm:w-[209px] h-[57px] ml-0 sm:ml-4 flex items-center justify-center bg-[#4640DE] hover:bg-opacity-90 transition-colors flex-shrink-0"
                 aria-label="Search for jobs"
               >
-                <span className="text-neutrals-0 text-[length:var(--button-large-font-size)] leading-[var(--button-large-line-height)] font-button-large font-[number:var(--button-large-font-weight)] text-center tracking-[var(--button-large-letter-spacing)] whitespace-nowrap [font-style:var(--button-large-font-style)]">
+                <span className="text-white font-epilogue font-bold text-[16px]">
                   Search my job
                 </span>
               </button>
             </form>
 
-            <p className="m-0 mt-2 opacity-70 [font-family:'Epilogue',Helvetica] font-normal text-colorblack text-sm sm:text-base tracking-[0] leading-[25.6px]">
-              <span className="[font-family:'Epilogue',Helvetica] font-normal text-[#202430]">
+            <p className="m-0 mt-4 opacity-70 font-epilogue text-[#202430] text-sm sm:text-base">
+              <span className="font-normal text-[#202430]">
                 Popular :{" "}
               </span>
-              <span className="[font-family:'Epilogue',Helvetica] font-medium ml-1">
+              <span className="font-medium ml-1">
                 {popularSearches.join(", ")}
               </span>
             </p>
