@@ -58,7 +58,14 @@ export default function LoginPage() {
       // Dispatch storage event for Navbar to pick up
       window.dispatchEvent(new Event("storage"));
 
-      router.push("/dashboard");
+      // Role-based redirection
+      if (data.data.user.role === "EMPLOYER") {
+        router.push("/employer/dashboard");
+      } else if (data.data.user.role === "ADMIN") {
+        router.push("/admin/dashboard");
+      } else {
+        router.push("/dashboard");
+      }
     } catch (err: any) {
       setError(err.message);
     } finally {
