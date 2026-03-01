@@ -36,6 +36,7 @@ export default function ApplicantsPage() {
 
         const res = await fetch(`${API_URL}/applications/employer/me`, {
           headers: { Authorization: `Bearer ${token}` },
+          cache: "no-store"
         });
 
         if (!res.ok) throw new Error("Failed to fetch applications");

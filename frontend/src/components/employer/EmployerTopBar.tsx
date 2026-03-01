@@ -82,8 +82,22 @@ export const EmployerTopBar = ({
             border: "1px solid #D6DDEB",
             borderRadius: "8px",
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-            overflow: "hidden"
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "column"
           }}>
+            <div style={{
+              padding: "12px 16px",
+              borderBottom: "1px solid #D6DDEB",
+              fontFamily: "var(--font-epilogue)",
+              fontSize: "14px",
+              color: "#25324B",
+              fontWeight: 600,
+              background: "#F8F8FD",
+              whiteSpace: "nowrap"
+            }}>
+              {companyName}
+            </div>
             <button
                onClick={() => {
                  localStorage.removeItem("token");

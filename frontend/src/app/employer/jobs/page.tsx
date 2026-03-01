@@ -33,6 +33,7 @@ export default function EmployerJobsPage() {
 
         const res = await fetch(`${API_URL}/jobs/employer/me`, {
           headers: { Authorization: `Bearer ${token}` },
+          cache: "no-store"
         });
 
         if (!res.ok) throw new Error("Failed to fetch jobs");

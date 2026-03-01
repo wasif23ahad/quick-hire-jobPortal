@@ -67,9 +67,11 @@ export default function EmployerDashboardPage() {
         const [jobsRes, appsRes] = await Promise.all([
           fetch(`${API_URL}/jobs/employer/me`, {
             headers: { Authorization: `Bearer ${token}` },
+            cache: "no-store"
           }),
           fetch(`${API_URL}/applications/employer/me`, {
             headers: { Authorization: `Bearer ${token}` },
+            cache: "no-store"
           })
         ]);
 
