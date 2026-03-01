@@ -9,7 +9,14 @@ datasource db {
 
 enum Role {
   USER
+  EMPLOYER
   ADMIN
+}
+
+enum JobStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 model User {
@@ -21,6 +28,7 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
 
   applications Application[]
+  postedJobs   Job[]
 
   @@map("users")
 }
@@ -36,10 +44,13 @@ model Job {
   salary      String?
   companyLogo String?  @map("company_logo")
   tags        String[] @default([])
+  status      JobStatus @default(PENDING)
+  postedById  String?   @map("posted_by_id")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   applications Application[]
+  postedBy     User?    @relation(fields: [postedById], references: [id], onDelete: SetNull)
 
   @@map("jobs")
 }

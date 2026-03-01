@@ -114,7 +114,7 @@ export const Navbar = () => {
                   className="absolute top-full right-0 mt-1 w-[200px] bg-white border border-[#D6DDEB] rounded-lg shadow-lg z-50 overflow-hidden"
                 >
                   <Link
-                    href="/dashboard"
+                    href={user.role === 'EMPLOYER' ? '/employer/dashboard' : user.role === 'ADMIN' ? '/admin/dashboard' : '/dashboard'}
                     onClick={() => setShowDropdown(false)}
                     className="flex items-center gap-2 px-4 py-3 font-epilogue text-sm text-[#25324B] no-underline border-b border-[#D6DDEB] hover:bg-gray-50 transition-colors"
                   >
@@ -193,7 +193,7 @@ export const Navbar = () => {
                   </div>
                   <div className="h-px w-full bg-neutrals-20 my-2" />
                   <Link
-                    href="/dashboard"
+                    href={user.role === 'EMPLOYER' ? '/employer/dashboard' : user.role === 'ADMIN' ? '/admin/dashboard' : '/dashboard'}
                     className="no-underline text-neutrals-80 font-body-normal-medium text-[16px] hover:text-[#4640DE] flex items-center gap-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >

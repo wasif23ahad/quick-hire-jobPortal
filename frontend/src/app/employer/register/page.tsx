@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function AdminLoginPage() {
+export default function EmployerSignUpPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -18,30 +19,28 @@ export default function AdminLoginPage() {
     try {
       const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
       const API_URL = rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl.replace(/\/$/, '')}/api`;
-      const res = await fetch(`${API_URL}/auth/login`, {
+      const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, role: "EMPLOYER" }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || "Login failed");
+        if (data.errors) {
+          throw new Error(data.errors.map((e: any) => e.message).join(", "));
+        }
+        throw new Error(data.message || "Registration failed");
       }
 
-      if (data.data.user.role !== "ADMIN") {
-        throw new Error("Unauthorized: Access restricted to Administrators only.");
-      }
-
-      // Store auth data
+      // Auto-login: store auth data
       localStorage.setItem("token", data.data.token);
       localStorage.setItem("user", JSON.stringify(data.data.user));
 
-      // Dispatch storage event for Navbar to pick up
       window.dispatchEvent(new Event("storage"));
 
-      router.push("/admin/dashboard");
+      router.push("/employer/dashboard");
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -61,7 +60,7 @@ export default function AdminLoginPage() {
               color: "#25324B",
             }}
           >
-            Admin Portal
+            Create Employer Account
           </h1>
           <p
             style={{
@@ -71,7 +70,7 @@ export default function AdminLoginPage() {
               marginTop: "8px",
             }}
           >
-            Sign in to moderate job postings
+            Join QuickHire and find top talent
           </p>
         </div>
 
@@ -112,7 +111,42 @@ export default function AdminLoginPage() {
                   marginBottom: "8px",
                 }}
               >
-                Admin Email
+                Company Name
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                placeholder="TechNova Inc."
+                style={{
+                  width: "100%",
+                  padding: "12px 16px",
+                  border: "1px solid #D6DDEB",
+                  borderRadius: "8px",
+                  fontFamily: "var(--font-epilogue)",
+                  fontSize: "16px",
+                  color: "#25324B",
+                  outline: "none",
+                  boxSizing: "border-box",
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: "20px" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontFamily: "var(--font-clash-display)",
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  color: "#25324B",
+                  marginBottom: "8px",
+                }}
+              >
+                Work Email Address
               </label>
               <input
                 type="email"
@@ -121,7 +155,7 @@ export default function AdminLoginPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
-                placeholder="admin@quickhire.com"
+                placeholder="hr@technova.com"
                 style={{
                   width: "100%",
                   padding: "12px 16px",
@@ -153,11 +187,12 @@ export default function AdminLoginPage() {
                 <input
                   type={showPassword ? "text" : "password"}
                   required
+                  minLength={6}
                   value={formData.password}
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  placeholder="••••••••"
+                  placeholder="Min. 6 characters"
                   style={{
                     width: "100%",
                     padding: "12px 40px 12px 16px",
@@ -221,9 +256,31 @@ export default function AdminLoginPage() {
                 transition: "background 0.2s ease",
               }}
             >
-              {isLoading ? "Authenticating..." : "Admin Login"}
+              {isLoading ? "Creating account..." : "Sign Up"}
             </button>
           </form>
+
+          <p
+            style={{
+              textAlign: "center",
+              marginTop: "24px",
+              fontFamily: "var(--font-epilogue)",
+              fontSize: "14px",
+              color: "#7C8493",
+            }}
+          >
+            Already have an account?{" "}
+            <Link
+              href="/employer/login"
+              style={{
+                color: "#4640DE",
+                fontWeight: 600,
+                textDecoration: "none",
+              }}
+            >
+              Login
+            </Link>
+          </p>
         </div>
       </div>
     </main>

@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function AdminLoginPage() {
+export default function EmployerLoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
@@ -30,10 +31,6 @@ export default function AdminLoginPage() {
         throw new Error(data.message || "Login failed");
       }
 
-      if (data.data.user.role !== "ADMIN") {
-        throw new Error("Unauthorized: Access restricted to Administrators only.");
-      }
-
       // Store auth data
       localStorage.setItem("token", data.data.token);
       localStorage.setItem("user", JSON.stringify(data.data.user));
@@ -41,7 +38,7 @@ export default function AdminLoginPage() {
       // Dispatch storage event for Navbar to pick up
       window.dispatchEvent(new Event("storage"));
 
-      router.push("/admin/dashboard");
+      router.push("/employer/dashboard");
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -61,7 +58,7 @@ export default function AdminLoginPage() {
               color: "#25324B",
             }}
           >
-            Admin Portal
+            Welcome Back
           </h1>
           <p
             style={{
@@ -71,7 +68,7 @@ export default function AdminLoginPage() {
               marginTop: "8px",
             }}
           >
-            Sign in to moderate job postings
+            Log in to your QuickHire Employer account
           </p>
         </div>
 
@@ -112,7 +109,7 @@ export default function AdminLoginPage() {
                   marginBottom: "8px",
                 }}
               >
-                Admin Email
+                Work Email Address
               </label>
               <input
                 type="email"
@@ -121,7 +118,7 @@ export default function AdminLoginPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
-                placeholder="admin@quickhire.com"
+                placeholder="hr@technova.com"
                 style={{
                   width: "100%",
                   padding: "12px 16px",
@@ -221,9 +218,31 @@ export default function AdminLoginPage() {
                 transition: "background 0.2s ease",
               }}
             >
-              {isLoading ? "Authenticating..." : "Admin Login"}
+              {isLoading ? "Logging in..." : "Login"}
             </button>
           </form>
+
+          <p
+            style={{
+              textAlign: "center",
+              marginTop: "24px",
+              fontFamily: "var(--font-epilogue)",
+              fontSize: "14px",
+              color: "#7C8493",
+            }}
+          >
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/employer/register"
+              style={{
+                color: "#4640DE",
+                fontWeight: 600,
+                textDecoration: "none",
+              }}
+            >
+              Sign Up
+            </Link>
+          </p>
         </div>
       </div>
     </main>

@@ -21,7 +21,9 @@ export const getAllJobs = async (
     const locationQuery = getQueryString(location);
     const typeQuery = getQueryString(type);
 
-    const where: any = {};
+    const where: any = {
+      status: "APPROVED"
+    };
 
     if (searchQuery) {
       where.OR = [
@@ -117,7 +119,7 @@ export const getJobById = async (
   }
 };
 
-// POST /api/jobs — Create a new job (Admin)
+// POST /api/jobs — Create a new job (Admin/Employer)
 export const createJob = async (
   req: Request,
   res: Response,
@@ -126,6 +128,8 @@ export const createJob = async (
   try {
     const { title, company, location, category, type, description, salary, companyLogo, tags } =
       req.body;
+      
+    const postedById = (req as any).user?.id;
 
     const job = await prisma.job.create({
       data: {
@@ -138,6 +142,8 @@ export const createJob = async (
         salary: salary || null,
         companyLogo: companyLogo || null,
         tags: tags || [],
+        postedById,
+        status: "PENDING"
       },
     });
 
@@ -176,6 +182,61 @@ export const deleteJob = async (
       success: true,
       message: "Job deleted successfully",
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// GET /api/jobs/admin/all — Get all jobs for admin moderation
+export const getAdminJobs = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const jobs = await prisma.job.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        postedBy: { select: { id: true, name: true, email: true } },
+      },
+    });
+    res.json({ success: true, data: jobs });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// GET /api/jobs/employer/me — Get jobs posted by the employer
+export const getEmployerJobs = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const postedById = (req as any).user?.id;
+    if (!postedById) return res.status(401).json({ success: false, message: "Unauthorized" });
+
+    const jobs = await prisma.job.findMany({
+      where: { postedById },
+      orderBy: { createdAt: "desc" },
+      include: {
+        _count: { select: { applications: true } },
+      },
+    });
+    res.json({ success: true, data: jobs });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// PATCH /api/jobs/:id/status — Admin update job status
+export const updateJobStatus = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = req.params.id as string;
+    const { status } = req.body; // PENDING, APPROVED, REJECTED
+
+    if (!["PENDING", "APPROVED", "REJECTED"].includes(status)) {
+      return res.status(400).json({ success: false, message: "Invalid status" });
+    }
+
+    const job = await prisma.job.update({
+      where: { id },
+      data: { status },
+    });
+
+    res.json({ success: true, message: `Job marked as ${status}`, data: job });
   } catch (error) {
     next(error);
   }

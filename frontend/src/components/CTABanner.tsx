@@ -262,7 +262,7 @@ export const CTABanner = () => {
             Start posting jobs for only $10.
           </p>
           <Link
-            href="/admin/create"
+            href="/employer/register"
             className="inline-flex items-center justify-center w-full sm:w-[202px] h-[57px] bg-white text-[#4640DE] hover:bg-gray-50 transition-colors"
             style={{
               fontFamily: 'var(--font-epilogue)',

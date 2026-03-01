@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "quickhire-secret-key-2024";
 // POST /api/auth/register
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -24,11 +24,17 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create user
+    let assignedRole = "USER";
+    if (role === "EMPLOYER") {
+      assignedRole = "EMPLOYER";
+    }
+
     const user = await prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
+        role: assignedRole as any,
       },
       select: {
         id: true,
