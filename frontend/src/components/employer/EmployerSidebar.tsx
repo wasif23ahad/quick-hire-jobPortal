@@ -34,13 +34,13 @@ export const EmployerSidebar = () => {
   return (
     <aside
       style={{
-        width: "240px",
+        width: "260px",
         height: "100vh",
         background: "#F8F8FD",
         borderRight: "1px solid #D6DDEB",
         display: "flex",
         flexDirection: "column",
-        padding: "24px 0",
+        padding: "32px 0",
         flexShrink: 0,
         position: "sticky",
         top: 0,
@@ -48,13 +48,24 @@ export const EmployerSidebar = () => {
       }}
     >
       {/* Brand */}
-      <div style={{ padding: "0 24px", marginBottom: "32px", display: "flex", alignItems: "center", gap: "10px" }}>
-        <div style={{ width: "32px", height: "32px", background: "#4640DE", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <span style={{ color: "#FFF", fontWeight: 700, fontSize: "16px" }}>Q</span>
+      <div style={{ padding: "0 32px", marginBottom: "40px", display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ width: "36px", height: "36px", background: "#4640DE", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <img src="/dashboard-icon.svg" alt="" style={{ width: "20px", height: "20px" }} onError={(e) => {
+            // Fallback to text if icon missing
+            const target = e.target as HTMLImageElement;
+            target.style.display = 'none';
+            if (target.parentElement) {
+              const span = document.createElement('span');
+              span.innerText = 'Q';
+              span.style.color = '#FFF';
+              span.style.fontWeight = '700';
+              target.parentElement.appendChild(span);
+            }
+          }} />
         </div>
         <span style={{ 
           fontFamily: "var(--font-clash-display)", 
-          fontSize: "20px", 
+          fontSize: "24px", 
           fontWeight: 700, 
           color: "#25324B" 
         }}>
@@ -63,8 +74,8 @@ export const EmployerSidebar = () => {
       </div>
 
       {/* Main Nav */}
-      <nav style={{ flex: 1, padding: "0 12px" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+      <nav style={{ flex: 1, padding: "0" }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           {sidebarItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -74,9 +85,8 @@ export const EmployerSidebar = () => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "12px",
-                  padding: "12px 16px",
-                  borderRadius: "8px",
+                  gap: "16px",
+                  padding: "16px 32px",
                   textDecoration: "none",
                   background: isActive ? "rgba(70,64,222,0.1)" : "transparent",
                   color: isActive ? "#4640DE" : "#7C8493",
@@ -84,20 +94,21 @@ export const EmployerSidebar = () => {
                   position: "relative",
                   fontFamily: "var(--font-epilogue)",
                   fontWeight: isActive ? 600 : 500,
-                  fontSize: "14px",
+                  fontSize: "16px",
+                  borderLeft: isActive ? "4px solid #4640DE" : "4px solid transparent",
                 }}
               >
-                <item.icon size={20} />
+                <item.icon size={24} color={isActive ? "#4640DE" : "#7C8493"} />
                 <span>{item.label}</span>
                 {item.badge && (
                   <span style={{
                     marginLeft: "auto",
                     background: "#4640DE",
                     color: "#FFF",
-                    fontSize: "10px",
+                    fontSize: "12px",
                     fontWeight: 700,
-                    width: "20px",
-                    height: "20px",
+                    width: "24px",
+                    height: "24px",
                     borderRadius: "50%",
                     display: "flex",
                     alignItems: "center",
@@ -106,18 +117,6 @@ export const EmployerSidebar = () => {
                     {item.badge}
                   </span>
                 )}
-                {isActive && (
-                  <div style={{ 
-                    position: "absolute", 
-                    right: "-12px", 
-                    top: "50%", 
-                    transform: "translateY(-50%)",
-                    width: "4px",
-                    height: "24px",
-                    background: "#4640DE",
-                    borderRadius: "4px 0 0 4px"
-                  }} />
-                )}
               </Link>
             );
           })}
@@ -125,18 +124,18 @@ export const EmployerSidebar = () => {
       </nav>
 
       {/* Settings Footer */}
-      <div style={{ padding: "0 12px", borderTop: "1px solid #D6DDEB", paddingTop: "24px" }}>
+      <div style={{ borderTop: "1px solid #D6DDEB", paddingTop: "32px", paddingBottom: "32px" }}>
         <p style={{ 
-          padding: "0 16px", 
+          padding: "0 32px", 
           fontSize: "12px", 
           fontWeight: 600, 
           color: "#7C8493", 
-          marginBottom: "12px",
-          letterSpacing: "0.5px"
+          marginBottom: "16px",
+          letterSpacing: "0.05em"
         }}>
           SETTINGS
         </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           {settingsItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -146,19 +145,19 @@ export const EmployerSidebar = () => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "12px",
-                  padding: "12px 16px",
-                  borderRadius: "8px",
+                  gap: "16px",
+                  padding: "16px 32px",
                   textDecoration: "none",
                   background: isActive ? "rgba(70,64,222,0.1)" : "transparent",
                   color: isActive ? "#4640DE" : "#7C8493",
                   transition: "all 0.2s ease",
                   fontFamily: "var(--font-epilogue)",
                   fontWeight: isActive ? 600 : 500,
-                  fontSize: "14px",
+                  fontSize: "16px",
+                  borderLeft: isActive ? "4px solid #4640DE" : "4px solid transparent",
                 }}
               >
-                <item.icon size={20} />
+                <item.icon size={24} />
                 <span>{item.label}</span>
               </Link>
             );

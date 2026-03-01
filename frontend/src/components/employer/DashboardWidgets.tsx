@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { FiChevronRight, FiEye, FiDownload } from "react-icons/fi";
+import { FiChevronRight, FiEye, FiCheckCircle, FiMoreHorizontal, FiCalendar, FiMail } from "react-icons/fi";
 
 /* ─── Stat Summary Card ─── */
 interface StatSummaryCardProps {
@@ -9,9 +9,10 @@ interface StatSummaryCardProps {
   label: string;
   color: string;
   href?: string;
+  icon?: React.ReactNode;
 }
 
-export const StatSummaryCard = ({ value, label, color, href = "#" }: StatSummaryCardProps) => (
+export const StatSummaryCard = ({ value, label, color, href = "#", icon }: StatSummaryCardProps) => (
   <div
     style={{
       flex: 1,
@@ -21,14 +22,14 @@ export const StatSummaryCard = ({ value, label, color, href = "#" }: StatSummary
       position: "relative",
       display: "flex",
       flexDirection: "column",
-      justifyContent: "space-between",
-      minHeight: "130px",
+      justifyContent: "center",
+      minHeight: "150px",
       fontFamily: "var(--font-epilogue)",
     }}
   >
-    <div style={{ fontSize: "32px", fontWeight: 700 }}>{value}</div>
-    <div style={{ fontSize: "16px", opacity: 0.8, fontWeight: 500 }}>{label}</div>
-    <div style={{ position: "absolute", right: "24px", top: "50%", transform: "translateY(-50%)", opacity: 0.6 }}>
+    <div style={{ fontSize: "48px", fontWeight: 700, marginBottom: "8px" }}>{value}</div>
+    <div style={{ display: "flex", alignItems: "center", gap: "12px", width: "100%" }}>
+      <div style={{ fontSize: "18px", opacity: 0.9, fontWeight: 500, flex: 1 }}>{label}</div>
       <FiChevronRight size={24} />
     </div>
   </div>
@@ -52,107 +53,124 @@ export const JobStatsChart = ({ onFilterChange, activeFilter = "Week" }: JobStat
   ];
 
   return (
-    <div style={{ background: "#FFFFFF", border: "1px solid #D6DDEB", padding: "24px", flex: 2 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
-        <h3 style={{ margin: 0, fontFamily: "var(--font-clash-display)", fontSize: "18px", color: "#25324B" }}>Job statistics</h3>
-        <div style={{ display: "flex", gap: "8px", background: "#F8F8FD", padding: "4px", borderRadius: "6px" }}>
-          {["Week", "Month", "Year"].map((t) => (
-             <button 
-               key={t} 
-               onClick={() => onFilterChange?.(t)}
-               style={{ 
-                 padding: "6px 12px", 
-                 border: "none", 
-                 background: activeFilter === t ? "#FFFFFF" : "transparent",
-                 color: activeFilter === t ? "#4640DE" : "#7C8493",
-                 fontSize: "12px",
-                 fontWeight: 600,
-                 borderRadius: "4px",
-                 cursor: "pointer",
-                 boxShadow: activeFilter === t ? "0 2px 4px rgba(0,0,0,0.05)" : "none"
-               }}
-             >
-               {t}
-             </button>
+    <div style={{ flex: 2, display: "flex", flexDirection: "column", gap: "24px" }}>
+      <div style={{ background: "#FFFFFF", border: "1px solid #D6DDEB", padding: "24px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
+          <div>
+            <h3 style={{ margin: 0, fontFamily: "var(--font-clash-display)", fontSize: "20px", fontWeight: 600, color: "#25324B" }}>Job statistics</h3>
+            <p style={{ fontSize: "14px", color: "#7C8493", margin: "4px 0 0 0" }}>Showing Jobstatistic Jul 19-25</p>
+          </div>
+          <div style={{ display: "flex", gap: "2px", background: "#F8F8FD", padding: "4px", borderRadius: "8px" }}>
+            {["Week", "Month", "Year"].map((t) => (
+               <button 
+                 key={t} 
+                 onClick={() => onFilterChange?.(t)}
+                 style={{ 
+                   padding: "8px 16px", 
+                   border: "none", 
+                   background: activeFilter === t ? "#FFFFFF" : "transparent",
+                   color: activeFilter === t ? "#4640DE" : "#7C8493",
+                   fontSize: "13px",
+                   fontWeight: 600,
+                   borderRadius: "6px",
+                   cursor: "pointer",
+                   boxShadow: activeFilter === t ? "0 2px 8px rgba(0,0,0,0.06)" : "none"
+                 }}
+               >
+                 {t}
+               </button>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ display: "flex", gap: "24px", marginBottom: "32px", borderBottom: "1px solid #D6DDEB" }}>
+          {["Overview", "Jobs View", "Jobs Applied"].map((tab, idx) => (
+            <div key={tab} style={{ 
+              fontSize: "14px", 
+              color: idx === 0 ? "#4640DE" : "#7C8493", 
+              fontWeight: 600, 
+              paddingBottom: "12px",
+              borderBottom: idx === 0 ? "2px solid #4640DE" : "2px solid transparent",
+              cursor: "pointer"
+            }}>
+              {tab}
+            </div>
           ))}
         </div>
-      </div>
 
-      <div style={{ display: "flex", gap: "16px", marginBottom: "24px" }}>
-        <div style={{ fontSize: "14px", color: "#4640DE", fontWeight: 600, borderBottom: "2px solid #4640DE", paddingBottom: "4px" }}>Overview</div>
-        <div style={{ fontSize: "14px", color: "#7C8493", paddingBottom: "4px" }}>Jobs View</div>
-        <div style={{ fontSize: "14px", color: "#7C8493", paddingBottom: "4px" }}>Jobs Applied</div>
-      </div>
-
-      {/* Bar Visualization */}
-      <div style={{ display: "flex", alignItems: "flex-end", gap: "12px", height: "200px", marginTop: "40px" }}>
-        {data.map((item) => {
-          // Simulate some variations for filter change demonstration
-          const factor = activeFilter === "Month" ? 1.2 : activeFilter === "Year" ? 0.8 : 1;
-          const vHeight = Math.min(100, item.view * factor);
-          const aHeight = Math.min(100, item.applied * factor);
-          
-          return (
-            <div key={item.day} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
-              <div style={{ width: "100%", display: "flex", gap: "4px", alignItems: "flex-end", justifyContent: "center", height: "160px" }}>
-                <div style={{ width: "12px", height: `${vHeight}%`, background: "#FFB836", borderRadius: "2px", transition: "height 0.3s ease" }} title={`View: ${item.view}`} />
-                <div style={{ width: "12px", height: `${aHeight}%`, background: "#4640DE", borderRadius: "2px", transition: "height 0.3s ease" }} title={`Applied: ${item.applied}`} />
-              </div>
-              <span style={{ fontSize: "12px", color: "#7C8493", fontFamily: "var(--font-epilogue)" }}>{item.day}</span>
+        <div style={{ display: "flex", gap: "32px" }}>
+          {/* Chart Area */}
+          <div style={{ flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "flex-end", gap: "16px", height: "240px", paddingBottom: "32px" }}>
+              {data.map((item) => {
+                const total = item.view + item.applied;
+                const viewH = (item.view / 180) * 100;
+                const appliedH = (item.applied / 180) * 100;
+                return (
+                  <div key={item.day} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+                    <div style={{ width: "100%", position: "relative", height: "180px", display: "flex", flexDirection: "column-reverse" }}>
+                      <div style={{ width: "100%", height: `${appliedH}%`, background: "#4640DE", transition: "height 0.3s ease" }} />
+                      <div style={{ width: "100%", height: `${viewH}%`, background: "#FFB836", transition: "height 0.3s ease" }} />
+                    </div>
+                    <span style={{ fontSize: "12px", color: "#7C8493", fontFamily: "var(--font-epilogue)" }}>{item.day}</span>
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
-      </div>
+            {/* Legend */}
+            <div style={{ display: "flex", gap: "24px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <div style={{ width: "12px", height: "12px", background: "#FFB836" }} />
+                <span style={{ fontSize: "14px", color: "#7C8493" }}>Job View</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <div style={{ width: "12px", height: "12px", background: "#4640DE" }} />
+                <span style={{ fontSize: "14px", color: "#7C8493" }}>Job Applied</span>
+              </div>
+            </div>
+          </div>
 
-      {/* Legend */}
-      <div style={{ display: "flex", gap: "24px", marginTop: "24px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <div style={{ width: "12px", height: "12px", background: "#FFB836", borderRadius: "2px" }} />
-          <span style={{ fontSize: "12px", color: "#7C8493" }}>Job View</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <div style={{ width: "12px", height: "12px", background: "#4640DE", borderRadius: "2px" }} />
-          <span style={{ fontSize: "12px", color: "#7C8493" }}>Job Applied</span>
+          {/* Side Metrics */}
+          <div style={{ width: "220px", display: "flex", flexDirection: "column", gap: "24px" }}>
+            <div style={{ background: "#FFFFFF", border: "1px solid #D6DDEB", padding: "20px", display: "flex", justifyContent: "space-between" }}>
+              <div>
+                <div style={{ fontSize: "14px", color: "#7C8493", marginBottom: "8px" }}>Job Views</div>
+                <div style={{ fontSize: "24px", fontWeight: 700, color: "#25324B", fontFamily: "var(--font-clash-display)" }}>2,342</div>
+                <div style={{ fontSize: "12px", color: "#4640DE", marginTop: "4px", display: "flex", alignItems: "center", gap: "4px" }}>
+                  This Week <span style={{ fontWeight: 700 }}>6.4%</span> <FiChevronRight style={{ transform: "rotate(-90deg)" }} />
+                </div>
+              </div>
+              <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "rgba(255,184,54,0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFB836" }}>
+                <FiEye size={18} />
+              </div>
+            </div>
+            
+            <div style={{ background: "#FFFFFF", border: "1px solid #D6DDEB", padding: "20px", display: "flex", justifyContent: "space-between" }}>
+              <div>
+                <div style={{ fontSize: "14px", color: "#7C8493", marginBottom: "8px" }}>Job Applied</div>
+                <div style={{ fontSize: "24px", fontWeight: 700, color: "#25324B", fontFamily: "var(--font-clash-display)" }}>654</div>
+                <div style={{ fontSize: "12px", color: "#FF6550", marginTop: "4px", display: "flex", alignItems: "center", gap: "4px" }}>
+                  This Week <span style={{ fontWeight: 700 }}>0.5%</span> <FiChevronRight style={{ transform: "rotate(90deg)" }} />
+                </div>
+              </div>
+              <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "rgba(70,64,222,0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#4640DE" }}>
+                <FiCheckCircle size={18} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-/* ─── Tiny Metric Widget ─── */
-interface MetricWidgetProps {
-  label: string;
-  value: string;
-  trend?: string;
-  trendUp?: boolean;
-  icon: React.ReactNode;
-  iconBg: string;
-}
-
-export const MetricWidget = ({ label, value, trend, trendUp, icon, iconBg }: MetricWidgetProps) => (
-  <div style={{ background: "#FFFFFF", border: "1px solid #D6DDEB", padding: "16px", flex: 1, display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-    <div>
-      <div style={{ fontSize: "12px", color: "#7C8493", marginBottom: "4px" }}>{label}</div>
-      <div style={{ fontSize: "24px", fontWeight: 700, color: "#25324B", fontFamily: "var(--font-clash-display)" }}>{value}</div>
-      {trend && (
-        <div style={{ fontSize: "12px", color: trendUp ? "#56CDAD" : "#FF6550", marginTop: "4px" }}>
-           This Week <span style={{ fontWeight: 600 }}>{trend}</span>
-        </div>
-      )}
-    </div>
-    <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: iconBg, display: "flex", alignItems: "center", justifyContent: "center", color: "#FFF" }}>
-      {icon}
-    </div>
-  </div>
-);
-
 /* ─── Jobs Open Widget ─── */
 export const JobOpenWidget = ({ count }: { count: number }) => (
-  <div style={{ background: "#FFFFFF", border: "1px solid #D6DDEB", padding: "24px", display: "flex", flexDirection: "column", gap: "12px" }}>
-    <h3 style={{ margin: 0, fontFamily: "var(--font-clash-display)", fontSize: "18px", color: "#25324B" }}>Job Open</h3>
+  <div style={{ background: "#FFFFFF", border: "1px solid #D6DDEB", padding: "24px", display: "flex", flexDirection: "column", gap: "16px" }}>
+    <h3 style={{ margin: 0, fontFamily: "var(--font-clash-display)", fontSize: "18px", fontWeight: 600, color: "#25324B" }}>Job Open</h3>
     <div style={{ display: "flex", alignItems: "flex-end", gap: "12px" }}>
-      <span style={{ fontSize: "48px", fontWeight: 700, color: "#25324B", lineHeight: 1 }}>{count}</span>
-      <span style={{ fontSize: "16px", color: "#7C8493", marginBottom: "8px" }}>Jobs Opened</span>
+      <span style={{ fontSize: "56px", fontWeight: 700, color: "#25324B", lineHeight: 1, fontFamily: "var(--font-clash-display)" }}>{count}</span>
+      <span style={{ fontSize: "18px", color: "#7C8493", marginBottom: "10px", fontWeight: 500 }}>Jobs Opened</span>
     </div>
   </div>
 );
@@ -164,37 +182,39 @@ interface ApplicantsSummaryWidgetProps {
 
 export const ApplicantsSummaryWidget = ({ total }: ApplicantsSummaryWidgetProps) => {
   const segments = [
-    { label: "Full Time", count: Math.round(total * 0.4), color: "#4640DE" },
-    { label: "Internship", count: Math.round(total * 0.2), color: "#56CDAD" },
-    { label: "Part-Time", count: Math.round(total * 0.15), color: "#FFB836" },
-    { label: "Remote", count: Math.round(total * 0.15), color: "#26A4FF" },
-    { label: "Contract", count: total - (Math.round(total * 0.4) + Math.round(total * 0.2) + Math.round(total * 0.15) + Math.round(total * 0.15)), color: "#FF6550" },
+    { label: "Full Time", count: 45, color: "#4640DE" },
+    { label: "Internship", count: 32, color: "#FFB836" },
+    { label: "Part-Time", count: 24, color: "#56CDAD" },
+    { label: "Contract", count: 30, color: "#FF6550" },
+    { label: "Remote", count: 22, color: "#26A4FF" },
   ];
+
+  const totalCalculated = segments.reduce((sum, seg) => sum + seg.count, 0);
 
   return (
     <div style={{ background: "#FFFFFF", border: "1px solid #D6DDEB", padding: "24px" }}>
-      <h3 style={{ margin: 0, fontFamily: "var(--font-clash-display)", fontSize: "18px", color: "#25324B", marginBottom: "20px" }}>Applicants Summary</h3>
+      <h3 style={{ margin: 0, fontFamily: "var(--font-clash-display)", fontSize: "18px", fontWeight: 600, color: "#25324B", marginBottom: "24px" }}>Applicants Summary</h3>
       
       <div style={{ display: "flex", alignItems: "flex-end", gap: "12px", marginBottom: "24px" }}>
-        <span style={{ fontSize: "48px", fontWeight: 700, color: "#25324B", lineHeight: 1 }}>{total}</span>
-        <span style={{ fontSize: "16px", color: "#7C8493", marginBottom: "8px" }}>Applicants</span>
+        <span style={{ fontSize: "56px", fontWeight: 700, color: "#25324B", lineHeight: 1, fontFamily: "var(--font-clash-display)" }}>{totalCalculated}</span>
+        <span style={{ fontSize: "18px", color: "#7C8493", marginBottom: "10px", fontWeight: 500 }}>Applicants</span>
       </div>
 
-      {/* Progress Bar Header */}
-      <div style={{ height: "8px", width: "100%", display: "flex", borderRadius: "4px", overflow: "hidden", marginBottom: "24px" }}>
+      <div style={{ height: "10px", width: "100%", display: "flex", borderRadius: "100px", overflow: "hidden", marginBottom: "32px" }}>
         {segments.map((seg) => (
-          seg.count > 0 && <div key={seg.label} style={{ height: "100%", width: `${(seg.count / (total || 1)) * 100}%`, background: seg.color }} />
+          <div key={seg.label} style={{ height: "100%", width: `${(seg.count / totalCalculated) * 100}%`, background: seg.color }} />
         ))}
       </div>
 
-      {/* Legend List */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
-        {segments.map((seg) => (
-          <div key={seg.label} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <div style={{ width: "10px", height: "10px", borderRadius: "1px", background: seg.color }} />
-            <span style={{ fontSize: "12px", color: "#7C8493" }}>{seg.label} : <span style={{ fontWeight: 600, color: "#25324B" }}>{seg.count}</span></span>
-          </div>
-        ))}
+      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+          {segments.map((seg) => (
+            <div key={seg.label} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <div style={{ width: "12px", height: "12px", borderRadius: "2px", background: seg.color }} />
+              <span style={{ fontSize: "14px", color: "#25324B", fontWeight: 500 }}>{seg.label} : <span style={{ color: "#7C8493" }}>{seg.count}</span></span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

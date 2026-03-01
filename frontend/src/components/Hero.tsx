@@ -114,18 +114,32 @@ export const Hero = () => {
           <div className="w-full">
             <form
               onSubmit={handleSearch}
-              className="flex flex-col sm:flex-row w-full max-w-[852px] min-h-[89px] items-stretch sm:items-center sm:justify-center bg-[#FFFFFF] z-30 relative shrink-0 gap-4 sm:gap-0"
+              className="flex flex-col lg:flex-row items-center bg-[#FFFFFF] z-30 relative shrink-0 mx-auto"
               style={{
-                width: '100%',
-                maxWidth: '852px',
+                width: '343px',
+                minHeight: '183px',
+                padding: '16px',
                 transform: 'rotate(0deg)',
                 opacity: 1,
-                padding: '16px',
                 boxShadow: '0px 79px 128px rgba(192, 192, 192, 0.09), 0px 28.8363px 46.7221px rgba(192, 192, 192, 0.0598508), 0px 13.9995px 22.6827px rgba(192, 192, 192, 0.0475723), 0px 6.86281px 11.1195px rgba(192, 192, 192, 0.0380675), 0px 2.71357px 4.39666px rgba(192, 192, 192, 0.0270615)',
               }}
               role="search"
               aria-label="Job search form"
             >
+              {/* Responsive style override */}
+              <style jsx>{`
+                form {
+                  width: 343px !important;
+                }
+                @media (min-width: 1024px) {
+                  form {
+                    width: 852px !important;
+                    height: 89px !important;
+                    min-height: 89px !important;
+                  }
+                }
+              `}</style>
+
               <div className="flex items-center gap-3 sm:gap-4 flex-1 w-full sm:h-full px-4 py-4 sm:px-2 sm:py-0">
                 <FiSearch className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] shrink-0" aria-hidden="true" />
                 <div className="flex flex-col justify-end flex-1 w-full relative h-[38px]">
@@ -146,7 +160,7 @@ export const Hero = () => {
               </div>
 
               {/* Vertical Divider line between search segments (desktop only) */}
-              <div className="hidden sm:block w-px h-[57px] bg-[#D6DDEB] shrink-0" />
+              <div className="hidden lg:block w-px h-[57px] bg-[#D6DDEB] shrink-0" />
 
               <div className="flex items-center gap-3 sm:gap-4 flex-1 w-full sm:h-full relative px-4 py-4 sm:px-2 sm:py-0">
                 <FiMapPin
@@ -200,8 +214,8 @@ export const Hero = () => {
 
               <button
                 type="submit"
-                className="w-full sm:w-[209px] h-[57px] flex items-center justify-center bg-[#4640DE] hover:bg-opacity-90 transition-colors shrink-0"
-                aria-label="Search for jobs"
+                className="w-full lg:w-[209px] h-full lg:h-[57px] mt-4 lg:mt-0 flex items-center justify-center bg-[#4640DE] hover:bg-opacity-90 transition-colors shrink-0"
+                aria-label="Search my job"
               >
                 <span className="text-white font-epilogue font-bold text-[16px]">
                   Search my job

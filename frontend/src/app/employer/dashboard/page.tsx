@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FiBriefcase, FiMapPin, FiCalendar, FiLogOut, FiUser, FiPlusCircle, FiClock, FiCheckCircle, FiXCircle, FiEye, FiDownload } from "react-icons/fi";
+import { FiBriefcase, FiMapPin, FiCalendar, FiLogOut, FiUser, FiPlusCircle, FiClock, FiCheckCircle, FiXCircle, FiEye, FiDownload, FiMoreHorizontal } from "react-icons/fi";
 import { EmployerSidebar } from "@/components/employer/EmployerSidebar";
 import { EmployerTopBar } from "@/components/employer/EmployerTopBar";
-import { StatSummaryCard, JobStatsChart, MetricWidget, JobOpenWidget, ApplicantsSummaryWidget } from "@/components/employer/DashboardWidgets";
+import { StatSummaryCard, JobStatsChart, JobOpenWidget, ApplicantsSummaryWidget } from "@/components/employer/DashboardWidgets";
 
 
 interface Job {
@@ -188,68 +188,92 @@ export default function EmployerDashboardPage() {
               </div>
             </div>
 
-            {/* Top Summaries */}
+            {/* Top Summaries: 3 Cards */}
             <div style={{ display: "flex", gap: "24px", marginBottom: "32px" }}>
-              <StatSummaryCard value={applications.length} label="New candidates to review" color="#4640DE" />
-              <StatSummaryCard value="3" label="Schedule for today" color="#56CDAD" />
-              <StatSummaryCard value="24" label="Messages received" color="#26A4FF" />
+              <StatSummaryCard 
+                value={applications.length} 
+                label="New candidates to review" 
+                color="#4640DE" 
+              />
+              <StatSummaryCard 
+                value="3" 
+                label="Schedule for today" 
+                color="#56CDAD" 
+              />
+              <StatSummaryCard 
+                value="24" 
+                label="Messages received" 
+                color="#26A4FF" 
+              />
             </div>
 
-            {/* Mid Section: Chart and Metric Column */}
-            <div style={{ display: "flex", gap: "24px", marginBottom: "24px" }}>
+            {/* main Grid: Statistics Chart + Side Widgets */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "24px", marginBottom: "40px" }}>
+              {/* Left Column: Job Statistics (Large) */}
               <JobStatsChart activeFilter={chartFilter} onFilterChange={setChartFilter} />
               
-              <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "24px" }}>
-                <MetricWidget 
-                  label="Job Views" 
-                  value="2,342" 
-                  trend="6.4% ↑" 
-                  trendUp={true}
-                  icon={<FiEye size={18} />}
-                  iconBg="#4640DE"
-                />
-                <MetricWidget 
-                  label="Job Applied" 
-                  value={applications.length > 0 ? (applications.length * 8).toLocaleString() : "654"} 
-                  trend="0.5% ↓" 
-                  trendUp={false}
-                  icon={<FiDownload size={18} />}
-                  iconBg="#FFB836"
-                />
+              {/* Right Column: Mini Widgets */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                <JobOpenWidget count={jobs.filter(j => j.status === 'APPROVED').length} />
+                <ApplicantsSummaryWidget total={applications.length} />
               </div>
             </div>
 
-            {/* Bottom Section: Side Widgets and Listings */}
-            <div style={{ display: "flex", gap: "24px" }}>
-               <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "24px" }}>
-                  <JobOpenWidget count={jobs.filter(j => j.status === 'APPROVED').length} />
-                  <ApplicantsSummaryWidget total={applications.length} />
-               </div>
+            {/* Bottom: Recent Job Postings */}
+            <div style={{ background: "#FFFFFF", border: "1px solid #D6DDEB", padding: "32px", marginBottom: "40px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
+                  <h3 style={{ margin: 0, fontFamily: "var(--font-clash-display)", fontSize: "20px", fontWeight: 600, color: "#25324B" }}>Recent Job Postings</h3>
+                  <Link href="/employer/jobs" style={{ fontSize: "14px", color: "#4640DE", textDecoration: "none", fontWeight: 600 }}>View All</Link>
+                </div>
 
-               {/* Real Job Listings from Backend (Simplified for this view) */}
-               <div style={{ flex: 2 }}>
-                  <div style={{ background: "#FFFFFF", border: "1px solid #D6DDEB", padding: "24px" }}>
-                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
-                        <h3 style={{ margin: 0, fontFamily: "var(--font-clash-display)", fontSize: "18px", color: "#25324B" }}>Recent Job Postings</h3>
-                        <Link href="/employer/jobs" style={{ fontSize: "14px", color: "#4640DE", textDecoration: "none", fontWeight: 600 }}>View All</Link>
-                     </div>
-
-                     <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                        {jobs.slice(0, 4).map(job => (
-                          <div key={job.id} style={{ padding: "12px", border: "1px solid #F8F8FD", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <div>
-                               <div style={{ fontSize: "14px", fontWeight: 600, color: "#25324B" }}>{job.title}</div>
-                               <div style={{ fontSize: "12px", color: "#7C8493" }}>{job.type} • {job.location}</div>
-                            </div>
-                            {getStatusBadge(job.status)}
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  {jobs.length === 0 ? (
+                    <p style={{ textAlign: "center", color: "#7C8493", padding: "20px", fontFamily: "var(--font-epilogue)" }}>No jobs posted yet.</p>
+                  ) : (
+                    jobs.slice(0, 5).map(job => (
+                      <div key={job.id} style={{ 
+                        padding: "20px 24px", 
+                        border: "1px solid #F8F8FD", 
+                        display: "flex", 
+                        justifyContent: "space-between", 
+                        alignItems: "center",
+                        fontFamily: "var(--font-epilogue)"
+                      }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                          <div style={{ 
+                            width: "48px", 
+                            height: "48px", 
+                            background: "#F8F8FD", 
+                            border: "1px solid #D6DDEB",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            borderRadius: "8px"
+                          }}>
+                             <FiBriefcase size={20} color="#4640DE" />
                           </div>
-                        ))}
-                        {jobs.length === 0 && (
-                          <p style={{ textAlign: "center", color: "#7C8493", padding: "20px" }}>No jobs posted yet.</p>
-                        )}
-                     </div>
-                  </div>
-               </div>
+                          <div>
+                            <div style={{ fontSize: "16px", fontWeight: 600, color: "#25324B" }}>{job.title}</div>
+                            <div style={{ fontSize: "14px", color: "#7C8493", marginTop: "4px" }}>{job.type} • {job.location}</div>
+                          </div>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                           <div style={{ 
+                             fontSize: "12px", 
+                             padding: "6px 16px", 
+                             borderRadius: "100px", 
+                             fontWeight: 600,
+                             background: job.status === "APPROVED" ? "rgba(86,205,173,0.1)" : "rgba(255,184,54,0.1)",
+                             color: job.status === "APPROVED" ? "#56CDAD" : "#FFB836"
+                           }}>
+                              {job.status}
+                           </div>
+                           <FiMoreHorizontal size={24} color="#7C8493" style={{ cursor: "pointer" }} />
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
             </div>
           </div>
         </main>
