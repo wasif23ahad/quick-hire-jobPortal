@@ -195,10 +195,8 @@ Application (id, job_id, user_id, name, email, resume_link, cover_note, created_
 
 **Mohammad Wasif Ahad**
 
-- **GitHub:** [https://github.com/Mohammadwasifahad]
-- **LinkedIn:** [https://www.linkedin.com/in/wasifahad/]
-
-
+- **GitHub:** [wasif23ahad](https://github.com/wasif23ahad)
+- **LinkedIn:** [Mohammad Wasif Ahad](https://www.linkedin.com/in/wasifahad/)
 
 ---
 
