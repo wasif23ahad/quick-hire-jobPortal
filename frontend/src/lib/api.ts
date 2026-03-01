@@ -18,9 +18,17 @@ export interface Job {
   };
 }
 
+export interface PaginationInfo {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
 export interface JobsResponse {
   success: boolean;
   data: Job[];
+  pagination: PaginationInfo;
   message: string;
 }
 
@@ -28,7 +36,9 @@ export const fetchJobs = async (params?: {
   search?: string;
   category?: string;
   location?: string;
-}): Promise<Job[]> => {
+  page?: number;
+  limit?: number;
+}): Promise<{ jobs: Job[]; pagination: PaginationInfo }> => {
   try {
     const url = new URL(`${API_URL}/jobs`);
     
@@ -36,20 +46,21 @@ export const fetchJobs = async (params?: {
       if (params.search) url.searchParams.append("search", params.search);
       if (params.category) url.searchParams.append("category", params.category);
       if (params.location) url.searchParams.append("location", params.location);
+      if (params.page) url.searchParams.append("page", String(params.page));
+      if (params.limit) url.searchParams.append("limit", String(params.limit));
     }
 
     const res = await fetch(url.toString(), {
-      // Revalidate every 60 seconds (ISR) or force dynamic based on requirements
       next: { revalidate: 60 } 
     });
     
     if (!res.ok) throw new Error("Failed to fetch jobs");
     
     const data: JobsResponse = await res.json();
-    return data.data;
+    return { jobs: data.data, pagination: data.pagination };
   } catch (error) {
     console.error("Error fetching jobs:", error);
-    return [];
+    return { jobs: [], pagination: { page: 1, limit: 12, total: 0, totalPages: 0 } };
   }
 };
 

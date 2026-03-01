@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import prisma from "../config/database";
 
-// GET /api/jobs — List all jobs (with search, category, location filters)
+// GET /api/jobs — List all jobs (with search, category, location, type filters + pagination)
 export const getAllJobs = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { search, category, location, type } = req.query;
+    const { search, category, location, type, page, limit } = req.query;
 
     const where: any = {};
 
@@ -32,20 +32,38 @@ export const getAllJobs = async (
       where.type = { equals: type as string, mode: "insensitive" };
     }
 
-    const jobs = await prisma.job.findMany({
-      where,
-      orderBy: { createdAt: "desc" },
-      include: {
-        _count: {
-          select: { applications: true },
+    // Pagination
+    const pageNum = Math.max(1, parseInt(page as string) || 1);
+    const pageSize = Math.min(100, Math.max(1, parseInt(limit as string) || 12));
+    const skip = (pageNum - 1) * pageSize;
+
+    const [jobs, totalCount] = await Promise.all([
+      prisma.job.findMany({
+        where,
+        orderBy: { createdAt: "desc" },
+        include: {
+          _count: {
+            select: { applications: true },
+          },
         },
-      },
-    });
+        skip,
+        take: pageSize,
+      }),
+      prisma.job.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(totalCount / pageSize);
 
     res.json({
       success: true,
       data: jobs,
-      message: `Found ${jobs.length} jobs`,
+      pagination: {
+        page: pageNum,
+        limit: pageSize,
+        total: totalCount,
+        totalPages,
+      },
+      message: `Found ${totalCount} jobs (showing page ${pageNum} of ${totalPages})`,
     });
   } catch (error) {
     next(error);

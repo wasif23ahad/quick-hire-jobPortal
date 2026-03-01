@@ -1,25 +1,24 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
 
 const companyBrandColors: Record<string, string> = {
-  Nomad: "#0075EB",
-  Netlify: "#00C7B7",
-  Dropbox: "#0062FF",
-  Maze: "#6C5CE7",
-  Terraform: "#7B42BC",
-  Udacity: "#02B3E4",
-  Packer: "#02A8EF",
-  Webflow: "#4353FF",
-  Revolut: "#0075EB",
-  Pitch: "#6C5CE7",
-  Blinkist: "#2ECC71",
-  ClassPass: "#FF6347",
-  Canva: "#00C4CC",
-  GoDaddy: "#1BDBDB",
-  Twitter: "#1DA1F2",
-  Netflix: "#E50914",
-  Nike: "#111111",
+  Nomad: "#0075EB", Netlify: "#00C7B7", Dropbox: "#0062FF", Maze: "#6C5CE7",
+  Terraform: "#7B42BC", Udacity: "#02B3E4", Packer: "#02A8EF", Webflow: "#4353FF",
+  Revolut: "#0075EB", Pitch: "#6C5CE7", Blinkist: "#2ECC71", ClassPass: "#FF6347",
+  Canva: "#00C4CC", GoDaddy: "#1BDBDB", Twitter: "#1DA1F2", Netflix: "#E50914",
+  Nike: "#111111", Google: "#4285F4", Microsoft: "#00A4EF", Apple: "#000000",
+  Amazon: "#FF9900", Meta: "#0668E1", Spotify: "#1DB954", Stripe: "#635BFF",
+  Airbnb: "#FF385C", Uber: "#000000", Slack: "#4A154B", Shopify: "#96BF48",
+  Adobe: "#FF0000", Salesforce: "#00A1E0", Zoom: "#2D8CFF", LinkedIn: "#0077B5",
+  GitHub: "#181717", Figma: "#F24E1E", Notion: "#000000", Vercel: "#000000",
 };
+
+function getCompanyLogoUrl(company: string): string {
+  const bgColor = (companyBrandColors[company] || "#4640DE").replace("#", "");
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(company)}&background=${bgColor}&color=fff&size=128&font-size=0.4&bold=true&format=svg`;
+}
 
 interface JobCardProps {
   id?: string;
@@ -34,25 +33,35 @@ interface JobCardProps {
 }
 
 export const JobCard = ({ id, logo, companyLogo, title, company, location, description, tags }: JobCardProps) => {
+  const [hovered, setHovered] = useState(false);
+  const logoSrc = logo || companyLogo || getCompanyLogoUrl(company);
+
   return (
     <Link
       href={`/jobs/${id || '#'}`}
-      style={{ 
+      style={{
         display: 'block',
-        width: '273.5px', // Exact width for 4-col in 1190px with 32px gaps
+        width: '273.5px',
         height: '350px',
         padding: '24px',
-        border: '1px solid #D6DDEB',
+        border: hovered ? '1px solid #4640DE' : '1px solid #D6DDEB',
         background: '#FFFFFF',
         textDecoration: 'none',
-        transition: 'all 0.2s ease',
+        transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        transform: hovered ? 'translateY(-6px) scale(1.02)' : 'translateY(0) scale(1)',
+        boxShadow: hovered
+          ? '0 16px 40px rgba(70, 64, 222, 0.15), 0 4px 12px rgba(0,0,0,0.08)'
+          : '0 1px 3px rgba(0,0,0,0.04)',
+        borderRadius: hovered ? '8px' : '0px',
       }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       {/* Type Badge — Top right absolute */}
-      <div 
-        style={{ 
+      <div
+        style={{
           position: 'absolute',
           right: '24px',
           top: '24px',
@@ -61,65 +70,64 @@ export const JobCard = ({ id, logo, companyLogo, title, company, location, descr
           color: '#4640DE',
           fontFamily: 'var(--font-epilogue)',
           fontWeight: 600,
-          fontSize: '14px'
+          fontSize: '14px',
+          transition: 'all 0.3s ease',
+          background: hovered ? 'rgba(70,64,222,0.08)' : 'transparent',
         }}
       >
         Full Time
       </div>
 
-      {/* Logo — Square container with company logo or branded initial */}
-      <div 
-        style={{ 
+      {/* Company Logo */}
+      <div
+        style={{
           width: '48px',
           height: '48px',
-          background: logo ? '#FFFFFF' : (companyBrandColors[company] || '#4640DE'),
-          border: logo ? '1px solid #D6DDEB' : 'none',
-          borderRadius: '4px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          borderRadius: '8px',
           overflow: 'hidden',
-          marginBottom: '24px'
+          marginBottom: '24px',
+          transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+          transform: hovered ? 'scale(1.1)' : 'scale(1)',
+          boxShadow: hovered ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
         }}
       >
-        {logo ? (
-          <img src={logo} alt={company} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-        ) : (
-          <span style={{ fontFamily: 'var(--font-clash-display)', fontWeight: 700, fontSize: '20px', color: '#FFFFFF' }}>
-            {company[0]}
-          </span>
-        )}
+        <img
+          src={logoSrc}
+          alt={company}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
       </div>
 
       {/* Title & Company */}
-      <h3 
-        style={{ 
+      <h3
+        style={{
           fontFamily: 'var(--font-clash-display)',
           fontWeight: 600,
           fontSize: '20px',
           lineHeight: '120%',
-          color: '#202430',
-          margin: '0 0 8px 0'
+          color: hovered ? '#4640DE' : '#202430',
+          margin: '0 0 8px 0',
+          transition: 'color 0.3s ease',
         }}
       >
         {title}
       </h3>
-      <p 
-        style={{ 
+      <p
+        style={{
           fontFamily: 'var(--font-epilogue)',
           fontWeight: 400,
           fontSize: '16px',
           lineHeight: '160%',
           color: '#515B6F',
-          margin: '0 0 16px 0'
+          margin: '0 0 16px 0',
         }}
       >
         {company} • {location}
       </p>
 
       {/* Description */}
-      <p 
-        style={{ 
+      <p
+        style={{
           fontFamily: 'var(--font-epilogue)',
           fontWeight: 400,
           fontSize: '14px',
@@ -129,24 +137,18 @@ export const JobCard = ({ id, logo, companyLogo, title, company, location, descr
           display: '-webkit-box',
           WebkitLineClamp: 2,
           WebkitBoxOrient: 'vertical',
-          overflow: 'hidden'
+          overflow: 'hidden',
         }}
       >
         {description || "Help us create the next generation of visual experiences for our users."}
       </p>
 
       {/* Tags */}
-      <div 
-        style={{ 
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '8px'
-        }}
-      >
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
         {tags?.map((tag) => (
-          <span 
+          <span
             key={tag.name}
-            style={{ 
+            style={{
               padding: '4px 12px',
               borderRadius: '80px',
               background: tag.bgColor,
@@ -154,7 +156,7 @@ export const JobCard = ({ id, logo, companyLogo, title, company, location, descr
               color: tag.color,
               fontFamily: 'var(--font-epilogue)',
               fontWeight: 600,
-              fontSize: '12px'
+              fontSize: '12px',
             }}
           >
             {tag.name}
@@ -166,6 +168,21 @@ export const JobCard = ({ id, logo, companyLogo, title, company, location, descr
           </>
         )}
       </div>
+
+      {/* Hover accent bar at bottom */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          height: '3px',
+          background: 'linear-gradient(90deg, #4640DE, #26A4FF)',
+          transform: hovered ? 'scaleX(1)' : 'scaleX(0)',
+          transformOrigin: 'left',
+          transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+        }}
+      />
     </Link>
   );
 };

@@ -1,219 +1,277 @@
 import { PrismaClient } from "@prisma/client";
 
-
 const prisma = new PrismaClient();
 
-// Company logo URLs using Clearbit Logo API
-const companyLogos: Record<string, string> = {
-  "Nomad": "https://logo.clearbit.com/nomadhealth.com",
-  "Netlify": "https://logo.clearbit.com/netlify.com",
-  "Dropbox": "https://logo.clearbit.com/dropbox.com",
-  "Maze": "https://logo.clearbit.com/maze.co",
-  "Terraform": "https://logo.clearbit.com/hashicorp.com",
-  "Udacity": "https://logo.clearbit.com/udacity.com",
-  "Packer": "https://logo.clearbit.com/hashicorp.com",
-  "Webflow": "https://logo.clearbit.com/webflow.com",
-  "Revolut": "https://logo.clearbit.com/revolut.com",
-  "Pitch": "https://logo.clearbit.com/pitch.com",
-  "Blinkist": "https://logo.clearbit.com/blinkist.com",
-  "ClassPass": "https://logo.clearbit.com/classpass.com",
-  "Canva": "https://logo.clearbit.com/canva.com",
-  "GoDaddy": "https://logo.clearbit.com/godaddy.com",
-  "Twitter": "https://logo.clearbit.com/x.com",
-};
+// ----- DATA POOLS FOR RANDOM JOB GENERATION -----
 
-const jobs = [
-  {
-    title: "Social Media Assistant",
-    company: "Nomad",
-    location: "Paris, France",
-    category: "Marketing",
-    type: "Full-Time",
-    companyLogo: companyLogos["Nomad"],
-    description:
-      "Nomad is looking for a Social Media Assistant to help build our brand and online presence. You will be responsible for creating engaging content, managing community interactions, and analyzing social media metrics to drive growth. The ideal candidate is creative, organized, and passionate about social media trends.\n\nResponsibilities:\n- Create and schedule daily social media posts\n- Engage with followers and respond to comments/messages\n- Monitor analytics and prepare monthly reports\n- Collaborate with the marketing team on campaigns\n- Stay up-to-date with social media trends and best practices\n\nRequirements:\n- 1+ years of social media management experience\n- Strong written communication skills\n- Experience with social media tools (Buffer, Hootsuite, etc.)\n- Basic knowledge of graphic design tools",
-    tags: ["Marketing", "Design"],
-  },
-  {
-    title: "Social Media Assistant",
-    company: "Netlify",
-    location: "Paris, France",
-    category: "Marketing",
-    type: "Full-Time",
-    companyLogo: companyLogos["Netlify"],
-    description:
-      "Netlify is seeking a Social Media Assistant to join our growing marketing team. You'll help manage our social media channels, create compelling content, and engage with our developer community.\n\nResponsibilities:\n- Manage daily social media posting schedule\n- Create engaging content for developer audiences\n- Track and report on social media KPIs\n- Support influencer partnership programs\n\nRequirements:\n- Understanding of developer tools and communities\n- Strong writing and communication skills\n- Experience with social analytics platforms\n- Creative mindset with attention to detail",
-    tags: ["Marketing", "Design"],
-  },
-  {
-    title: "Brand Designer",
-    company: "Dropbox",
-    location: "San Francisco, USA",
-    category: "Design",
-    type: "Full-Time",
-    companyLogo: companyLogos["Dropbox"],
-    description:
-      "Dropbox is looking for a Brand Designer to help the team maintain and evolve our visual identity. You'll create compelling designs across multiple touchpoints including digital, print, and experiential.\n\nResponsibilities:\n- Design brand assets across all platforms\n- Maintain and evolve the brand design system\n- Collaborate with marketing and product teams\n- Create presentations, social media graphics, and campaign materials\n- Ensure brand consistency across all touchpoints\n\nRequirements:\n- 3+ years of brand design experience\n- Expert in Figma, Adobe Creative Suite\n- Strong portfolio demonstrating brand work\n- Understanding of design systems\n- Excellent communication and collaboration skills",
-    tags: ["Design", "Business"],
-  },
-  {
-    title: "Brand Designer",
-    company: "Maze",
-    location: "San Francisco, USA",
-    category: "Design",
-    type: "Full-Time",
-    companyLogo: companyLogos["Maze"],
-    description:
-      "Maze is looking for a Brand Designer to join our creative team. You'll help shape the visual identity of our product testing platform and create designs that resonate with our user base.\n\nResponsibilities:\n- Develop brand guidelines and assets\n- Design marketing materials and campaigns\n- Create illustrations and visual content\n- Collaborate with product and engineering teams\n\nRequirements:\n- Strong brand design portfolio\n- Proficiency in Figma and Adobe tools\n- Experience in SaaS or tech companies\n- Creative problem-solving skills",
-    tags: ["Marketing", "Design"],
-  },
-  {
-    title: "Interactive Developer",
-    company: "Terraform",
-    location: "Hamburg, Germany",
-    category: "Technology",
-    type: "Full-Time",
-    companyLogo: companyLogos["Terraform"],
-    description:
-      "Terraform is seeking an Interactive Developer to create engaging web experiences. You'll work at the intersection of design and development to build interactive prototypes, animations, and creative web applications.\n\nResponsibilities:\n- Build interactive web experiences using modern frameworks\n- Create animations and micro-interactions\n- Collaborate with designers to bring concepts to life\n- Optimize performance for smooth user experiences\n- Experiment with new web technologies (WebGL, Three.js, GSAP)\n\nRequirements:\n- 3+ years of frontend development experience\n- Strong JavaScript/TypeScript skills\n- Experience with animation libraries (GSAP, Framer Motion)\n- Understanding of WebGL/Three.js is a plus\n- Creative portfolio showcasing interactive work",
-    tags: ["Marketing", "Design"],
-  },
-  {
-    title: "Interactive Developer",
-    company: "Udacity",
-    location: "Hamburg, Germany",
-    category: "Technology",
-    type: "Full-Time",
-    companyLogo: companyLogos["Udacity"],
-    description:
-      "Udacity is looking for an Interactive Developer to create engaging educational experiences. You will develop interactive course content, build web-based learning tools, and push the boundaries of online education.\n\nResponsibilities:\n- Develop interactive learning modules\n- Build educational tools and simulations\n- Collaborate with instructional designers\n- Create accessible and engaging interfaces\n\nRequirements:\n- Strong frontend development skills\n- Experience with React or similar frameworks\n- Passion for education and learning\n- Strong problem-solving abilities",
-    tags: ["Marketing", "Design"],
-  },
-  {
-    title: "HR Manager",
-    company: "Packer",
-    location: "Lucern, Switzerland",
-    category: "Human Resources",
-    type: "Full-Time",
-    companyLogo: companyLogos["Packer"],
-    description:
-      "Packer is looking for an experienced HR Manager to lead our people operations. You will be responsible for talent acquisition, employee relations, performance management, and building a positive company culture.\n\nResponsibilities:\n- Lead the full recruitment lifecycle\n- Manage employee onboarding and offboarding\n- Develop and implement HR policies\n- Handle employee relations and conflict resolution\n- Oversee performance review processes\n- Manage compensation and benefits programs\n\nRequirements:\n- 5+ years of HR management experience\n- Strong knowledge of employment law\n- Excellent interpersonal and communication skills\n- Experience with HRIS systems\n- HR certification (SHRM, CIPD) preferred",
-    tags: ["Marketing", "Design"],
-  },
-  {
-    title: "HR Manager",
-    company: "Webflow",
-    location: "Lucern, Switzerland",
-    category: "Human Resources",
-    type: "Full-Time",
-    companyLogo: companyLogos["Webflow"],
-    description:
-      "Webflow is hiring an HR Manager to help scale our People team. You'll play a key role in building our culture, improving our hiring processes, and supporting employee growth and development.\n\nResponsibilities:\n- Drive recruitment and hiring strategy\n- Build employee engagement programs\n- Manage performance management systems\n- Develop training and development initiatives\n\nRequirements:\n- Proven HR management experience\n- Experience in fast-growing tech companies\n- Strong organizational and leadership skills\n- Knowledge of modern HR tools and practices",
-    tags: ["Marketing", "Design"],
-  },
-  {
-    title: "Email Marketing",
-    company: "Revolut",
-    location: "Madrid, Spain",
-    category: "Marketing",
-    type: "Full-Time",
-    companyLogo: companyLogos["Revolut"],
-    description:
-      "Revolut is looking for an Email Marketing specialist to help drive customer engagement and retention. You will design, build, and optimize email campaigns that connect with millions of users worldwide.\n\nResponsibilities:\n- Design and execute email marketing campaigns\n- Build automated email workflows and drip sequences\n- A/B test subject lines, content, and send times\n- Analyze campaign performance and optimize for KPIs\n- Collaborate with design and content teams\n- Maintain email list hygiene and segmentation\n\nRequirements:\n- 2+ years of email marketing experience\n- Proficiency with email platforms (Mailchimp, Sendgrid, HubSpot)\n- Understanding of HTML/CSS for email templates\n- Strong analytical and data-driven mindset\n- Experience with marketing automation",
-    tags: ["Marketing", "Design"],
-  },
-  {
-    title: "Brand Designer",
-    company: "Dropbox",
-    location: "San Francisco, US",
-    category: "Design",
-    type: "Full-Time",
-    companyLogo: companyLogos["Dropbox"],
-    description:
-      "Dropbox is seeking a talented Brand Designer to expand our creative team. You'll help shape how Dropbox shows up in the world through thoughtful, impactful design work across all customer touchpoints.\n\nResponsibilities:\n- Create visual designs for brand campaigns\n- Work on brand guidelines and design systems\n- Design presentations and marketing collateral\n- Collaborate with cross-functional teams\n\nRequirements:\n- 3+ years brand or visual design experience\n- Expertise in Figma, Illustrator, Photoshop\n- Strong portfolio with brand projects\n- Excellent eye for typography and color",
-    tags: ["Design", "Business"],
-  },
-  {
-    title: "Email Marketing",
-    company: "Pitch",
-    location: "Berlin, Germany",
-    category: "Marketing",
-    type: "Full-Time",
-    companyLogo: companyLogos["Pitch"],
-    description:
-      "Pitch is looking for a Customer Email Marketing specialist who can create engaging email campaigns that drive user activation, retention, and growth for our presentation platform.\n\nResponsibilities:\n- Plan and execute lifecycle email campaigns\n- Manage automated onboarding sequences\n- Track and optimize email performance metrics\n- Work with content and product teams\n\nRequirements:\n- Experience in SaaS email marketing\n- Knowledge of email automation tools\n- Strong copywriting and design sensibility\n- Analytical mindset with attention to metrics",
-    tags: ["Marketing"],
-  },
-  {
-    title: "Visual Designer",
-    company: "Blinkist",
-    location: "Granada, Spain",
-    category: "Design",
-    type: "Full-Time",
-    companyLogo: companyLogos["Blinkist"],
-    description:
-      "Blinkist is seeking a Visual Designer to join our creative team. You'll create stunning visual content for our platform, marketing materials, and brand experiences.\n\nResponsibilities:\n- Create visual designs for mobile and web platforms\n- Design marketing and social media graphics\n- Contribute to the overall visual direction of the brand\n- Prototype and iterate on design concepts\n\nRequirements:\n- Strong visual design portfolio\n- Proficiency in Figma, Sketch, or Adobe XD\n- Understanding of mobile design patterns\n- Eye for detail and typography",
-    tags: ["Design"],
-  },
-  {
-    title: "Product Designer",
-    company: "ClassPass",
-    location: "Manchester, UK",
-    category: "Design",
-    type: "Full-Time",
-    companyLogo: companyLogos["ClassPass"],
-    description:
-      "ClassPass is looking for a Product Designer to help us create delightful fitness booking experiences. You'll work closely with engineering and product teams to design intuitive, beautiful interfaces.\n\nResponsibilities:\n- Design end-to-end product features\n- Conduct user research and usability testing\n- Create wireframes, prototypes, and high-fidelity designs\n- Maintain and extend the design system\n- Collaborate closely with engineers during implementation\n\nRequirements:\n- 3+ years of product design experience\n- Strong portfolio showing product design work\n- Proficiency in Figma\n- Experience with user research methods\n- Understanding of design systems",
-    tags: ["Marketing", "Design"],
-  },
-  {
-    title: "Lead Designer",
-    company: "Canva",
-    location: "Ontario, Canada",
-    category: "Design",
-    type: "Full-Time",
-    companyLogo: companyLogos["Canva"],
-    description:
-      "Canva is looking for a Lead Designer to help develop next-generation design features. You'll lead a team of designers working on some of the most-used design tools in the world.\n\nResponsibilities:\n- Lead and mentor a team of designers\n- Set design direction for major product initiatives\n- Collaborate with product and engineering leadership\n- Drive design quality and innovation\n- Contribute to design system evolution\n\nRequirements:\n- 5+ years of design experience, 2+ in leadership\n- Expert-level Figma skills\n- Strong portfolio with complex product design\n- Experience leading and mentoring designers\n- Strategic thinking and communication skills",
-    tags: ["Design", "Business"],
-  },
-  {
-    title: "Brand Strategist",
-    company: "GoDaddy",
-    location: "Marseille, France",
-    category: "Marketing",
-    type: "Full-Time",
-    companyLogo: companyLogos["GoDaddy"],
-    description:
-      "GoDaddy is seeking a Brand Strategist to help define and execute our brand positioning. You'll work with cross-functional teams to create compelling brand narratives that resonate with small business owners.\n\nResponsibilities:\n- Develop brand strategy and positioning\n- Create brand guidelines and messaging frameworks\n- Conduct market research and competitive analysis\n- Lead brand workshops and presentations\n\nRequirements:\n- 4+ years in brand strategy or related field\n- Strong analytical and research skills\n- Excellent presentation and storytelling abilities\n- Experience in tech or SaaS companies preferred",
-    tags: ["Marketing"],
-  },
-  {
-    title: "Data Analyst",
-    company: "Twitter",
-    location: "San Diego, US",
-    category: "Technology",
-    type: "Full-Time",
-    companyLogo: companyLogos["Twitter"],
-    description:
-      "Twitter is looking for a Data Analyst to help teams make data-driven decisions. You'll analyze product metrics, build dashboards, and provide actionable insights that shape product strategy.\n\nResponsibilities:\n- Analyze product usage data and user behavior\n- Build dashboards and reporting tools\n- Conduct A/B test analysis\n- Present findings to stakeholders\n- Identify trends and opportunities in data\n\nRequirements:\n- 2+ years of data analysis experience\n- Strong SQL and Python skills\n- Experience with visualization tools (Tableau, Looker)\n- Statistical analysis knowledge\n- Excellent communication skills",
-    tags: ["Technology"],
-  },
+const companies = [
+  "Google", "Microsoft", "Apple", "Amazon", "Meta", "Netflix", "Spotify",
+  "Stripe", "Airbnb", "Uber", "Slack", "Shopify", "Adobe", "Salesforce",
+  "Zoom", "LinkedIn", "GitHub", "Figma", "Notion", "Vercel", "Canva",
+  "Dropbox", "Twitter", "Revolut", "Webflow", "Square", "PayPal",
+  "Twilio", "Atlassian", "HubSpot", "Zendesk", "Datadog", "Cloudflare",
+  "MongoDB", "Elastic", "GitLab", "HashiCorp", "Docker", "Confluent",
+  "Snowflake", "Databricks", "Okta", "CrowdStrike", "Palantir", "Asana",
+  "Monday.com", "Miro", "Loom", "Calendly", "Grammarly", "Duolingo",
+  "Coursera", "Udemy", "Khan Academy", "Brex", "Plaid", "Chime",
+  "Robinhood", "Coinbase", "Binance", "OpenAI", "Anthropic", "Mistral",
+  "Tesla", "SpaceX", "Boeing", "Samsung", "Sony", "Intel", "AMD", "NVIDIA",
+  "Oracle", "IBM", "Cisco", "VMware", "Palo Alto Networks", "Fortinet",
+  "ServiceNow", "Workday", "SAP", "Intuit", "Block", "Toast",
+  "DoorDash", "Instacart", "Lyft", "Pinterest", "Snap", "Reddit",
+  "Discord", "Roblox", "Epic Games", "Unity", "Valve", "Riot Games",
+  "Electronic Arts", "Activision", "Ubisoft", "Warner Bros", "Disney",
+  "Pixar", "DreamWorks", "NBCUniversal", "ViacomCBS", "BBC", "Reuters",
+  "Bloomberg", "The New York Times", "The Guardian", "CNN",
 ];
 
+const locations = [
+  "San Francisco, USA", "New York, USA", "Los Angeles, USA", "Seattle, USA",
+  "Austin, USA", "Chicago, USA", "Boston, USA", "Denver, USA", "Miami, USA",
+  "Portland, USA", "San Diego, USA", "Washington DC, USA", "Atlanta, USA",
+  "Dallas, USA", "Houston, USA", "Phoenix, USA", "Minneapolis, USA",
+  "London, UK", "Manchester, UK", "Edinburgh, UK", "Birmingham, UK",
+  "Berlin, Germany", "Munich, Germany", "Hamburg, Germany", "Frankfurt, Germany",
+  "Paris, France", "Lyon, France", "Marseille, France", "Toulouse, France",
+  "Amsterdam, Netherlands", "Rotterdam, Netherlands", "The Hague, Netherlands",
+  "Stockholm, Sweden", "Gothenburg, Sweden", "Malmö, Sweden",
+  "Copenhagen, Denmark", "Oslo, Norway", "Helsinki, Finland",
+  "Dublin, Ireland", "Zürich, Switzerland", "Geneva, Switzerland",
+  "Barcelona, Spain", "Madrid, Spain", "Valencia, Spain", "Lisbon, Portugal",
+  "Milan, Italy", "Rome, Italy", "Vienna, Austria", "Prague, Czech Republic",
+  "Warsaw, Poland", "Budapest, Hungary", "Bucharest, Romania",
+  "Toronto, Canada", "Vancouver, Canada", "Montreal, Canada",
+  "Sydney, Australia", "Melbourne, Australia", "Brisbane, Australia",
+  "Singapore", "Hong Kong", "Tokyo, Japan", "Seoul, South Korea",
+  "Taipei, Taiwan", "Bangalore, India", "Mumbai, India", "Delhi, India",
+  "Hyderabad, India", "Tel Aviv, Israel", "Dubai, UAE", "Riyadh, Saudi Arabia",
+  "Cape Town, South Africa", "Nairobi, Kenya", "Lagos, Nigeria",
+  "São Paulo, Brazil", "Mexico City, Mexico", "Buenos Aires, Argentina",
+  "Dhaka, Bangladesh", "Chittagong, Bangladesh", "Sylhet, Bangladesh",
+  "Remote", "Hybrid - Remote",
+];
+
+const categories = [
+  "Technology", "Design", "Marketing", "Sales", "Finance",
+  "Engineering", "Human Resources", "Business", "Data Science",
+  "Product Management", "Operations", "Customer Success",
+  "Legal", "Healthcare", "Education",
+];
+
+const types = ["Full-Time", "Part-Time", "Remote", "Contract", "Internship"];
+
+const tagSets: Record<string, string[]> = {
+  Technology: ["React", "Node.js", "Python", "AWS", "Docker", "Kubernetes", "TypeScript", "GraphQL", "REST API", "Microservices", "CI/CD", "DevOps", "Cloud", "System Design", "Agile"],
+  Design: ["Figma", "UI/UX", "Sketch", "Adobe XD", "Prototyping", "User Research", "Design Systems", "Motion Design", "Brand Design", "Illustration", "Typography", "Wireframing"],
+  Marketing: ["SEO", "SEM", "Content", "Social Media", "Email Marketing", "Growth", "Analytics", "Branding", "PPC", "Influencer", "Copywriting", "Campaign Management"],
+  Sales: ["B2B", "SaaS", "Enterprise", "Account Management", "Lead Generation", "CRM", "Negotiation", "Pipeline", "Prospecting", "Cold Outreach"],
+  Finance: ["Financial Analysis", "Accounting", "FP&A", "Treasury", "Risk Management", "Investment", "Budgeting", "Compliance", "Audit", "Tax"],
+  Engineering: ["Mechanical", "Civil", "Electrical", "Chemical", "Aerospace", "Robotics", "IoT", "Embedded", "CAD", "Simulation"],
+  "Human Resources": ["Recruiting", "Talent Acquisition", "Employee Relations", "Compensation", "Benefits", "HRIS", "Training", "Culture", "Diversity", "Onboarding"],
+  Business: ["Strategy", "Operations", "Consulting", "Project Management", "Agile", "Scrum", "Business Development", "Partnerships", "Analytics", "Stakeholder Management"],
+  "Data Science": ["Machine Learning", "AI", "Deep Learning", "NLP", "Computer Vision", "Statistics", "R", "Python", "TensorFlow", "PyTorch", "Big Data", "SQL"],
+  "Product Management": ["Product Strategy", "Roadmap", "User Stories", "A/B Testing", "Market Research", "Go-to-Market", "OKRs", "Stakeholders", "Prioritization"],
+  Operations: ["Supply Chain", "Logistics", "Process Improvement", "Lean", "Six Sigma", "Inventory", "Vendor Management", "Quality Assurance"],
+  "Customer Success": ["Customer Support", "Onboarding", "Retention", "NPS", "Churn Prevention", "Account Health", "Success Metrics"],
+  Legal: ["Corporate Law", "IP", "Compliance", "Contracts", "Regulatory", "Privacy", "GDPR", "Litigation"],
+  Healthcare: ["Clinical", "Medical Devices", "Biotech", "Pharma", "Patient Care", "Health IT", "Nursing", "Telemedicine"],
+  Education: ["Curriculum", "EdTech", "Teaching", "E-Learning", "Assessment", "Training", "LMS", "Instruction Design"],
+};
+
+// Job title templates per category
+const jobTitles: Record<string, string[]> = {
+  Technology: [
+    "Software Engineer", "Senior Software Engineer", "Staff Engineer",
+    "Frontend Developer", "Backend Developer", "Full Stack Developer",
+    "DevOps Engineer", "Site Reliability Engineer", "Cloud Architect",
+    "Mobile Developer", "iOS Developer", "Android Developer",
+    "Security Engineer", "Platform Engineer", "Infrastructure Engineer",
+    "QA Engineer", "Test Automation Engineer", "Systems Engineer",
+    "API Developer", "Embedded Software Engineer", "Blockchain Developer",
+    "Machine Learning Engineer", "AI Engineer", "Data Engineer",
+  ],
+  Design: [
+    "UI/UX Designer", "Senior Product Designer", "Visual Designer",
+    "Brand Designer", "Interaction Designer", "Motion Designer",
+    "Design Lead", "UX Researcher", "Design Systems Engineer",
+    "Creative Director", "Art Director", "Graphic Designer",
+    "Illustration Designer", "Design Manager", "Principal Designer",
+  ],
+  Marketing: [
+    "Marketing Manager", "Content Marketing Specialist", "SEO Specialist",
+    "Social Media Manager", "Growth Marketing Manager", "Email Marketing Specialist",
+    "Digital Marketing Manager", "Brand Manager", "Marketing Analyst",
+    "Content Strategist", "Copywriter", "Performance Marketing Manager",
+    "Marketing Coordinator", "Campaign Manager", "Community Manager",
+  ],
+  Sales: [
+    "Sales Development Representative", "Account Executive", "Enterprise Account Manager",
+    "Sales Manager", "Business Development Manager", "Sales Engineer",
+    "Strategic Account Director", "Inside Sales Representative", "Channel Sales Manager",
+    "VP of Sales", "Regional Sales Manager", "Solutions Consultant",
+  ],
+  Finance: [
+    "Financial Analyst", "Senior Accountant", "FP&A Manager",
+    "Controller", "Treasurer", "Risk Analyst", "Tax Specialist",
+    "Compliance Officer", "Internal Auditor", "Finance Manager",
+    "Payroll Specialist", "Revenue Analyst", "Investment Analyst",
+  ],
+  Engineering: [
+    "Mechanical Engineer", "Electrical Engineer", "Civil Engineer",
+    "Chemical Engineer", "Aerospace Engineer", "Robotics Engineer",
+    "Manufacturing Engineer", "Process Engineer", "Systems Architect",
+    "Hardware Engineer", "Embedded Systems Engineer", "Controls Engineer",
+  ],
+  "Human Resources": [
+    "HR Manager", "Recruiter", "Talent Acquisition Specialist",
+    "HR Business Partner", "Compensation Analyst", "Benefits Administrator",
+    "People Operations Manager", "HR Coordinator", "Training Manager",
+    "Diversity & Inclusion Lead", "Employee Experience Manager",
+  ],
+  Business: [
+    "Business Analyst", "Strategy Consultant", "Project Manager",
+    "Program Manager", "Business Operations Manager", "Management Consultant",
+    "Chief of Staff", "Operations Analyst", "Scrum Master",
+    "Business Development Associate", "Partnerships Manager",
+  ],
+  "Data Science": [
+    "Data Scientist", "Senior Data Scientist", "Machine Learning Scientist",
+    "Research Scientist", "AI Researcher", "NLP Engineer",
+    "Computer Vision Engineer", "Data Analyst", "Applied Scientist",
+    "Quantitative Analyst", "MLOps Engineer", "Deep Learning Engineer",
+  ],
+  "Product Management": [
+    "Product Manager", "Senior Product Manager", "Director of Product",
+    "Technical Product Manager", "Growth Product Manager", "Product Analyst",
+    "Product Owner", "VP of Product", "Associate Product Manager",
+  ],
+  Operations: [
+    "Operations Manager", "Supply Chain Manager", "Logistics Coordinator",
+    "Process Improvement Manager", "Facilities Manager", "Procurement Specialist",
+    "Operations Analyst", "Quality Manager", "Inventory Planner",
+  ],
+  "Customer Success": [
+    "Customer Success Manager", "Implementation Manager", "Support Engineer",
+    "Technical Support Specialist", "Customer Experience Manager",
+    "Solutions Architect", "Onboarding Specialist", "Client Success Director",
+  ],
+  Legal: [
+    "Legal Counsel", "Paralegal", "Corporate Attorney",
+    "Compliance Manager", "Privacy Officer", "IP Attorney",
+    "Contract Manager", "Legal Operations Manager", "General Counsel",
+  ],
+  Healthcare: [
+    "Clinical Research Associate", "Biomedical Engineer", "Health Data Analyst",
+    "Medical Science Liaison", "Nurse Practitioner", "Healthcare Consultant",
+    "Patient Care Coordinator", "Health IT Specialist", "Regulatory Affairs Manager",
+  ],
+  Education: [
+    "Curriculum Designer", "Instructional Designer", "EdTech Product Manager",
+    "Learning Experience Designer", "Training Specialist", "Education Coordinator",
+    "Academic Advisor", "Online Course Developer", "Assessment Specialist",
+  ],
+};
+
+const seniority = ["", "Junior ", "Mid-Level ", "Senior ", "Staff ", "Lead ", "Principal "];
+
+const descriptionTemplates = [
+  (company: string, title: string, category: string) =>
+    `${company} is looking for a talented ${title} to join our ${category} team. You'll work on challenging problems and collaborate with world-class professionals to deliver exceptional results.\n\nResponsibilities:\n- Drive key initiatives within the ${category} department\n- Collaborate cross-functionally with engineering, design, and product teams\n- Mentor junior team members and contribute to team growth\n- Stay current with industry trends and best practices\n- Participate in code/design reviews and technical discussions\n\nRequirements:\n- 2+ years of relevant experience\n- Strong problem-solving and analytical skills\n- Excellent communication and teamwork abilities\n- Bachelor's degree or equivalent practical experience\n- Passion for building great products`,
+
+  (company: string, title: string, category: string) =>
+    `Join ${company} as a ${title} and help us shape the future of ${category.toLowerCase()}. We're a rapidly growing team that values innovation, collaboration, and personal growth.\n\nWhat you'll do:\n- Design and implement solutions for complex ${category.toLowerCase()} challenges\n- Partner with stakeholders to define requirements and deliver high-impact projects\n- Contribute to our ${category.toLowerCase()} strategy and roadmap\n- Build scalable, maintainable solutions\n- Participate in team planning and retrospectives\n\nWhat we're looking for:\n- 3+ years of professional experience in ${category.toLowerCase()}\n- Track record of delivering impactful projects\n- Strong analytical and communication skills\n- Growth mindset and eagerness to learn\n- Experience working in fast-paced environments`,
+
+  (company: string, title: string, category: string) =>
+    `${company} is on a mission to transform the ${category.toLowerCase()} landscape, and we need a ${title} to help us get there. This is an opportunity to make a real impact at a company that's changing the way people work.\n\nThe role:\n- Take ownership of key ${category.toLowerCase()} initiatives from concept to delivery\n- Work closely with cross-functional teams to ship high-quality products\n- Use data-driven approaches to inform decisions and measure impact\n- Contribute to our culture of continuous improvement\n- Help scale our ${category.toLowerCase()} processes as the company grows\n\nAbout you:\n- You have 1-5 years of experience in a similar role\n- You're results-oriented and thrive in ambiguity\n- You communicate clearly and build strong relationships\n- You're passionate about ${category.toLowerCase()} and staying ahead of trends\n- You value diversity, inclusion, and collaboration`,
+];
+
+// Salary ranges by seniority
+const salaryRanges = [
+  "$40,000 - $60,000", "$50,000 - $75,000", "$60,000 - $90,000",
+  "$70,000 - $100,000", "$80,000 - $120,000", "$90,000 - $130,000",
+  "$100,000 - $150,000", "$120,000 - $180,000", "$140,000 - $200,000",
+  "$160,000 - $220,000", "$180,000 - $250,000", "$200,000 - $300,000",
+];
+
+// ----- HELPERS -----
+
+function pick<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function pickN<T>(arr: T[], n: number): T[] {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
+
+function generateJob(index: number) {
+  const company = pick(companies);
+  const category = pick(categories);
+  const titleBase = pick(jobTitles[category] || jobTitles["Technology"]);
+  const sen = index < 100 ? "" : pick(seniority);
+  const title = `${sen}${titleBase}`.trim();
+  const location = pick(locations);
+  const type = pick(types);
+  const descFn = pick(descriptionTemplates);
+  const description = descFn(company, title, category);
+  const tags = pickN(tagSets[category] || tagSets["Technology"], Math.floor(Math.random() * 3) + 1);
+  const salary = pick(salaryRanges);
+
+  // Generate a company logo using ui-avatars.com (always works, free)
+  const brandColors: Record<string, string> = {
+    Google: "4285F4", Microsoft: "00A4EF", Apple: "000000", Amazon: "FF9900",
+    Meta: "0668E1", Netflix: "E50914", Spotify: "1DB954", Stripe: "635BFF",
+    Airbnb: "FF385C", Uber: "000000", Slack: "4A154B", Shopify: "96BF48",
+    Adobe: "FF0000", Salesforce: "00A1E0", Zoom: "2D8CFF", LinkedIn: "0077B5",
+    GitHub: "181717", Figma: "F24E1E", Notion: "000000", Vercel: "000000",
+    Canva: "00C4CC", Dropbox: "0062FF", Twitter: "1DA1F2", Revolut: "0075EB",
+    Webflow: "4353FF", Square: "3E4348", PayPal: "003087", Twilio: "F22F46",
+    Atlassian: "0052CC", HubSpot: "FF7A59", Zendesk: "03363D",
+    Datadog: "632CA6", Cloudflare: "F38020", MongoDB: "47A248",
+    Tesla: "CC0000", SpaceX: "005288", Samsung: "1428A0", NVIDIA: "76B900",
+    Oracle: "F80000", IBM: "054ADA", OpenAI: "10A37F", Anthropic: "D97757",
+  };
+  const bgColor = brandColors[company] || "4640DE";
+  const companyLogo = `https://ui-avatars.com/api/?name=${encodeURIComponent(company)}&background=${bgColor}&color=fff&size=128&font-size=0.35&bold=true&format=svg`;
+
+  return {
+    title,
+    company,
+    location,
+    category,
+    type,
+    description,
+    salary,
+    companyLogo,
+    tags,
+  };
+}
+
+// ----- MAIN SEED -----
+
 async function main() {
-  console.log("🌱 Seeding database...");
+  console.log("🌱 Seeding database with 1000+ jobs...");
 
   // Clear existing data
   await prisma.application.deleteMany();
   await prisma.job.deleteMany();
 
-  // Insert jobs
-  for (const job of jobs) {
-    await prisma.job.create({ data: job });
+  const TOTAL_JOBS = 1000;
+  const BATCH_SIZE = 50;
+
+  let created = 0;
+  for (let i = 0; i < TOTAL_JOBS; i += BATCH_SIZE) {
+    const batch = [];
+    for (let j = 0; j < BATCH_SIZE && i + j < TOTAL_JOBS; j++) {
+      batch.push(generateJob(i + j));
+    }
+
+    await prisma.job.createMany({ data: batch });
+    created += batch.length;
+    console.log(`  ✅ Created ${created}/${TOTAL_JOBS} jobs...`);
   }
 
-  console.log(`✅ Seeded ${jobs.length} jobs successfully!`);
+  console.log(`\n🎉 Successfully seeded ${TOTAL_JOBS} jobs!`);
 }
 
 main()
