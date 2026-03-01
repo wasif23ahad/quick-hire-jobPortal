@@ -110,6 +110,10 @@ export const Hero = () => {
               onSubmit={handleSearch}
               className="flex flex-col sm:flex-row w-full max-w-[852px] sm:h-[89px] items-stretch sm:items-center sm:justify-center bg-[#FFFFFF] z-30 relative shrink-0"
               style={{
+                width: '852px',
+                height: '89px',
+                transform: 'rotate(0deg)',
+                opacity: 1,
                 padding: '16px',
                 boxShadow: '0px 79px 128px rgba(192, 192, 192, 0.09), 0px 28.8363px 46.7221px rgba(192, 192, 192, 0.0598508), 0px 13.9995px 22.6827px rgba(192, 192, 192, 0.0475723), 0px 6.86281px 11.1195px rgba(192, 192, 192, 0.0380675), 0px 2.71357px 4.39666px rgba(192, 192, 192, 0.0270615)',
               }}
