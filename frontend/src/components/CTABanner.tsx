@@ -246,7 +246,7 @@ export const CTABanner = () => {
               margin: '0 0 16px 0',
             }}
           >
-            Start posting jobs today
+            Start posting jobs <br className="block sm:hidden" /> today
           </h2>
           <p
             style={{

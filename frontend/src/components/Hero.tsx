@@ -126,7 +126,7 @@ export const Hero = () => {
               role="search"
               aria-label="Job search form"
             >
-              <div className="flex items-center gap-3 sm:gap-4 flex-1 w-full sm:h-full px-[8px] py-[16px] sm:py-[0px]">
+              <div className="flex items-center gap-3 sm:gap-4 flex-1 w-full sm:h-full px-4 py-4 sm:px-2 sm:py-0">
                 <FiSearch className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] shrink-0" aria-hidden="true" />
                 <div className="flex flex-col justify-end flex-1 w-full relative h-[38px]">
                   <label htmlFor="job-title-input" className="sr-only">
@@ -148,7 +148,7 @@ export const Hero = () => {
               {/* Vertical Divider line between search segments (desktop only) */}
               <div className="hidden sm:block w-px h-[57px] bg-[#D6DDEB] shrink-0" />
 
-              <div className="flex items-center gap-3 sm:gap-4 flex-1 w-full sm:h-full relative px-[8px] py-[16px] sm:py-0">
+              <div className="flex items-center gap-3 sm:gap-4 flex-1 w-full sm:h-full relative px-4 py-4 sm:px-2 sm:py-0">
                 <FiMapPin
                   className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] shrink-0"
                   aria-hidden="true"

@@ -1,22 +1,13 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { FiChevronRight } from "react-icons/fi";
 import { JobCard } from "./JobCard";
+import { fetchJobs } from "@/lib/api";
 
-const featuredJobs = [
-  { id: '1', title: "Email Marketing", company: "Revolut", location: "Madrid, Spain", tags: [{ name: "Marketing", color: "#FFB836", bgColor: "rgba(255,184,54,0.1)", borderColor: "#FFB836" }, { name: "Design", color: "#4640DE", bgColor: "rgba(70,64,222,0.1)", borderColor: "#4640DE" }] },
-  { id: '2', title: "Brand Designer", company: "Dropbox", location: "San Francisco, USA", tags: [{ name: "Design", color: "#4640DE", bgColor: "rgba(70,64,222,0.1)", borderColor: "#4640DE" }, { name: "Business", color: "#FFB836", bgColor: "rgba(255,184,54,0.1)", borderColor: "#FFB836" }] },
-  { id: '3', title: "Email Marketing", company: "Pitch", location: "Berlin, Germany", tags: [{ name: "Marketing", color: "#FFB836", bgColor: "rgba(255,184,54,0.1)", borderColor: "#FFB836" }, { name: "Design", color: "#4640DE", bgColor: "rgba(70,64,222,0.1)", borderColor: "#4640DE" }] },
-  { id: '4', title: "Visual Designer", company: "Blinkist", location: "Remote", tags: [{ name: "Design", color: "#4640DE", bgColor: "rgba(70,64,222,0.1)", borderColor: "#4640DE" }] },
-  { id: '5', title: "Product Designer", company: "ClassPass", location: "Remote", tags: [{ name: "Marketing", color: "#FFB836", bgColor: "rgba(255,184,54,0.1)", borderColor: "#FFB836" }, { name: "Design", color: "#4640DE", bgColor: "rgba(70,64,222,0.1)", borderColor: "#4640DE" }] },
-  { id: '6', title: "Lead Designer", company: "Canva", location: "Sydney, Australia", tags: [{ name: "Design", color: "#4640DE", bgColor: "rgba(70,64,222,0.1)", borderColor: "#4640DE" }] },
-  { id: '7', title: "Brand Strategist", company: "GoDaddy", location: "USA", tags: [{ name: "Marketing", color: "#FFB836", bgColor: "rgba(255,184,54,0.1)", borderColor: "#FFB836" }] },
-  { id: '8', title: "Customer Care", company: "Twitter", location: "San Francisco, USA", tags: [{ name: "Marketing", color: "#FFB836", bgColor: "rgba(255,184,54,0.1)", borderColor: "#FFB836" }] },
-];
+export const FeaturedJobs = async () => {
+  const { jobs } = await fetchJobs({ limit: 8 });
+  const displayJobs = jobs || [];
 
-export const FeaturedJobs = () => {
   return (
     <section className="w-full bg-white flex justify-center py-16 md:py-20 px-4 sm:px-6">
       <div className="w-full max-w-[1190px]">
@@ -52,10 +43,33 @@ export const FeaturedJobs = () => {
           </Link>
         </div>
 
-        {/* Responsive Grid — 1 col mobile, 2 cols tablet, 4 cols desktop */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {featuredJobs.map((job) => (
-            <JobCard key={job.id} {...job} />
+        {/* Responsive Grid — Horizontal scroll mobile, 2 cols tablet, 4 cols desktop */}
+        <div className="flex sm:grid overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 pb-4 sm:pb-0 px-2 sm:px-0 scrollbar-hide">
+          {displayJobs.map((job) => (
+            <div key={job.id} className="min-w-[85vw] sm:min-w-0 snap-start shrink-0">
+              <JobCard
+                id={job.id}
+                title={job.title}
+                company={job.company}
+                location={job.location}
+                type={job.type}
+                companyLogo={job.companyLogo}
+                tags={[
+                  {
+                    name: job.category,
+                    color: "#FFB836",
+                    bgColor: "rgba(255,184,54,0.1)",
+                    borderColor: "#FFB836",
+                  },
+                  ...(job.tags || []).slice(0, 1).map((t) => ({
+                    name: t,
+                    color: "#4640DE",
+                    bgColor: "rgba(70,64,222,0.1)",
+                    borderColor: "#4640DE",
+                  })),
+                ]}
+              />
+            </div>
           ))}
         </div>
       </div>

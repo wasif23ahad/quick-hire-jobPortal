@@ -4,11 +4,11 @@ import React from "react";
 
 export const CompanyLogos = () => {
   return (
-    <section className="relative w-full flex justify-center bg-lightsgray pt-8 sm:pt-[40px] pb-12 sm:pb-[80px]">
-      <div className="w-full max-w-[1440px] px-6 sm:px-12 lg:px-[125px]">
+    <section className="relative w-full flex justify-center bg-lightsgray pt-10 sm:pt-[40px] pb-10 sm:pb-[80px]">
+      <div className="w-full max-w-[1440px] px-4 sm:px-12 lg:px-[125px]">
         {/* Title */}
         <p 
-          className="m-0 mb-8 sm:mb-[64px] text-colorblack"
+          className="m-0 mb-8 sm:mb-[64px] text-colorblack text-center sm:text-left"
           style={{
             width: "243px",
             height: "29px",
