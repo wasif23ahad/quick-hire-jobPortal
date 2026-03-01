@@ -53,11 +53,7 @@ export const EmployerTopBar = ({
              fontWeight: 700,
              fontSize: "16px"
            }}>
-             <img src="/nomad-logo.svg" alt="" style={{ width: "20px", height: "20px" }} onError={(e) => {
-               (e.target as HTMLImageElement).style.display = 'none';
-               const parent = (e.target as HTMLImageElement).parentElement;
-               if (parent) parent.innerText = 'N';
-             }} />
+             {companyName.charAt(0).toUpperCase()}
            </div>
         </div>
         <div>

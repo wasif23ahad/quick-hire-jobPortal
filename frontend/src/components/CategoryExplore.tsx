@@ -67,7 +67,7 @@ export const CategoryExplore = () => {
           
           <Link 
             href="/jobs"
-            className="hidden sm:flex"
+            className="hidden sm:flex transition-all duration-300 hover:-translate-y-0.5 hover:text-[#26A4FF]"
             style={{ 
               alignItems: 'center',
               gap: '8px',
@@ -78,7 +78,7 @@ export const CategoryExplore = () => {
               textDecoration: 'none'
             }}
           >
-            Show all jobs <FiChevronRight />
+            Show all jobs <FiChevronRight className="transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
 

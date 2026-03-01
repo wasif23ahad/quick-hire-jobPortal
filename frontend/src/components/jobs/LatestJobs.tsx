@@ -66,12 +66,18 @@ export const LatestJobs = async () => {
                   bgColor: "rgba(255,184,54,0.1)",
                   borderColor: "#FFB836",
                 },
-                ...(job.tags || []).slice(0, 1).map((t) => ({
-                  name: t,
-                  color: "#4640DE",
-                  bgColor: "rgba(70,64,222,0.1)",
-                  borderColor: "#4640DE",
-                })),
+                ...(job.tags || [])
+                  .filter(t => 
+                    t.toLowerCase() !== job.category.toLowerCase() && 
+                    t.toLowerCase() !== job.type.toLowerCase()
+                  )
+                  .slice(0, 1)
+                  .map((t) => ({
+                    name: t,
+                    color: "#4640DE",
+                    bgColor: "rgba(70,64,222,0.1)",
+                    borderColor: "#4640DE",
+                  })),
               ]}
             />
           ))}

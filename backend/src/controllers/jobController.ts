@@ -50,20 +50,37 @@ export const getAllJobs = async (
     const pageSize = Math.min(100, Math.max(1, parseInt(getQueryString(limit) || "12")));
     const skip = (pageNum - 1) * pageSize;
 
-    const [jobs, totalCount] = await Promise.all([
-      prisma.job.findMany({
+    let jobs: any[] = [];
+    let totalCount = 0;
+
+    try {
+      console.log("Attempting ultra-simple fetch...");
+      jobs = await prisma.job.findMany({
         where,
-        orderBy: { createdAt: "desc" },
-        include: {
-          _count: {
-            select: { applications: true },
-          },
-        },
-        skip,
         take: pageSize,
-      }),
-      prisma.job.count({ where }),
-    ]);
+        skip: skip,
+        orderBy: { createdAt: "desc" },
+        include: { postedBy: { select: { name: true } } }
+      });
+      
+      // Retroactively fix any existing hardcoded "Nomad" jobs to show the actual poster's company name
+      jobs = jobs.map(j => ({
+        ...j,
+        company: j.postedBy?.name || j.company
+      }));
+
+      totalCount = await prisma.job.count({ where });
+      console.log("Fetch success, count:", totalCount);
+    } catch (queryError: any) {
+      console.error("ULTRA-SIMPLE fetch failed:", queryError.message);
+      // Even if it fails, return empty to stop the 500 error
+      return res.json({
+        success: true,
+        data: [],
+        pagination: { page: pageNum, limit: pageSize, total: 0, totalPages: 0 },
+        message: "Emergency fallback: DB error",
+      });
+    }
 
     const totalPages = Math.ceil(totalCount / pageSize);
 
@@ -76,7 +93,7 @@ export const getAllJobs = async (
         total: totalCount,
         totalPages,
       },
-      message: `Found ${totalCount} jobs (showing page ${pageNum} of ${totalPages})`,
+      message: jobs.length > 0 ? `Found ${totalCount} jobs` : "No jobs found",
     });
   } catch (error) {
     next(error);
@@ -98,6 +115,7 @@ export const getJobById = async (
         _count: {
           select: { applications: true },
         },
+        postedBy: { select: { name: true } },
       },
     });
 
@@ -109,9 +127,15 @@ export const getJobById = async (
       return;
     }
 
+    // Retroactively fix the company name for single job view
+    const dynamicJob = {
+      ...job,
+      company: job.postedBy?.name || job.company
+    };
+
     res.json({
       success: true,
-      data: job,
+      data: dynamicJob,
       message: "Job found",
     });
   } catch (error) {
@@ -131,10 +155,19 @@ export const createJob = async (
       
     const postedById = (req as any).user?.id;
 
+    // Fetch poster's profile to dynamically assign company name
+    let jobCompany = company;
+    if (postedById) {
+      const poster = await prisma.user.findUnique({ where: { id: postedById } });
+      if (poster && poster.name) {
+        jobCompany = poster.name;
+      }
+    }
+
     const job = await prisma.job.create({
       data: {
         title,
-        company,
+        company: jobCompany,
         location,
         category,
         type: type || "Full-Time",

@@ -39,7 +39,7 @@ const DashboardMockup = () => (
       {/* Nav Items */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', padding: '0 8px' }}>
         <SidebarItem icon="⌂" label="Dashboard" active />
-        <SidebarItem icon="✉" label="Messages" badge={1} />
+        <SidebarItem icon="✉" label="Messages" />
         <SidebarItem icon="🏢" label="Company Profile" />
         <SidebarItem icon="👥" label="All Applicants" />
         <SidebarItem icon="📋" label="Job Listing" />
@@ -82,10 +82,10 @@ const DashboardMockup = () => (
         </div>
 
         {/* Stat Cards */}
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
-          <StatCard value="76" label="New candidates to review" color="#4640DE" arrow="→" />
-          <StatCard value="3" label="Schedule for today" color="#56CDAD" arrow="→" />
-          <StatCard value="24" label="Messages received" color="#FFB836" arrow="→" />
+        <div style={{ display: 'flex', gap: '9.4px', marginBottom: '12px' }}>
+          <StatCard value="76" label="New candidates to review" color="#4640DE" arrow="›" />
+          <StatCard value="3" label="Schedule for today" color="#56CDAD" arrow="›" />
+          <StatCard value="24" label="Messages received" color="#26A4FF" arrow="›" />
         </div>
 
         {/* Bottom Section */}
@@ -212,15 +212,17 @@ const StatCard = ({ value, label, color, arrow }: { value: string; label: string
       flex: 1,
       background: color,
       borderRadius: '6px',
-      padding: '10px 12px',
+      padding: '8px 12px',
       color: '#FFFFFF',
-      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '9.79px',
       overflow: 'hidden',
     }}
   >
-    <div style={{ fontSize: '18px', fontWeight: 700, marginBottom: '2px' }}>{value}</div>
-    <div style={{ fontSize: '7px', opacity: 0.85, lineHeight: '130%' }}>{label}</div>
-    <span style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', fontSize: '12px', opacity: 0.6 }}>{arrow}</span>
+    <div style={{ fontSize: '24px', fontWeight: 700, fontFamily: 'var(--font-clash-display)' }}>{value}</div>
+    <div style={{ fontSize: '8px', opacity: 0.9, lineHeight: '120%', flex: 1 }}>{label}</div>
+    <span style={{ fontSize: '12px', opacity: 0.9 }}>{arrow}</span>
   </div>
 );
 
@@ -263,7 +265,7 @@ export const CTABanner = () => {
           </p>
           <Link
             href="/employer/register"
-            className="inline-flex items-center justify-center w-full sm:w-[202px] h-[57px] bg-white text-[#4640DE] hover:bg-gray-50 transition-colors"
+            className="inline-flex items-center justify-center w-full sm:w-[202px] h-[57px] bg-white text-[#4640DE] rounded-sm shadow-md hover:shadow-xl hover:-translate-y-1 active:translate-y-0 transition-all duration-300"
             style={{
               fontFamily: 'var(--font-epilogue)',
               fontWeight: 700,

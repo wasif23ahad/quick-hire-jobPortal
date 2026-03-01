@@ -145,9 +145,9 @@ export const JobCard = ({ id, logo, companyLogo, title, company, location, descr
 
       {/* Tags */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-        {tags?.map((tag) => (
+        {tags?.map((tag, index) => (
           <span
-            key={tag.name}
+            key={`${tag.name}-${index}`}
             style={{
               padding: '4px 12px',
               borderRadius: '80px',

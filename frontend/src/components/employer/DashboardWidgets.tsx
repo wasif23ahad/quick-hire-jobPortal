@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { FiChevronRight, FiEye, FiCheckCircle, FiMoreHorizontal, FiCalendar, FiMail } from "react-icons/fi";
+import { FiChevronRight, FiEye, FiCheckCircle, FiMoreHorizontal, FiCalendar, FiMail, FiClipboard } from "react-icons/fi";
 
 /* ─── Stat Summary Card ─── */
 interface StatSummaryCardProps {
@@ -21,17 +21,15 @@ export const StatSummaryCard = ({ value, label, color, href = "#", icon }: StatS
       color: "#FFFFFF",
       position: "relative",
       display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      minHeight: "150px",
+      alignItems: "center",
+      gap: "16px",
+      minHeight: "120px",
       fontFamily: "var(--font-epilogue)",
     }}
   >
-    <div style={{ fontSize: "48px", fontWeight: 700, marginBottom: "8px" }}>{value}</div>
-    <div style={{ display: "flex", alignItems: "center", gap: "12px", width: "100%" }}>
-      <div style={{ fontSize: "18px", opacity: 0.9, fontWeight: 500, flex: 1 }}>{label}</div>
-      <FiChevronRight size={24} />
-    </div>
+    <div style={{ fontSize: "52px", fontWeight: 700, fontFamily: "var(--font-clash-display)" }}>{value}</div>
+    <div style={{ fontSize: "18px", opacity: 0.9, fontWeight: 500, flex: 1, lineHeight: "130%" }}>{label}</div>
+    <FiChevronRight size={28} />
   </div>
 );
 
@@ -154,7 +152,7 @@ export const JobStatsChart = ({ onFilterChange, activeFilter = "Week" }: JobStat
                 </div>
               </div>
               <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "rgba(70,64,222,0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#4640DE" }}>
-                <FiCheckCircle size={18} />
+                <FiClipboard size={18} />
               </div>
             </div>
           </div>
@@ -183,10 +181,10 @@ interface ApplicantsSummaryWidgetProps {
 export const ApplicantsSummaryWidget = ({ total }: ApplicantsSummaryWidgetProps) => {
   const segments = [
     { label: "Full Time", count: 45, color: "#4640DE" },
-    { label: "Internship", count: 32, color: "#FFB836" },
-    { label: "Part-Time", count: 24, color: "#56CDAD" },
-    { label: "Contract", count: 30, color: "#FF6550" },
-    { label: "Remote", count: 22, color: "#26A4FF" },
+    { label: "Internship", count: 32, color: "#56CDAD" },
+    { label: "Part-Time", count: 24, color: "#26A4FF" },
+    { label: "Contract", count: 30, color: "#FFB836" },
+    { label: "Remote", count: 22, color: "#FF6550" },
   ];
 
   const totalCalculated = segments.reduce((sum, seg) => sum + seg.count, 0);

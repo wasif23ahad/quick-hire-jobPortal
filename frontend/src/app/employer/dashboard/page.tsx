@@ -150,7 +150,7 @@ export default function EmployerDashboardPage() {
         <EmployerTopBar companyName={user.name} />
         
         <main style={{ flex: 1, overflowY: "auto", padding: "32px" }}>
-          <div style={{ maxWidth: "1120px" }}>
+          <div style={{ width: "100%", maxWidth: "1600px", margin: "0 auto" }}>
             {/* Greeting */}
             <div style={{ marginBottom: "32px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <div>
@@ -208,7 +208,7 @@ export default function EmployerDashboardPage() {
             </div>
 
             {/* main Grid: Statistics Chart + Side Widgets */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "24px", marginBottom: "40px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) 340px", gap: "24px", marginBottom: "40px" }}>
               {/* Left Column: Job Statistics (Large) */}
               <JobStatsChart activeFilter={chartFilter} onFilterChange={setChartFilter} />
               

@@ -54,10 +54,21 @@ export const fetchJobs = async (params?: {
     }
 
     const res = await fetch(url.toString(), {
-      next: { revalidate: 60 } 
+      cache: 'no-store'
     });
     
-    if (!res.ok) throw new Error("Failed to fetch jobs");
+    if (!res.ok) {
+      console.error(`Failed to fetch jobs. Status: ${res.status} ${res.statusText}`);
+      try {
+        const errorJson = await res.json();
+        console.error("--- BACKEND ERROR RESPONSE ---");
+        console.error("Response Body:", errorJson);
+        console.error("------------------------------");
+      } catch (e) {
+        console.error("Could not parse error response body");
+      }
+      throw new Error("Failed to fetch jobs");
+    }
     
     const data: JobsResponse = await res.json();
     return { jobs: data.data, pagination: data.pagination };
@@ -70,10 +81,21 @@ export const fetchJobs = async (params?: {
 export const fetchJobById = async (id: string): Promise<Job | null> => {
   try {
     const res = await fetch(`${API_URL}/jobs/${id}`, {
-      next: { revalidate: 60 }
+      cache: 'no-store' // Disabled caching as per instruction
     });
     
-    if (!res.ok) throw new Error("Failed to fetch job");
+    if (!res.ok) {
+      console.error(`Failed to fetch job by ID ${id}. Status: ${res.status} ${res.statusText}`);
+      try {
+        const errorJson = await res.json();
+        console.error("--- BACKEND ERROR RESPONSE ---");
+        console.error("Response Body:", errorJson);
+        console.error("------------------------------");
+      } catch (e) {
+        console.error("Could not parse error response body for job by ID");
+      }
+      throw new Error("Failed to fetch job");
+    }
     
     const data = await res.json();
     return data.data;

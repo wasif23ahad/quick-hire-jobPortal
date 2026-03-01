@@ -214,7 +214,7 @@ export const Hero = () => {
 
               <button
                 type="submit"
-                className="w-full lg:w-[209px] h-full lg:h-[57px] mt-4 lg:mt-0 flex items-center justify-center bg-[#4640DE] hover:bg-opacity-90 transition-colors shrink-0"
+                className="w-full lg:w-[209px] h-full lg:h-[57px] mt-4 lg:mt-0 flex items-center justify-center bg-[#4640DE] hover:bg-opacity-90 hover:shadow-lg hover:-translate-y-1 active:translate-y-0 transition-all duration-300 shrink-0"
                 aria-label="Search my job"
               >
                 <span className="text-white font-epilogue font-bold text-[16px]">

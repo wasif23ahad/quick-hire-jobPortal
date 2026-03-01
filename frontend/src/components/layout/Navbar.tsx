@@ -74,7 +74,7 @@ export const Navbar = () => {
               >
                 <Link
                   href={link.href}
-                  className="no-underline text-neutrals-80 font-body-normal-medium text-[16px] leading-[160%] hover:text-[#4640DE] transition-colors"
+                  className="no-underline text-neutrals-80 font-body-normal-medium text-[16px] leading-[160%] hover:text-[#4640DE] transition-all duration-300 hover:-translate-y-0.5"
                 >
                   {link.label}
                 </Link>
@@ -134,14 +134,14 @@ export const Navbar = () => {
             <>
               <Link
                 href="/employer/register"
-                className="hidden lg:inline-flex no-underline text-brandsprimary font-button-normal text-[16px] font-bold hover:text-[#4640DE] mr-4"
+                className="hidden lg:inline-flex no-underline text-brandsprimary font-button-normal text-[16px] font-bold hover:text-[#4640DE] mr-4 transition-all duration-300 hover:-translate-y-0.5"
               >
                 Post a Job
               </Link>
 
               <Link
                 href="/login"
-                className="no-underline px-6 py-3 text-brandsprimary font-button-normal text-[16px] font-bold hover:bg-gray-50 rounded transition-colors"
+                className="no-underline px-6 py-3 text-brandsprimary font-button-normal text-[16px] font-bold hover:bg-gray-50 rounded transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
               >
                 Login
               </Link>
@@ -150,7 +150,7 @@ export const Navbar = () => {
 
               <Link
                 href="/signup"
-                className="no-underline bg-brandsprimary px-6 py-3 text-white font-button-normal text-[16px] font-bold hover:bg-opacity-90 transition-colors rounded"
+                className="no-underline bg-brandsprimary px-6 py-3 text-white font-button-normal text-[16px] font-bold rounded shadow-sm hover:shadow-lg hover:bg-opacity-90 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 transform-gpu"
               >
                 Sign Up
               </Link>
@@ -217,21 +217,21 @@ export const Navbar = () => {
                 <div className="flex flex-col gap-4 max-w-[300px] w-full mx-auto">
                   <Link
                     href="/employer/register"
-                    className="no-underline px-6 text-center py-3 border border-brandsprimary text-brandsprimary font-button-normal text-[16px] font-bold hover:bg-gray-50 rounded transition-colors"
+                    className="no-underline px-6 text-center py-3 border border-brandsprimary text-brandsprimary font-button-normal text-[16px] font-bold rounded transition-all duration-300 hover:bg-gray-50 active:scale-95"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Post a Job
                   </Link>
                   <Link
                     href="/login"
-                    className="no-underline px-6 text-center py-3 border border-brandsprimary text-brandsprimary font-button-normal text-[16px] font-bold hover:bg-gray-50 rounded transition-colors"
+                    className="no-underline px-6 text-center py-3 border border-brandsprimary text-brandsprimary font-button-normal text-[16px] font-bold rounded transition-all duration-300 hover:bg-gray-50 active:scale-95"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Login
                   </Link>
                   <Link
                     href="/signup"
-                    className="no-underline bg-brandsprimary text-center px-6 py-3 text-white font-button-normal text-[16px] font-bold hover:bg-opacity-90 transition-colors rounded"
+                    className="no-underline bg-brandsprimary text-center px-6 py-3 text-white font-button-normal text-[16px] font-bold rounded shadow-sm hover:shadow-lg hover:bg-opacity-90 transition-all duration-300 active:scale-95"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Sign Up

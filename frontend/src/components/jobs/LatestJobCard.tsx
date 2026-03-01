@@ -104,9 +104,9 @@ export function LatestJobCard({ id, title, company, location, tags, companyLogo 
           {company} • {location}
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-          {tags.map((tag: any) => (
+          {tags.map((tag: any, index: number) => (
             <span
-              key={tag.name}
+              key={`${tag.name}-${index}`}
               style={{
                 padding: '3px 10px',
                 borderRadius: '80px',
