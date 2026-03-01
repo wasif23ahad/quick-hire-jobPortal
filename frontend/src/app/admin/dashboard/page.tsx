@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FiBriefcase, FiMapPin, FiCalendar, FiLogOut, FiShield, FiClock, FiCheck, FiX } from "react-icons/fi";
+import { FiBriefcase, FiMapPin, FiCalendar, FiLogOut, FiShield, FiClock, FiCheck, FiX, FiUser } from "react-icons/fi";
 
 interface Job {
   id: string;

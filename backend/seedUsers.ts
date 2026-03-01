@@ -48,9 +48,7 @@ async function main() {
   });
   console.log(`Job Seeker user created: ${user.email}`);
   
-  // We seeded jobs earlier, but without an employer. We can assign them randomly.
-  // Actually, we'll just leave the previous jobs as they are (maybe NO postedBy if not enforced).
-  // Oh wait, `postedById` is enforce-added in schema? Let's check.
+
 }
 
 main()
