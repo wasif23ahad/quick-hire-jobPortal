@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiArrowLeft, FiBriefcase, FiMapPin, FiCalendar } from "react-icons/fi";
-import { EmployerSidebar } from "@/components/employer/EmployerSidebar";
-import { EmployerTopBar } from "@/components/employer/EmployerTopBar";
 
 interface Job {
   id: string;
@@ -51,13 +49,7 @@ export default function EmployerJobsPage() {
   }, [router]);
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#FFFFFF" }}>
-      <EmployerSidebar />
-      
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", overflow: "hidden" }}>
-        <EmployerTopBar />
-        
-        <main style={{ flex: 1, overflowY: "auto", padding: "32px" }}>
+    <main style={{ flex: 1, overflowY: "auto", padding: "32px", background: "#FFFFFF" }}>
           <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
             <button 
               onClick={() => router.back()}
@@ -138,7 +130,5 @@ export default function EmployerJobsPage() {
             )}
           </div>
         </main>
-      </div>
-    </div>
   );
 }

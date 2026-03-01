@@ -60,14 +60,7 @@ export const EmployerTopBar = ({
           }}>
              {companyName.charAt(0).toUpperCase()}
           </div>
-          <span style={{ 
-            fontFamily: "var(--font-epilogue)", 
-            fontSize: "16px", 
-            fontWeight: 600, 
-            color: "#25324B" 
-          }}>
-            {companyName}
-          </span>
+
           <FiChevronDown 
             size={18} 
             color="#25324B" 

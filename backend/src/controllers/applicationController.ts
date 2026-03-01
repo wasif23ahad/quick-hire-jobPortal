@@ -24,18 +24,7 @@ export const submitApplication = async (
       return;
     }
 
-    // Try to extract userId from auth token if present
-    let userId: string | undefined;
-    const authHeader = req.headers.authorization;
-    if (authHeader && authHeader.startsWith("Bearer ")) {
-      try {
-        const token = authHeader.split(" ")[1];
-        const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
-        userId = decoded.id;
-      } catch {
-        // Token invalid — proceed without userId
-      }
-    }
+    const userId = (req as any).user.id;
 
     const application = await prisma.application.create({
       data: {
@@ -44,7 +33,7 @@ export const submitApplication = async (
         email,
         resumeLink,
         coverNote,
-        ...(userId ? { userId } : {}),
+        userId,
       },
     });
 

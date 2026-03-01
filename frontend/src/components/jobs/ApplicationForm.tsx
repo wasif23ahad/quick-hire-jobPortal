@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
 import { Toast } from '../ui/Toast';
+import Link from 'next/link';
 
 interface ApplicationFormProps {
   jobId: string;
@@ -20,6 +21,24 @@ export const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const userStr = localStorage.getItem("user");
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr);
+          setUserRole(user.role);
+        } catch (e) {
+          console.error("Error parsing user from localStorage", e);
+        }
+      }
+      setIsCheckingAuth(false);
+    };
+    checkAuth();
+  }, []);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -98,7 +117,32 @@ export const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
         <p className="text-muted mt-2">Submit your details below and we'll get back to you.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      {isCheckingAuth ? (
+        <div className="flex justify-center py-12">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      ) : userRole !== 'USER' ? (
+        <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-8 text-center">
+          <div className="w-16 h-16 bg-blue-100 text-primary rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h4 className="text-xl font-bold font-clash text-heading mb-2">Sign In Required</h4>
+          <p className="text-muted mb-6 max-w-md mx-auto">
+            You must be logged in as an applicant to submit your application and resume.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/login">
+              <Button size="lg">Sign In to Apply</Button>
+            </Link>
+            <Link href="/signup">
+              <Button size="lg" variant="outline">Create Account</Button>
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
           <Input 
             label="Full Name"
@@ -163,6 +207,7 @@ export const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
           </Button>
         </div>
       </form>
+      )}
 
       {toast && (
         <Toast 
