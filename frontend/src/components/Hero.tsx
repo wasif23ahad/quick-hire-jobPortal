@@ -114,10 +114,10 @@ export const Hero = () => {
           <div className="w-full">
             <form
               onSubmit={handleSearch}
-              className="flex flex-col sm:flex-row w-full max-w-[852px] sm:h-[89px] items-stretch sm:items-center sm:justify-center bg-[#FFFFFF] z-30 relative shrink-0"
+              className="flex flex-col sm:flex-row w-full max-w-[852px] min-h-[89px] items-stretch sm:items-center sm:justify-center bg-[#FFFFFF] z-30 relative shrink-0 gap-4 sm:gap-0"
               style={{
-                width: '852px',
-                height: '89px',
+                width: '100%',
+                maxWidth: '852px',
                 transform: 'rotate(0deg)',
                 opacity: 1,
                 padding: '16px',
@@ -126,9 +126,9 @@ export const Hero = () => {
               role="search"
               aria-label="Job search form"
             >
-              <div className="flex items-center gap-3 sm:gap-4 flex-1 h-full px-[8px] py-[16px]">
+              <div className="flex items-center gap-3 sm:gap-4 flex-1 w-full sm:h-full px-[8px] py-[16px] sm:py-[0px]">
                 <FiSearch className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] shrink-0" aria-hidden="true" />
-                <div className="flex flex-col justify-end flex-1 h-full w-full relative h-[38px]">
+                <div className="flex flex-col justify-end flex-1 w-full relative h-[38px]">
                   <label htmlFor="job-title-input" className="sr-only">
                     Job title or keyword
                   </label>
@@ -148,12 +148,12 @@ export const Hero = () => {
               {/* Vertical Divider line between search segments (desktop only) */}
               <div className="hidden sm:block w-px h-[57px] bg-[#D6DDEB] shrink-0" />
 
-              <div className="flex items-center gap-3 sm:gap-4 flex-1 h-full relative px-[8px] py-[16px]">
+              <div className="flex items-center gap-3 sm:gap-4 flex-1 w-full sm:h-full relative px-[8px] py-[16px] sm:py-0">
                 <FiMapPin
                   className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] shrink-0"
                   aria-hidden="true"
                 />
-                <div className="flex flex-col justify-end flex-1 h-full w-full relative h-[38px]">
+                <div className="flex flex-col justify-end flex-1 w-full relative h-[38px]">
                   <div className="flex items-center justify-between w-full pb-2">
                     <input
                       id="location-input"
@@ -212,8 +212,9 @@ export const Hero = () => {
             <p 
               className="m-0 mt-4 opacity-70 text-[#202430]"
               style={{
-                width: "412px",
-                height: "26px",
+                width: "100%",
+                maxWidth: "412px",
+                minHeight: "26px",
                 transform: "rotate(0deg)",
                 opacity: 0.7,
                 fontFamily: "var(--font-epilogue)",
