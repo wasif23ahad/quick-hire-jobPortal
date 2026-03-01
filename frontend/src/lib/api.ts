@@ -68,3 +68,35 @@ export const fetchJobById = async (id: string): Promise<Job | null> => {
     return null;
   }
 };
+
+export const getJobs = fetchJobs;
+export const getJobById = fetchJobById;
+
+export const createJob = async (jobData: any): Promise<Job> => {
+  const res = await fetch(`${API_URL}/jobs`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(jobData),
+  });
+  if (!res.ok) throw new Error("Failed to create job");
+  const data = await res.json();
+  return data.data;
+};
+
+export const deleteJob = async (id: string): Promise<void> => {
+  const res = await fetch(`${API_URL}/jobs/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) throw new Error("Failed to delete job");
+};
+
+export const submitApplication = async (applicationData: any): Promise<any> => {
+  const res = await fetch(`${API_URL}/applications`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(applicationData),
+  });
+  if (!res.ok) throw new Error("Failed to submit application");
+  const data = await res.json();
+  return data.data;
+};

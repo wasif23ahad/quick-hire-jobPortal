@@ -1,264 +1,211 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { FiSearch, FiMapPin, FiChevronDown } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+
+const popularSearches = ["UI Designer", "UX Researcher", "Android", "Admin"];
+
+const locationSuggestions = [
+  "Amsterdam, Netherlands",
+  "Austin, USA",
+  "Bangkok, Thailand",
+  "Barcelona, Spain",
+  "Beijing, China",
+  "Berlin, Germany",
+  "Boston, USA",
+  "Chicago, USA",
+  "Chittagong, Bangladesh",
+  "Dhaka, Bangladesh",
+  "Dubai, UAE",
+  "Dublin, Ireland",
+  "Florence, Italy",
+  "Hong Kong, China",
+  "Istanbul, Turkey",
+  "Jakarta, Indonesia",
+  "Kuala Lumpur, Malaysia",
+  "Lisbon, Portugal",
+  "London, UK",
+  "Los Angeles, USA",
+  "Madrid, Spain",
+  "Melbourne, Australia",
+  "Mexico City, Mexico",
+  "Milan, Italy",
+  "Montreal, Canada",
+  "Munich, Germany",
+  "New York, USA",
+  "Paris, France",
+  "Remote",
+  "Rome, Italy",
+  "San Francisco, USA",
+  "São Paulo, Brazil",
+  "Seattle, USA",
+  "Seoul, South Korea",
+  "Shanghai, China",
+  "Singapore",
+  "Stockholm, Sweden",
+  "Sydney, Australia",
+  "Sylhet, Bangladesh",
+  "Tel Aviv, Israel",
+  "Tokyo, Japan",
+  "Toronto, Canada",
+  "Vancouver, Canada",
+  "Vienna, Austria",
+  "Warsaw, Poland",
+  "Zurich, Switzerland"
+];
 
 export const Hero = () => {
+  const [jobTitle, setJobTitle] = useState("");
+  const [location, setLocation] = useState("");
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const query = new URLSearchParams();
+    if (jobTitle) query.append("search", jobTitle);
+    if (location) query.append("location", location);
+    router.push(`/jobs?${query.toString()}`);
+  };
+
+  const handleLocationToggle = () => {
+    setIsLocationOpen(!isLocationOpen);
+  };
+
+  const filteredLocations = locationSuggestions.filter((loc) =>
+    loc.toLowerCase().includes(location.toLowerCase())
+  );
+
   return (
-    <section 
-      style={{ 
-        width: '100%', 
-        backgroundColor: '#F8F8FD', 
-        display: 'flex', 
-        justifyContent: 'center',
-        overflow: 'hidden'
-      }}
-    >
-      {/* 1440px Fixed Width Container */}
-      <div 
-        style={{ 
-          width: '1440px', 
-          height: '787px', // Approximated height based on design
-          position: 'relative',
-          backgroundColor: '#F8F8FD'
-        }}
-      >
-        {/* Title Content — 629px wide, left 125px, top 160px */}
-        <div 
-          style={{ 
-            position: 'absolute',
-            width: '629px',
-            height: '530.58px',
-            left: '125px',
-            top: '160px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '23px'
-          }}
+    <section className="relative w-full flex justify-center bg-lightsgray overflow-hidden shrink-0">
+      <div className="relative w-[1440px] h-[716px] bg-lightsgray overflow-hidden">
+        
+        {/* Background Images / SVGs */}
+        <div
+          className="absolute top-[9px] left-[812px] w-[838px] h-[1037px]"
+          aria-hidden="true"
         >
-          {/* Main Title Heading — Clash Display 600, 72px */}
-          <div style={{ position: 'relative', width: '533px', height: '289.58px' }}>
-            <h1 
-              style={{ 
-                fontFamily: 'var(--font-clash-display)',
-                fontWeight: 600,
-                fontSize: '72px',
-                lineHeight: '110%',
-                color: '#25324B',
-                margin: 0
-              }}
-            >
-              Discover<br />
-              more than<br />
-              <span style={{ color: '#26A4FF' }}>5000+ Jobs</span>
-            </h1>
-
-            {/* Underline Vector 1 */}
-            <div 
-              style={{ 
-                position: 'absolute',
-                left: '0%',
-                right: '27.66%',
-                top: '88%',
-                height: '6px',
-                background: '#26A4FF',
-                borderRadius: '3px'
-              }}
-            />
-            {/* Underline Vector 2 */}
-            <div 
-              style={{ 
-                position: 'absolute',
-                left: '5.45%',
-                right: '60%',
-                top: '94%',
-                height: '4px',
-                background: '#26A4FF',
-                borderRadius: '2px'
-              }}
-            />
-          </div>
-
-          {/* Description — Epilogue 400, 20px, #515B6F */}
-          <p 
-            style={{ 
-              width: '521px',
-              fontFamily: 'var(--font-epilogue)',
-              fontWeight: 400,
-              fontSize: '20px',
-              lineHeight: '160%',
-              color: '#515B6F',
-              opacity: 0.7,
-              margin: 0
-            }}
-          >
-            Great platform for the job seeker that searching for new career heights and passionate about startups.
-          </p>
-
-          {/* Search Bar — 852x89px, white, complex shadow */}
-          <div 
-            style={{ 
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              padding: '16px',
-              width: '852px',
-              height: '89px',
-              background: '#FFFFFF',
-              boxShadow: '0px 79px 128px rgba(192, 192, 192, 0.09), 0px 28.8363px 46.7221px rgba(192, 192, 192, 0.0598508), 0px 13.9995px 22.6827px rgba(192, 192, 192, 0.0475723), 0px 6.86281px 11.1195px rgba(192, 192, 192, 0.0380675), 0px 2.71357px 4.39666px rgba(192, 192, 192, 0.0270615)',
-              zIndex: 10
-            }}
-          >
-            {/* Job Title Field */}
-            <div 
-              style={{ 
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                padding: '0 16px',
-                gap: '16px',
-                flex: 1,
-                alignSelf: 'stretch',
-                borderBottom: '1px solid #D6DDEB'
-              }}
-            >
-              <FiSearch style={{ width: '24px', height: '24px', color: '#25324B', flexShrink: 0 }} />
-              <input 
-                type="text" 
-                placeholder="Job title or keyword" 
-                style={{ 
-                  width: '100%',
-                  background: 'transparent',
-                  border: 'none',
-                  outline: 'none',
-                  fontFamily: 'var(--font-epilogue)',
-                  fontWeight: 400,
-                  fontSize: '16px',
-                  lineHeight: '160%',
-                  color: '#25324B'
-                }}
-              />
-            </div>
-
-            {/* Location Field */}
-            <div 
-              style={{ 
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                padding: '0 24px 0 8px',
-                gap: '16px',
-                flex: 1,
-                alignSelf: 'stretch',
-                borderBottom: '1px solid #D6DDEB'
-              }}
-            >
-              <FiMapPin style={{ width: '24px', height: '24px', color: '#25324B', flexShrink: 0 }} />
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flex: 1 }}>
-                <span 
-                  style={{ 
-                    fontFamily: 'var(--font-epilogue)',
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '160%',
-                    color: '#25324B',
-                    opacity: 0.9,
-                    whiteSpace: 'nowrap'
-                  }}
-                >
-                  Florence, Italy
-                </span>
-                <FiChevronDown style={{ width: '16px', height: '16px', color: '#7C8493' }} />
-              </div>
-            </div>
-
-            {/* Search Button — 209x57px */}
-            <button 
-              style={{ 
-                width: '209px',
-                height: '57px',
-                background: '#4640DE',
-                fontFamily: 'var(--font-epilogue)',
-                fontWeight: 700,
-                fontSize: '18px',
-                lineHeight: '160%',
-                color: '#FFFFFF',
-                border: 'none',
-                cursor: 'pointer',
-                flexShrink: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              Search my job
-            </button>
-          </div>
-
-          {/* Popular Tag Line */}
-          <div 
-            style={{ 
-              display: 'flex',
-              alignItems: 'center',
-              width: '412px',
-              fontFamily: 'var(--font-epilogue)',
-              fontWeight: 400,
-              fontSize: '16px',
-              lineHeight: '160%',
-              color: '#202430',
-              opacity: 0.7
-            }}
-          >
-            Popular : UI Designer, UX Researcher, Android, Admin
-          </div>
-        </div>
-
-        {/* Hero Image Section — absolute right:0, top:87px */}
-        <div 
-          style={{ 
-            position: 'absolute',
-            width: '837.99px',
-            height: '1036.69px',
-            left: '812px', // In Figma 812px from left
-            top: '87px',
-            zIndex: 1
-          }}
-        >
-          {/* Person Image Container */}
-          <div 
-            style={{ 
-              position: 'absolute',
-              width: '501px',
-              height: '707px',
-              left: '0',
-              top: '0',
-              overflow: 'hidden'
-            }}
-          >
-            <img 
-              src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800&auto=format&fit=crop"
-              alt="Person"
-              style={{ 
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'top'
-              }}
-            />
-          </div>
-
-          {/* White cutout rectangle — rotated 64deg */}
-          <div 
-            style={{ 
-              position: 'absolute',
-              width: '283.38px',
-              height: '716.25px',
-              left: '70px', // Relative to container left 812px
-              top: '468px',
-              background: '#FFFFFF',
-              transform: 'rotate(64deg)',
-              zIndex: 2
-            }}
+          {/* Person Image */}
+          <img
+            className="absolute top-0 left-0 w-[501px] h-[707px] object-cover"
+            alt="Hero Person"
+            src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800&auto=format&fit=crop"
           />
         </div>
+
+        <main className="flex flex-col w-[629px] items-start gap-[23px] absolute top-[82px] left-[125px] z-20">
+          <div className="relative w-[533px] h-auto mb-4">
+            <svg width="533" height="290" viewBox="0 0 533 290" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Discover more than 5000+ Jobs">
+              <path d="M26.712 63H3.456V14.76H26.712C42.192 14.76 51.984 23.76 51.984 38.88C51.984 54 42.192 63 26.712 63ZM26.712 24.48H14.256V53.28H26.712C36.504 53.28 40.464 50.472 40.464 38.88C40.464 27.288 36.504 24.48 26.712 24.48ZM67.4691 23.256H56.6691V14.76H67.4691V23.256ZM67.4691 63H56.6691V26.928H67.4691V63ZM91.3382 63.72C79.1702 63.72 72.4742 58.968 72.4742 50.616V50.4H83.2742V51.048C83.2742 54.288 85.2902 55.152 91.4102 55.152C97.1702 55.152 98.5382 54.216 98.5382 52.056C98.5382 50.04 97.4582 49.464 93.2102 48.888L83.0582 47.664C75.8582 46.872 71.8262 43.632 71.8262 37.584C71.8262 31.248 77.2262 26.208 89.6102 26.208C101.418 26.208 108.114 30.672 108.114 39.456V39.672H97.3142V39.24C97.3142 36.288 95.8742 34.776 89.2502 34.776C83.8502 34.776 82.4822 35.712 82.4822 38.016C82.4822 39.888 83.4902 40.68 88.2422 41.256L95.9462 42.192C105.594 43.272 109.194 46.512 109.194 52.488C109.194 59.256 102.498 63.72 91.3382 63.72ZM132.776 63.72C120.392 63.72 112.472 56.376 112.472 45C112.472 33.48 120.392 26.208 132.776 26.208C144.368 26.208 152.288 32.4 152.288 41.76V42.768H141.56V42.192C141.56 37.584 138.176 35.928 132.56 35.928C126.152 35.928 123.2 38.304 123.2 45C123.2 51.624 126.152 54 132.56 54C138.176 54 141.56 52.344 141.56 47.736V47.16H152.288V48.168C152.288 57.456 144.368 63.72 132.776 63.72ZM176.159 63.72C163.847 63.72 155.567 56.376 155.567 45C155.567 33.48 163.847 26.208 176.159 26.208C188.471 26.208 196.751 33.48 196.751 45C196.751 56.376 188.471 63.72 176.159 63.72ZM176.159 54.144C183.431 54.144 186.023 51.336 186.023 45C186.023 38.664 183.431 35.712 176.159 35.712C168.815 35.712 166.295 38.664 166.295 45C166.295 51.336 168.815 54.144 176.159 54.144ZM228.017 63H214.697L198.281 26.928H210.305L221.105 52.488H221.825L232.697 26.928H244.505L228.017 63ZM266.509 63.72C254.485 63.72 246.277 57.816 246.277 45C246.277 33.48 254.413 26.208 266.293 26.208C278.101 26.208 285.949 32.4 285.949 43.704C285.949 45 285.805 45.936 285.661 47.16H256.285C256.573 52.704 259.165 55.08 266.149 55.08C272.557 55.08 274.789 53.424 274.789 50.328V49.608H285.589V50.4C285.589 58.248 277.957 63.72 266.509 63.72ZM266.077 34.632C259.669 34.632 256.933 36.792 256.429 41.472H275.581C275.293 36.72 272.413 34.632 266.077 34.632ZM301.328 63H290.528V26.928H300.536V36.504H301.184C302.192 30.672 306.008 26.208 313.28 26.208C321.344 26.208 324.656 31.752 324.656 38.808V44.784H313.856V41.04C313.856 37.08 312.272 35.352 307.88 35.352C303.056 35.352 301.328 37.584 301.328 42.12V63ZM13.68 142H2.88V105.928H12.888V116.872H13.464C14.328 110.824 17.928 105.208 27 105.208C35.352 105.208 39.6 110.32 40.392 117.016H41.04C41.904 110.896 45.576 105.208 54.864 105.208C64.152 105.208 68.688 111.328 68.688 119.536V142H57.888V123.136C57.888 117.16 55.8 114.928 49.608 114.928C43.056 114.928 41.184 117.52 41.184 123.784V142H30.384V123.136C30.384 117.16 28.296 114.928 22.104 114.928C15.552 114.928 13.68 117.52 13.68 123.784V142ZM93.4009 142.72C81.0889 142.72 72.8089 135.376 72.8089 124C72.8089 112.48 81.0889 105.208 93.4009 105.208C105.713 105.208 113.993 112.48 113.993 124C113.993 135.376 105.713 142.72 93.4009 142.72ZM93.4009 133.144C100.673 133.144 103.265 130.336 103.265 124C103.265 117.664 100.673 114.712 93.4009 114.712C86.0569 114.712 83.5369 117.664 83.5369 124C83.5369 130.336 86.0569 133.144 93.4009 133.144ZM129.203 142H118.403V105.928H128.411V115.504H129.059C130.067 109.672 133.883 105.208 141.155 105.208C149.219 105.208 152.531 110.752 152.531 117.808V123.784H141.731V120.04C141.731 116.08 140.147 114.352 135.755 114.352C130.931 114.352 129.203 116.584 129.203 121.12V142ZM175.595 142.72C163.571 142.72 155.363 136.816 155.363 124C155.363 112.48 163.499 105.208 175.379 105.208C187.187 105.208 195.035 111.4 195.035 122.704C195.035 124 194.891 124.936 194.747 126.16H165.371C165.659 131.704 168.251 134.08 175.235 134.08C181.643 134.08 183.875 132.424 183.875 129.328V128.608H194.675V129.4C194.675 137.248 187.043 142.72 175.595 142.72ZM175.163 113.632C168.755 113.632 166.019 115.792 165.515 120.472H184.667C184.379 115.72 181.499 113.632 175.163 113.632ZM236.14 142H227.212C218.788 142 213.676 138.04 213.676 128.968V114.856H207.988V105.928H213.676V98.944H224.476V105.928H236.14V114.856H224.476V127.744C224.476 131.344 225.844 132.28 229.66 132.28H236.14V142ZM250.985 142H240.185V93.76H250.985V116.944H251.561C252.713 110.824 256.961 105.208 266.177 105.208C275.897 105.208 280.649 111.544 280.649 119.896V142H269.849V123.136C269.849 117.088 267.257 114.928 260.489 114.928C253.217 114.928 250.985 117.88 250.985 123.928V142ZM297.187 142.72C289.411 142.72 284.731 139.12 284.731 133.072C284.731 127.744 288.691 124.432 296.395 123.64L311.875 122.056V120.688C311.875 116.008 309.787 114.712 304.027 114.712C298.555 114.712 296.323 116.152 296.323 120.256V120.544H285.451V120.328C285.451 111.4 292.939 105.208 304.819 105.208C316.843 105.208 322.531 111.4 322.531 120.832V142H312.451V133.72H311.875C310.219 139.336 305.179 142.72 297.187 142.72ZM295.603 132.352C295.603 134.296 297.115 135.088 300.283 135.088C307.627 135.088 311.587 133.36 311.875 128.248L299.347 129.688C296.755 129.904 295.603 130.624 295.603 132.352ZM338.805 142H328.005V105.928H338.013V117.016H338.661C339.597 110.968 343.917 105.208 353.349 105.208C363.213 105.208 367.893 111.544 367.893 119.536V142H357.093V123.136C357.093 117.376 354.717 114.928 348.093 114.928C341.253 114.928 338.805 117.664 338.805 123.784V142Z" fill="#25324B"/>
+              <path d="M25.344 221.72C10.224 221.72 2.304 216.608 2.304 206.024V205.376H13.464V206.024C13.464 210.128 16.344 211.856 25.488 211.856C33.768 211.856 36.288 209.912 36.288 204.656C36.288 199.328 33.768 197.384 25.56 197.384C18.936 197.384 15.336 198.176 13.608 200.696L12.816 200.624V200.696L2.664 200.408L5.4 172.76H45.144V182.48H14.976L13.464 195.08L14.112 195.152C15.84 192.344 20.952 188.816 29.952 188.816C41.832 188.816 47.736 194.576 47.736 204.512C47.736 214.952 40.68 221.72 25.344 221.72ZM75.9825 221.72C60.4305 221.72 51.8625 211.928 51.8625 196.88C51.8625 181.904 60.4305 172.04 75.9825 172.04C91.4625 172.04 100.103 181.904 100.103 196.88C100.103 211.928 91.4625 221.72 75.9825 221.72ZM75.9825 211.208C85.1265 211.208 88.5105 207.248 88.5105 196.88C88.5105 186.512 85.1265 182.552 75.9825 182.552C66.7665 182.552 63.4545 186.512 63.4545 196.88C63.4545 207.248 66.7665 211.208 75.9825 211.208ZM127.733 221.72C112.181 221.72 103.613 211.928 103.613 196.88C103.613 181.904 112.181 172.04 127.733 172.04C143.213 172.04 151.853 181.904 151.853 196.88C151.853 211.928 143.213 221.72 127.733 221.72ZM127.733 211.208C136.877 211.208 140.261 207.248 140.261 196.88C140.261 186.512 136.877 182.552 127.733 182.552C118.517 182.552 115.205 186.512 115.205 196.88C115.205 207.248 118.517 211.208 127.733 211.208ZM179.483 221.72C163.931 221.72 155.363 211.928 155.363 196.88C155.363 181.904 163.931 172.04 179.483 172.04C194.963 172.04 203.603 181.904 203.603 196.88C203.603 211.928 194.963 221.72 179.483 221.72ZM179.483 211.208C188.627 211.208 192.011 207.248 192.011 196.88C192.011 186.512 188.627 182.552 179.483 182.552C170.267 182.552 166.955 186.512 166.955 196.88C166.955 207.248 170.267 211.208 179.483 211.208ZM228.353 212.936H219.065V201.344H207.617V192.416H219.065V180.824H228.353V192.416H239.801V201.344H228.353V212.936ZM275.731 221.72C260.107 221.72 254.275 214.16 254.275 201.416V199.328H265.723V201.416C265.723 208.544 267.163 211.208 275.731 211.208C284.227 211.208 285.883 208.688 285.883 201.92V172.76H297.331V201.92C297.331 214.304 291.427 221.72 275.731 221.72ZM321.987 221.72C309.675 221.72 301.395 214.376 301.395 203C301.395 191.48 309.675 184.208 321.987 184.208C334.299 184.208 342.579 191.48 342.579 203C342.579 214.376 334.299 221.72 321.987 221.72ZM321.987 212.144C329.259 212.144 331.851 209.336 331.851 203C331.851 196.664 329.259 193.712 321.987 193.712C314.643 193.712 312.123 196.664 312.123 203C312.123 209.336 314.643 212.144 321.987 212.144ZM356.997 221H346.989V172.76H357.789V194.504H358.365C359.589 188.456 363.981 184.208 372.549 184.208C383.349 184.208 389.397 191.48 389.397 203C389.397 214.376 383.277 221.72 372.045 221.72C363.693 221.72 358.941 218.12 357.645 210.992H356.997V221ZM357.789 203.216C357.789 209.48 361.461 211.856 368.301 211.856C375.285 211.856 378.453 209.552 378.453 203C378.453 196.376 375.285 194.072 368.373 194.072C361.389 194.072 357.789 196.376 357.789 202.64V203.216ZM412.104 221.72C399.936 221.72 393.24 216.968 393.24 208.616V208.4H404.04V209.048C404.04 212.288 406.056 213.152 412.176 213.152C417.936 213.152 419.304 212.216 419.304 210.056C419.304 208.04 418.224 207.464 413.976 206.888L403.824 205.664C396.624 204.872 392.592 201.632 392.592 195.584C392.592 189.248 397.992 184.208 410.376 184.208C422.184 184.208 428.88 188.672 428.88 197.456V197.672H418.08V197.24C418.08 194.288 416.64 192.776 410.016 192.776C404.616 192.776 403.248 193.712 403.248 196.016C403.248 197.888 404.256 198.68 409.008 199.256L416.712 200.192C426.36 201.272 429.96 204.512 429.96 210.488C429.96 217.256 423.264 221.72 412.104 221.72Z" fill="#26A4FF"/>
+              <path d="M9.7022 266.507C13.2646 266.507 16.9966 266.339 20.559 266.17C22.0857 266.17 23.4428 266.002 24.9696 266.002C31.4158 265.665 37.862 265.328 44.3082 264.991C52.1115 264.654 59.7452 264.149 67.5485 263.812C78.5749 263.138 89.6013 262.633 100.628 261.959C103.172 261.791 105.717 261.791 108.261 261.622C114.708 261.285 121.154 260.949 127.6 260.78C134.046 260.443 140.493 260.106 146.939 259.938C149.483 259.769 152.028 259.601 154.572 259.601C164.751 259.264 175.099 258.927 185.277 258.59C191.553 258.422 197.83 258.254 204.276 257.917C206.821 257.917 209.196 257.748 211.74 257.748C221.579 257.58 231.588 257.411 241.427 257.243C251.266 257.074 260.935 256.906 270.774 256.738C273.318 256.738 275.863 256.738 278.577 256.738C285.023 256.738 291.3 256.738 297.746 256.738C307.755 256.738 317.594 256.738 327.602 256.569C330.826 256.569 334.049 256.569 337.272 256.569C344.057 256.569 350.843 256.569 357.628 256.569C358.137 256.569 358.816 256.569 359.325 256.569C344.057 256.738 328.62 256.906 313.353 257.243C306.907 257.411 300.63 257.411 294.184 257.58C291.47 257.58 288.586 257.58 285.872 257.748C276.542 257.917 267.381 258.254 258.051 258.422C247.364 258.759 236.677 258.927 225.99 259.264C224.124 259.264 222.427 259.433 220.561 259.433C214.794 259.769 209.196 259.938 203.428 260.275C191.893 260.78 180.357 261.285 168.822 261.791C167.126 261.791 165.429 261.959 163.733 262.128C158.135 262.465 152.367 262.97 146.769 263.307C136.591 263.98 126.582 264.654 116.404 265.328C113.69 265.496 110.806 265.833 108.092 266.002C101.646 266.507 95.1994 267.012 88.7532 267.686C80.6106 268.36 72.2983 269.034 64.1558 269.707C52.7901 270.718 41.2547 271.729 29.889 272.739C27.1748 272.908 24.4606 273.245 21.5768 273.413C16.6573 273.918 11.7378 274.424 6.81837 274.929C6.30945 274.929 5.80055 275.266 5.80055 275.94C5.80055 276.445 6.30945 276.95 6.81837 276.95C8.68438 276.95 10.3808 277.119 12.2468 277.119C12.0771 277.624 11.9075 278.129 11.9075 278.635C11.9075 280.488 13.4342 282.172 15.4699 282.172C29.5498 281.33 43.46 280.319 57.5399 279.645C69.7538 279.14 81.9677 278.466 94.1816 277.961C107.583 277.287 121.154 276.613 134.555 276.108C138.796 275.94 143.037 275.771 147.278 275.434C148.465 275.434 149.653 275.266 151.01 275.266C172.724 274.761 194.437 274.087 216.151 273.582C227.686 273.245 239.391 272.908 250.926 272.739C255.167 272.571 259.239 272.571 263.48 272.402C285.702 272.066 307.924 271.729 330.147 271.392C339.647 271.223 349.146 271.055 358.646 270.886C366.789 270.718 374.931 270.718 383.074 270.381C389.859 270.213 396.475 269.876 403.261 269.707C406.653 269.539 410.046 269.539 413.269 269.371C420.903 268.865 428.537 268.36 436.17 267.855C435.661 268.528 435.661 269.539 435.831 270.213C436.001 271.055 436.51 271.729 437.358 272.066C438.036 272.402 439.054 272.739 439.733 272.402C441.429 271.729 443.125 271.055 444.652 270.381C444.652 270.381 444.652 270.381 444.482 270.381C444.652 270.381 444.652 270.213 444.822 270.213C444.991 270.213 445.161 270.044 445.161 270.044H444.991C445.84 269.707 446.688 269.371 447.706 268.865C448.554 268.528 449.572 268.023 450.42 267.686C451.438 267.181 452.286 266.676 453.304 266.17C454.321 265.665 455 264.317 455 263.138C455 262.465 454.83 261.959 454.491 261.285C454.152 260.612 453.304 259.769 452.455 259.601C451.607 259.433 450.759 259.264 449.911 259.264C449.741 259.264 449.572 259.264 449.402 259.264C448.893 259.264 448.215 259.264 447.706 259.433C446.349 259.601 445.161 259.769 443.804 259.769C442.786 259.769 441.768 259.938 440.581 259.938C437.697 260.106 434.983 260.275 432.099 260.612C431.42 260.612 430.572 260.78 429.894 260.78C430.233 260.443 430.403 260.106 430.403 259.769C430.572 259.433 430.572 259.096 430.572 258.759C430.572 258.59 430.572 258.254 430.742 258.085C430.742 257.748 430.742 257.411 430.572 257.243C430.572 257.243 430.742 257.243 430.742 257.074C431.251 256.738 431.76 256.401 432.099 255.727C432.438 255.222 432.608 254.548 432.608 253.874C432.608 253.2 432.438 252.695 432.099 252.021C431.929 251.853 431.76 251.516 431.59 251.348C431.081 250.842 430.572 250.674 430.063 250.505C429.045 250.168 427.858 250 426.671 250C425.653 250 424.805 250 423.787 250C422.43 250 421.073 250 419.715 250C417.849 250 415.814 250 413.948 250C408.859 250 403.77 250 398.68 250C393.931 250 389.011 250 384.261 250C379.851 250 375.61 250 371.199 250C353.727 250 336.424 250.168 318.951 250.337C305.889 250.505 292.827 250.674 279.765 250.674C273.997 250.674 268.06 250.842 262.292 251.011C249.23 251.348 236.168 251.516 223.106 251.853C219.374 251.853 215.642 252.021 211.91 252.021C209.705 252.021 207.669 252.19 205.464 252.19C192.571 252.695 179.679 253.2 166.786 253.706C162.885 253.874 158.983 254.043 154.912 254.211C152.706 254.211 150.501 254.379 148.296 254.548C135.403 255.222 122.681 255.895 109.788 256.569C103.172 256.906 96.5565 257.243 89.9406 257.748C78.5749 258.422 67.2092 259.096 56.0132 259.938C46.1742 260.612 36.3353 261.117 26.4963 261.622C24.9696 261.791 23.4428 261.791 21.7464 261.959C19.2019 262.128 16.6573 262.128 14.1128 262.296C11.9075 262.465 9.7022 262.465 7.32728 262.465C7.15764 261.959 6.47909 261.454 5.97018 261.454C4.44345 261.622 3.08635 261.791 1.55961 261.959C0.881065 261.959 0.202516 262.296 0.0328783 263.138C-0.136759 263.98 0.372152 264.823 1.0507 264.991C1.72925 265.16 2.23816 265.328 2.91671 265.496C3.59526 265.665 4.10417 265.665 4.78272 265.665C6.47909 266.339 8.00583 266.339 9.7022 266.507ZM406.653 260.949C408.689 260.949 410.894 260.949 412.93 260.949C413.1 261.454 413.439 261.791 413.778 262.128C412.93 262.128 412.082 262.296 411.403 262.296C409.876 262.296 408.35 262.465 406.823 262.465C400.038 262.633 393.422 262.97 386.636 263.138C383.583 263.307 380.529 263.475 377.476 263.475C372.726 263.475 367.806 263.644 363.057 263.644C352.03 263.812 341.173 263.98 330.147 264.149C308.773 264.486 287.568 264.823 266.194 265.16C250.926 265.328 235.659 265.833 220.392 266.339C197.491 267.012 174.42 267.518 151.519 268.191C146.939 268.36 142.359 268.528 137.778 268.865C124.716 269.539 111.654 270.044 98.5921 270.718C85.8693 271.392 72.9769 271.897 60.2541 272.571C59.0666 272.571 57.8792 272.739 56.6917 272.739C60.0845 272.402 63.6468 272.234 67.0396 271.897C79.0838 271.055 91.1281 270.044 103.172 269.202C107.413 268.865 111.654 268.528 115.725 268.191C117.931 268.023 120.136 267.855 122.172 267.855C134.725 267.181 147.278 266.339 159.831 265.665C162.206 265.496 164.751 265.328 167.126 265.16C170.688 264.991 174.25 264.823 177.643 264.823C190.536 264.317 203.428 263.812 216.32 263.307C219.204 263.138 222.088 263.138 224.802 262.97C225.481 262.97 226.329 262.97 227.008 262.97C229.043 262.97 231.079 262.97 232.945 262.801C245.837 262.465 258.899 262.296 271.792 261.959C277.729 261.791 283.666 261.622 289.604 261.622C308.773 261.454 328.111 261.285 347.28 261.117C367.467 261.117 387.145 261.117 406.653 260.949Z" fill="#26A4FF"/>
+              <path d="M35.317 289.583C35.8791 289.583 36.3348 289.131 36.3348 288.573C36.3348 288.014 35.8791 287.562 35.317 287.562C34.7549 287.562 34.2992 288.014 34.2992 288.573C34.2992 289.131 34.7549 289.583 35.317 289.583Z" fill="#26A4FF"/>
+            </svg>
+          </div>
+
+          <p className="m-0 relative w-[521px] opacity-70 font-body-xlarge-regular font-[number:var(--body-xlarge-regular-font-weight)] text-neutrals-80 text-[length:var(--body-xlarge-regular-font-size)] tracking-[var(--body-xlarge-regular-letter-spacing)] leading-[var(--body-xlarge-regular-line-height)] [font-style:var(--body-xlarge-regular-font-style)]">
+            Great platform for the job seeker that searching for new career
+            heights and passionate about startups.
+          </p>
+
+          <div className="inline-flex flex-col items-start gap-4 relative flex-[0_0_auto] mr-[-223.00px]">
+            <form
+              onSubmit={handleSearch}
+              className="flex w-[852px] items-center justify-center p-4 relative flex-[0_0_auto] bg-color-white shadow-shadow"
+              role="search"
+              aria-label="Job search form"
+            >
+              <div className="flex items-center gap-4 px-4 py-0 relative flex-1 self-stretch grow">
+                <FiSearch className="!relative !w-6 !h-6 text-[#25324B] font-bold" aria-hidden="true" />
+                <div className="flex flex-col items-start justify-between pt-5 pb-0 px-0 relative flex-1 self-stretch grow">
+                  <label htmlFor="job-title-input" className="sr-only">
+                    Job title or keyword
+                  </label>
+                  <input
+                    id="job-title-input"
+                    type="text"
+                    value={jobTitle}
+                    onChange={(e) => setJobTitle(e.target.value)}
+                    placeholder="Job title or keyword"
+                    className="relative w-full mt-[-1.00px] opacity-50 font-body-normal-regular font-[number:var(--body-normal-regular-font-weight)] text-neutrals-60 text-[length:var(--body-normal-regular-font-size)] tracking-[var(--body-normal-regular-letter-spacing)] leading-[var(--body-normal-regular-line-height)] [font-style:var(--body-normal-regular-font-style)] focus:opacity-100 focus:text-neutrals-100 placeholder:text-neutrals-60 bg-transparent border-none outline-none"
+                    aria-label="Job title or keyword"
+                  />
+                  <div className="relative self-stretch w-full h-px bg-neutrals-20" />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 pl-2 pr-6 py-0 relative flex-1 self-stretch grow">
+                <FiMapPin
+                  className="!relative !w-6 !h-6 text-[#25324B] font-bold"
+                  aria-hidden="true"
+                />
+                <div className="flex flex-col items-start justify-between pt-5 pb-0 px-0 relative flex-1 self-stretch grow">
+                  <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
+                    <input
+                      id="location-input"
+                      type="text"
+                      value={location}
+                      onChange={(e) => {
+                        setLocation(e.target.value);
+                        setIsLocationOpen(true);
+                      }}
+                      onFocus={() => setIsLocationOpen(true)}
+                      onBlur={() => setTimeout(() => setIsLocationOpen(false), 200)}
+                      placeholder="City, state, or country"
+                      className="relative w-full mt-[-1.00px] opacity-90 font-body-normal-regular font-[number:var(--body-normal-regular-font-weight)] text-neutrals-100 text-[length:var(--body-normal-regular-font-size)] tracking-[var(--body-normal-regular-letter-spacing)] leading-[var(--body-normal-regular-line-height)] [font-style:var(--body-normal-regular-font-style)] focus:opacity-100 bg-transparent border-none outline-none"
+                      aria-label="Location"
+                      autoComplete="off"
+                    />
+                    <FiChevronDown 
+                      className="!relative !w-4 !h-4 text-neutrals-60 cursor-pointer hover:text-[#25324b] transition-colors" 
+                      aria-hidden="true" 
+                      onClick={() => setIsLocationOpen((prev) => !prev)}
+                    />
+                  </div>
+                  <div className="relative self-stretch w-full h-px bg-neutrals-20" />
+                  
+                  {/* Autocomplete Dropdown */}
+                  {isLocationOpen && filteredLocations.length > 0 && (
+                    <ul className="absolute top-full left-0 w-full mt-2 bg-white border border-neutrals-20 rounded shadow-shadow z-50 max-h-48 overflow-y-auto list-none p-0 m-0">
+                      {filteredLocations.map((loc, idx) => (
+                        <li
+                          key={idx}
+                          className="px-4 py-3 hover:bg-lightsgray hover:text-[#4640de] transition-colors cursor-pointer text-neutrals-80 font-body-normal-regular text-[length:var(--body-normal-regular-font-size)] border-b border-neutrals-20 last:border-b-0"
+                          onClick={() => {
+                            setLocation(loc);
+                            setIsLocationOpen(false);
+                          }}
+                        >
+                          {loc}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="cursor-pointer all-[unset] box-border flex w-[209px] items-center justify-center gap-2.5 px-[27px] py-3.5 relative self-stretch bg-brandsprimary"
+                aria-label="Search for jobs"
+              >
+                <span className="text-neutrals-0 text-[length:var(--button-large-font-size)] leading-[var(--button-large-line-height)] relative w-fit mt-[-1.00px] font-button-large font-[number:var(--button-large-font-weight)] text-center tracking-[var(--button-large-letter-spacing)] whitespace-nowrap [font-style:var(--button-large-font-style)]">
+                  Search my job
+                </span>
+              </button>
+            </form>
+
+            <p className="m-0 mt-2 relative flex items-center w-fit opacity-70 [font-family:'Epilogue',Helvetica] font-normal text-colorblack text-base tracking-[0] leading-[25.6px] whitespace-nowrap">
+              <span className="[font-family:'Epilogue',Helvetica] font-normal text-[#202430] text-base tracking-[0] leading-[25.6px]">
+                Popular :{" "}
+              </span>
+              <span className="[font-family:'Epilogue',Helvetica] font-medium ml-1">
+                {popularSearches.join(", ")}
+              </span>
+            </p>
+          </div>
+        </main>
       </div>
     </section>
   );

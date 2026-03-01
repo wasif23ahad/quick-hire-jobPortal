@@ -1,33 +1,33 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { 
   FiChevronRight, 
   FiPenTool, 
   FiTrendingUp, 
-  FiVolume2,   // changed from FiMegaphone
+  FiVolume2,
   FiBriefcase, 
   FiCode, 
   FiCpu, 
   FiUsers,
-  FiCrosshair  // optional: better replacement for FiTarget
+  FiCrosshair
 } from "react-icons/fi";
 import Link from "next/link";
 
 const categories = [
-  { name: "Design", jobs: "235 jobs available", Icon: FiPenTool, active: false },
-  { name: "Sales", jobs: "756 jobs available", Icon: FiTrendingUp, active: false },
-  { name: "Marketing", jobs: "140 jobs available", Icon: FiVolume2, active: true }, // changed
-  { name: "Finance", jobs: "325 jobs available", Icon: FiCrosshair, active: false }, // changed
-  { name: "Technology", jobs: "436 jobs available", Icon: FiCpu, active: false },
-  { name: "Engineering", jobs: "542 jobs available", Icon: FiCode, active: false },
-  { name: "Business", jobs: "211 jobs available", Icon: FiBriefcase, active: false },
-  { name: "Human Resource", jobs: "346 jobs available", Icon: FiUsers, active: false },
+  { name: "Design", jobs: "235 jobs available", Icon: FiPenTool },
+  { name: "Sales", jobs: "756 jobs available", Icon: FiTrendingUp },
+  { name: "Marketing", jobs: "140 jobs available", Icon: FiVolume2 },
+  { name: "Finance", jobs: "325 jobs available", Icon: FiCrosshair },
+  { name: "Technology", jobs: "436 jobs available", Icon: FiCpu },
+  { name: "Engineering", jobs: "542 jobs available", Icon: FiCode },
+  { name: "Business", jobs: "211 jobs available", Icon: FiBriefcase },
+  { name: "Human Resource", jobs: "346 jobs available", Icon: FiUsers },
 ];
 
-function FiTarget(props: any) {
-  return <FiTrendingUp {...props} />; // Placeholder as react-icons FiTarget might need different import
-}
-
 export const CategoryExplore = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <section 
       style={{ 
@@ -100,63 +100,85 @@ export const CategoryExplore = () => {
             gap: '32px'
           }}
         >
-          {categories.map((cat, index) => (
-            <div 
-              key={cat.name}
-              style={{ 
-                height: '240px',
-                padding: '32px',
-                border: cat.active ? 'none' : '1px solid #D6DDEB',
-                background: cat.active ? '#4640DE' : '#FFFFFF',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between'
-              }}
-            >
-              <div 
-                style={{ 
-                  width: '48px',
-                  height: '48px',
-                  color: cat.active ? '#FFFFFF' : '#4640DE',
-                  fontSize: '32px'
-                }}
+          {categories.map((cat, index) => {
+            const isActive = hoveredIndex === index;
+            return (
+              <Link
+                key={cat.name}
+                href={`/jobs?search=${encodeURIComponent(cat.name)}`}
+                style={{ textDecoration: 'none' }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
               >
-                <cat.Icon size={40} />
-              </div>
-              
-              <div>
-                <h3 
+                <div 
                   style={{ 
-                    fontFamily: 'var(--font-clash-display)',
-                    fontWeight: 600,
-                    fontSize: '24px',
-                    color: cat.active ? '#FFFFFF' : '#202430',
-                    margin: '0 0 12px 0'
-                  }}
-                >
-                  {cat.name}
-                </h3>
-                <p 
-                  style={{ 
-                    fontFamily: 'var(--font-epilogue)',
-                    fontWeight: 400,
-                    fontSize: '18px',
-                    color: cat.active ? '#FFFFFF' : '#7C8493',
-                    opacity: cat.active ? 0.8 : 1,
-                    margin: 0,
+                    height: '240px',
+                    padding: '32px',
+                    border: isActive ? 'none' : '1px solid #D6DDEB',
+                    background: isActive ? '#4640DE' : '#FFFFFF',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    transform: isActive ? 'translateY(-6px)' : 'translateY(0)',
+                    boxShadow: isActive ? '0 12px 24px rgba(70, 64, 222, 0.3)' : 'none',
                   }}
                 >
-                  {cat.jobs} 
-                  <FiChevronRight style={{ color: cat.active ? '#FFFFFF' : '#202430' }} />
-                </p>
-              </div>
-            </div>
-          ))}
+                  <div 
+                    style={{ 
+                      width: '48px',
+                      height: '48px',
+                      color: isActive ? '#FFFFFF' : '#4640DE',
+                      fontSize: '32px',
+                      transition: 'color 0.3s ease, transform 0.3s ease',
+                      transform: isActive ? 'scale(1.1)' : 'scale(1)',
+                    }}
+                  >
+                    <cat.Icon size={40} />
+                  </div>
+                  
+                  <div>
+                    <h3 
+                      style={{ 
+                        fontFamily: 'var(--font-clash-display)',
+                        fontWeight: 600,
+                        fontSize: '24px',
+                        color: isActive ? '#FFFFFF' : '#202430',
+                        margin: '0 0 12px 0',
+                        transition: 'color 0.3s ease',
+                      }}
+                    >
+                      {cat.name}
+                    </h3>
+                    <p 
+                      style={{ 
+                        fontFamily: 'var(--font-epilogue)',
+                        fontWeight: 400,
+                        fontSize: '18px',
+                        color: isActive ? '#FFFFFF' : '#7C8493',
+                        opacity: isActive ? 0.8 : 1,
+                        margin: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        transition: 'color 0.3s ease, opacity 0.3s ease',
+                      }}
+                    >
+                      {cat.jobs} 
+                      <FiChevronRight 
+                        style={{ 
+                          color: isActive ? '#FFFFFF' : '#202430',
+                          transition: 'color 0.3s ease, transform 0.3s ease',
+                          transform: isActive ? 'translateX(4px)' : 'translateX(0)',
+                        }} 
+                      />
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

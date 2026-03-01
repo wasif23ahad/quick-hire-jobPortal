@@ -3,6 +3,50 @@
 :root {
   --background: #ffffff;
   --foreground: #25324b;
+
+  /* Figma Export Typography Variables */
+  --body-normal-medium-font-family: "Epilogue", Helvetica;
+  --body-normal-medium-font-size: 16px;
+  --body-normal-medium-font-style: normal;
+  --body-normal-medium-font-weight: 500;
+  --body-normal-medium-letter-spacing: 0px;
+  --body-normal-medium-line-height: 160%;
+  --body-normal-regular-font-family: "Epilogue", Helvetica;
+  --body-normal-regular-font-size: 16px;
+  --body-normal-regular-font-style: normal;
+  --body-normal-regular-font-weight: 400;
+  --body-normal-regular-letter-spacing: 0px;
+  --body-normal-regular-line-height: 160%;
+  --body-xlarge-regular-font-family: "Epilogue", Helvetica;
+  --body-xlarge-regular-font-size: 20px;
+  --body-xlarge-regular-font-style: normal;
+  --body-xlarge-regular-font-weight: 400;
+  --body-xlarge-regular-letter-spacing: 0px;
+  --body-xlarge-regular-line-height: 160%;
+  --button-large-font-family: "Epilogue", Helvetica;
+  --button-large-font-size: 18px;
+  --button-large-font-style: normal;
+  --button-large-font-weight: 700;
+  --button-large-letter-spacing: 0px;
+  --button-large-line-height: 160%;
+  --button-normal-font-family: "Epilogue", Helvetica;
+  --button-normal-font-size: 16px;
+  --button-normal-font-style: normal;
+  --button-normal-font-weight: 700;
+  --button-normal-letter-spacing: 0px;
+  --button-normal-line-height: 160%;
+  --heading-h1-font-family: "Clash Display", Helvetica;
+  --heading-h1-font-size: 72px;
+  --heading-h1-font-style: normal;
+  --heading-h1-font-weight: 400;
+  --heading-h1-letter-spacing: 0px;
+  --heading-h1-line-height: 110%;
+}
+
+@layer components {
+  .all-\[unset\] {
+    all: unset;
+  }
 }
 
 @theme {
@@ -25,7 +69,27 @@
   --color-tag-business: #4640de;
   --color-tag-technology: #ff6550;
 
-  --font-clash: "Clash Display", sans-serif;
+  /* Figma Export Theme Config Variables */
+  --color-brandsprimary: rgba(70, 64, 222, 1);
+  --color-color-white: rgba(255, 255, 255, 1);
+  --color-colorblack: rgba(32, 36, 48, 1);
+  --color-lightsgray: rgba(248, 248, 253, 1);
+  --color-neutrals-0: rgba(255, 255, 255, 1);
+  --color-neutrals-100: rgba(37, 50, 75, 1);
+  --color-neutrals-20: rgba(214, 221, 235, 1);
+  --color-neutrals-60: rgba(124, 132, 147, 1);
+  --color-neutrals-80: rgba(81, 91, 111, 1);
+
+  --font-body-normal-medium: var(--body-normal-medium-font-family);
+  --font-body-normal-regular: var(--body-normal-regular-font-family);
+  --font-body-xlarge-regular: var(--body-xlarge-regular-font-family);
+  --font-button-large: var(--button-large-font-family);
+  --font-button-normal: var(--button-normal-font-family);
+  --font-heading-h1: var(--heading-h1-font-family);
+  
+  --shadow-shadow: 0px 2.7135651111602783px 4.396662712097168px 0px rgba(192, 192, 192, 0.03), 0px 6.862810134887695px 11.119489669799805px 0px rgba(192, 192, 192, 0.04), 0px 13.999488830566406px 22.682716369628906px 0px rgba(192, 192, 192, 0.05), 0px 28.836299896240234px 46.72210693359375px 0px rgba(192, 192, 192, 0.06), 0px 79px 128px 0px rgba(192, 192, 192, 0.09);
+
+  --font-clash-display: "Clash Display", sans-serif;
   --font-epilogue: "Epilogue", sans-serif;
 }
 

@@ -12,7 +12,7 @@ interface JobCardProps {
   tags?: { name: string; color: string; bgColor: string; borderColor: string }[];
 }
 
-export const JobCard = ({ id, title, company, location, description, tags }: JobCardProps) => {
+export const JobCard = ({ id, logo, title, company, location, description, tags }: JobCardProps) => {
   return (
     <Link
       href={`/jobs/${id || '#'}`}
@@ -51,18 +51,22 @@ export const JobCard = ({ id, title, company, location, description, tags }: Job
         style={{ 
           width: '48px',
           height: '48px',
-          background: '#F8F8FD',
+          background: '#FFFFFF',
+          border: '1px solid #D6DDEB',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontFamily: 'var(--font-clash-display)',
-          fontWeight: 700,
-          fontSize: '24px',
-          color: '#202430',
+          overflow: 'hidden',
           marginBottom: '24px'
         }}
       >
-        {company[0]}
+        {logo ? (
+          <img src={logo} alt={company} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+        ) : (
+          <span style={{ fontFamily: 'var(--font-clash-display)', fontWeight: 700, fontSize: '24px', color: '#202430' }}>
+            {company[0]}
+          </span>
+        )}
       </div>
 
       {/* Title & Company */}

@@ -38,8 +38,8 @@ export const Footer = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '32px' }}>
-            <div style={{ width: '32px', height: '32px', background: '#4640DE', borderRadius: '50%' }} />
-            <span style={{ fontFamily: 'var(--font-clash-display)', fontWeight: 700, fontSize: '24px' }}>QuickHire</span>
+            <img src="/logo.svg" alt="QuickHire Logo" style={{ width: '32px', height: '32px' }} />
+            <span style={{ fontFamily: 'var(--font-clash-display)', fontWeight: 700, fontSize: '24px', letterSpacing: '-0.02em' }}>QuickHire</span>
           </div>
           <p 
             style={{ 
@@ -64,10 +64,10 @@ export const Footer = () => {
             top: '0px'
           }}
         >
-          <h3 style={{ fontFamily: 'var(--font-epilogue)', fontWeight: 600, fontSize: '18px', margin: '0 0 24px 0' }}>About</h3>
+          <h3 style={{ fontFamily: 'var(--font-clash-display)', fontWeight: 600, fontSize: '18px', margin: '0 0 24px 0', color: '#FFFFFF' }}>About</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {['Companies', 'Pricing', 'Terms', 'Advice', 'Privacy Policy'].map(item => (
-              <Link key={item} href="#" style={{ color: '#D6DDEB', textDecoration: 'none', opacity: 0.8, fontFamily: 'var(--font-epilogue)', fontSize: '16px' }}>{item}</Link>
+              <Link key={item} href="#" style={{ color: '#D6DDEB', textDecoration: 'none', fontFamily: 'var(--font-epilogue)', fontSize: '16px' }}>{item}</Link>
             ))}
           </div>
         </div>
@@ -80,10 +80,10 @@ export const Footer = () => {
             top: '0px'
           }}
         >
-          <h3 style={{ fontFamily: 'var(--font-epilogue)', fontWeight: 600, fontSize: '18px', margin: '0 0 24px 0' }}>Resources</h3>
+          <h3 style={{ fontFamily: 'var(--font-clash-display)', fontWeight: 600, fontSize: '18px', margin: '0 0 24px 0', color: '#FFFFFF' }}>Resources</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {['Help Docs', 'Guide', 'Updates', 'Contact Us'].map(item => (
-              <Link key={item} href="#" style={{ color: '#D6DDEB', textDecoration: 'none', opacity: 0.8, fontFamily: 'var(--font-epilogue)', fontSize: '16px' }}>{item}</Link>
+              <Link key={item} href="#" style={{ color: '#D6DDEB', textDecoration: 'none', fontFamily: 'var(--font-epilogue)', fontSize: '16px' }}>{item}</Link>
             ))}
           </div>
         </div>
@@ -97,7 +97,7 @@ export const Footer = () => {
             width: '394px'
           }}
         >
-          <h3 style={{ fontFamily: 'var(--font-epilogue)', fontWeight: 600, fontSize: '18px', margin: '0 0 24px 0' }}>Get job notifications</h3>
+          <h3 style={{ fontFamily: 'var(--font-clash-display)', fontWeight: 600, fontSize: '18px', margin: '0 0 24px 0', color: '#FFFFFF' }}>Get job notifications</h3>
           <p 
             style={{ 
               fontFamily: 'var(--font-epilogue)',
@@ -111,28 +111,30 @@ export const Footer = () => {
           >
             The latest job news, articles, sent to your inbox weekly.
           </p>
-          <div style={{ display: 'flex', gap: '8px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <input 
               type="text" 
               placeholder="Email Address" 
               style={{ 
-                flex: 1,
+                width: '100%',
                 height: '50px',
-                padding: '0 16px',
-                border: 'none',
+                padding: '12px 16px',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #D6DDEB',
                 fontFamily: 'var(--font-epilogue)',
                 fontSize: '16px',
+                color: '#25324B',
                 outline: 'none'
               }}
             />
             <button 
               style={{ 
+                width: '100%',
                 height: '50px',
-                padding: '0 24px',
                 background: '#4640DE',
                 color: '#FFFFFF',
                 border: 'none',
-                fontFamily: 'var(--font-epilogue)',
+                fontFamily: 'var(--font-clash-display)',
                 fontWeight: 700,
                 fontSize: '16px',
                 cursor: 'pointer'
