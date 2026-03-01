@@ -79,11 +79,17 @@ export const Hero = () => {
         
         {/* Background Person Image — hidden on mobile */}
         <div
-          className="hidden lg:block absolute top-[87px] left-[812px] w-[501px] h-[707px]"
+          className="hidden lg:block absolute z-10"
+          style={{
+            width: '501px',
+            height: '707px',
+            left: '812px',
+            top: '87px',
+          }}
           aria-hidden="true"
         >
           <img
-            className="absolute top-0 left-0 w-[501px] h-[707px] object-cover"
+            className="w-full h-full object-cover object-top"
             alt="Hero Person"
             src="/happy-good-looking-man-glasses-pointing-finger-left.jpg"
           />
