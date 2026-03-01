@@ -4,8 +4,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FiBriefcase, FiMapPin, FiCalendar, FiLogOut, FiUser, FiPlusCircle, FiClock, FiCheckCircle, FiXCircle, FiEye, FiDownload, FiMoreHorizontal } from "react-icons/fi";
-import { EmployerSidebar } from "@/components/employer/EmployerSidebar";
-import { EmployerTopBar } from "@/components/employer/EmployerTopBar";
 import { StatSummaryCard, JobStatsChart, JobOpenWidget, ApplicantsSummaryWidget } from "@/components/employer/DashboardWidgets";
 
 
@@ -117,6 +115,15 @@ export default function EmployerDashboardPage() {
 
   if (!user) return null;
 
+  const today = new Date();
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - today.getDay() + 1); // Get Monday
+  const shortDateOpts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+  const longDateOpts: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric' };
+  
+  const shortDateStr = `${startOfWeek.toLocaleDateString('en-US', shortDateOpts)} - ${today.toLocaleDateString('en-US', shortDateOpts)}`;
+  const longDateStr = `${startOfWeek.toLocaleDateString('en-US', longDateOpts)} - ${today.toLocaleDateString('en-US', longDateOpts)}`;
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "APPROVED":
@@ -143,14 +150,8 @@ export default function EmployerDashboardPage() {
   };
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#FFFFFF" }}>
-      <EmployerSidebar />
-      
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", overflow: "hidden" }}>
-        <EmployerTopBar companyName={user.name} />
-        
-        <main style={{ flex: 1, overflowY: "auto", padding: "32px" }}>
-          <div style={{ width: "100%", maxWidth: "1600px", margin: "0 auto" }}>
+    <main style={{ flex: 1, overflowY: "auto", padding: "32px", background: "#F8F8FD" }}>
+      <div style={{ width: "100%", maxWidth: "1600px", margin: "0 auto" }}>
             {/* Greeting */}
             <div style={{ marginBottom: "32px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <div>
@@ -169,7 +170,7 @@ export default function EmployerDashboardPage() {
                   fontSize: "16px", 
                   color: "#7C8493" 
                 }}>
-                  Here is your job listings statistic report from July 19 - July 25.
+                  Here is your job listings statistic report from {longDateStr}.
                 </p>
               </div>
               
@@ -183,7 +184,7 @@ export default function EmployerDashboardPage() {
                 fontSize: "14px",
                 color: "#25324B"
               }}>
-                <span>Jul 19 - Jul 25</span>
+                <span>{shortDateStr}</span>
                 <FiCalendar color="#4640DE" />
               </div>
             </div>
@@ -191,17 +192,17 @@ export default function EmployerDashboardPage() {
             {/* Top Summaries: 3 Cards */}
             <div style={{ display: "flex", gap: "24px", marginBottom: "32px" }}>
               <StatSummaryCard 
-                value={applications.length} 
+                value={applications.filter(a => a.status === 'PENDING' || !a.status).length || applications.length} 
                 label="New candidates to review" 
                 color="#4640DE" 
               />
               <StatSummaryCard 
-                value="3" 
-                label="Schedule for today" 
+                value={applications.filter(a => new Date(a.createdAt).toDateString() === new Date().toDateString()).length} 
+                label="Applications today" 
                 color="#56CDAD" 
               />
               <StatSummaryCard 
-                value="24" 
+                value={0} 
                 label="Messages received" 
                 color="#26A4FF" 
               />
@@ -210,12 +211,12 @@ export default function EmployerDashboardPage() {
             {/* main Grid: Statistics Chart + Side Widgets */}
             <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) 340px", gap: "24px", marginBottom: "40px" }}>
               {/* Left Column: Job Statistics (Large) */}
-              <JobStatsChart activeFilter={chartFilter} onFilterChange={setChartFilter} />
+              <JobStatsChart activeFilter={chartFilter} onFilterChange={setChartFilter} applications={applications} />
               
               {/* Right Column: Mini Widgets */}
               <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
                 <JobOpenWidget count={jobs.filter(j => j.status === 'APPROVED').length} />
-                <ApplicantsSummaryWidget total={applications.length} />
+                <ApplicantsSummaryWidget total={applications.length} recentApplicants={applications} applications={applications} />
               </div>
             </div>
 
@@ -277,7 +278,5 @@ export default function EmployerDashboardPage() {
             </div>
           </div>
         </main>
-      </div>
-    </div>
   );
 }

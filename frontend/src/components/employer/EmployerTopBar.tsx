@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { FiBell, FiChevronDown, FiPlus } from "react-icons/fi";
+import { FiBell, FiChevronDown, FiPlus, FiLogOut } from "react-icons/fi";
 
 interface EmployerTopBarProps {
   companyName?: string;
@@ -13,6 +13,8 @@ export const EmployerTopBar = ({
   companyName = "Nomad", 
   companyLogo = "/nomad-logo.png" 
 }: EmployerTopBarProps) => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
   return (
     <header
       style={{
@@ -29,47 +31,93 @@ export const EmployerTopBar = ({
       }}
     >
       {/* Left: Company Selector */}
-      <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-        <div style={{ 
-          width: "48px", 
-          height: "48px", 
-          borderRadius: "8px", 
-          overflow: "hidden", 
-          background: "#F8F8FD",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          border: "1px solid #D6DDEB"
-        }}>
-           <div style={{ 
-             width: "32px", 
-             height: "32px", 
-             background: "#56CDAD", 
-             borderRadius: "4px",
-             display: "flex",
-             alignItems: "center",
-             justifyContent: "center",
-             color: "#FFF",
-             fontWeight: 700,
-             fontSize: "16px"
-           }}>
+      <div style={{ position: "relative" }}>
+        <button 
+          onClick={() => setShowDropdown(!showDropdown)}
+          style={{ 
+            display: "flex", 
+            alignItems: "center", 
+            gap: "12px",
+            padding: "8px 16px",
+            border: "2px solid #25324B",
+            borderRadius: "8px",
+            background: "#FFFFFF",
+            cursor: "pointer",
+            fontFamily: "var(--font-epilogue)"
+          }}
+        >
+          <div style={{ 
+            width: "32px", 
+            height: "32px", 
+            background: "#4640DE", 
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#FFF",
+            fontWeight: 700,
+            fontSize: "14px"
+          }}>
              {companyName.charAt(0).toUpperCase()}
-           </div>
-        </div>
-        <div>
-          <div style={{ fontSize: "12px", color: "#7C8493", fontFamily: "var(--font-epilogue)", fontWeight: 500 }}>Company</div>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}>
-            <span style={{ 
-              fontFamily: "var(--font-clash-display)", 
-              fontSize: "18px", 
-              fontWeight: 600, 
-              color: "#25324B" 
-            }}>
-              {companyName}
-            </span>
-            <FiChevronDown size={20} color="#25324B" />
           </div>
-        </div>
+          <span style={{ 
+            fontFamily: "var(--font-epilogue)", 
+            fontSize: "16px", 
+            fontWeight: 600, 
+            color: "#25324B" 
+          }}>
+            {companyName}
+          </span>
+          <FiChevronDown 
+            size={18} 
+            color="#25324B" 
+            style={{ 
+              transform: showDropdown ? "rotate(180deg)" : "rotate(0deg)", 
+              transition: "transform 0.2s",
+              marginLeft: "4px"
+            }} 
+          />
+        </button>
+
+        {showDropdown && (
+          <div style={{
+            position: "absolute",
+            top: "calc(100% + 8px)",
+            left: 0,
+            minWidth: "100%",
+            background: "#FFFFFF",
+            border: "1px solid #D6DDEB",
+            borderRadius: "8px",
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+            overflow: "hidden"
+          }}>
+            <button
+               onClick={() => {
+                 localStorage.removeItem("token");
+                 localStorage.removeItem("user");
+                 window.location.href = "/employer/login";
+               }}
+               style={{
+                 width: "100%",
+                 padding: "12px 16px",
+                 background: "none",
+                 border: "none",
+                 textAlign: "left",
+                 cursor: "pointer",
+                 fontFamily: "var(--font-epilogue)",
+                 fontSize: "14px",
+                 color: "#DC2626",
+                 fontWeight: 500,
+                 display: "flex",
+                 alignItems: "center",
+                 gap: "8px"
+               }}
+            >
+              <FiLogOut size={16} />
+              Log out
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Right: Actions */}

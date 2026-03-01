@@ -50,29 +50,8 @@ export const EmployerSidebar = () => {
       }}
     >
       {/* Brand */}
-      <div style={{ padding: "0 32px", marginBottom: "40px", display: "flex", alignItems: "center", gap: "12px" }}>
-        <div style={{ width: "36px", height: "36px", background: "#4640DE", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <img src="/dashboard-icon.svg" alt="" style={{ width: "20px", height: "20px" }} onError={(e) => {
-            // Fallback to text if icon missing
-            const target = e.target as HTMLImageElement;
-            target.style.display = 'none';
-            if (target.parentElement) {
-              const span = document.createElement('span');
-              span.innerText = 'Q';
-              span.style.color = '#FFF';
-              span.style.fontWeight = '700';
-              target.parentElement.appendChild(span);
-            }
-          }} />
-        </div>
-        <span style={{ 
-          fontFamily: "var(--font-clash-display)", 
-          fontSize: "24px", 
-          fontWeight: 700, 
-          color: "#25324B" 
-        }}>
-          QuickHire
-        </span>
+      <div style={{ padding: "0 32px", marginBottom: "40px", display: "flex", alignItems: "center" }}>
+        <img src="/logo.svg" alt="QuickHire" style={{ height: "36px", width: "auto", objectFit: "contain" }} />
       </div>
 
       {/* Main Nav */}
@@ -139,16 +118,7 @@ export const EmployerSidebar = () => {
 
       {/* Settings Footer */}
       <div style={{ borderTop: "1px solid #D6DDEB", paddingTop: "32px", paddingBottom: "32px" }}>
-        <p style={{ 
-          padding: "0 32px", 
-          fontSize: "12px", 
-          fontWeight: 600, 
-          color: "#7C8493", 
-          marginBottom: "16px",
-          letterSpacing: "0.05em"
-        }}>
-          SETTINGS
-        </p>
+
         <div style={{ display: "flex", flexDirection: "column" }}>
           {settingsItems.map((item) => {
             const isActive = pathname === item.href;

@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiArrowLeft, FiUser, FiMail, FiFileText, FiCalendar, FiExternalLink } from "react-icons/fi";
-import { EmployerSidebar } from "@/components/employer/EmployerSidebar";
-import { EmployerTopBar } from "@/components/employer/EmployerTopBar";
+
 
 interface Application {
   id: string;
@@ -53,14 +52,8 @@ export default function ApplicantsPage() {
   }, [router]);
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#FFFFFF" }}>
-      <EmployerSidebar />
-      
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", overflow: "hidden" }}>
-        <EmployerTopBar />
-        
-        <main style={{ flex: 1, overflowY: "auto", padding: "32px" }}>
-          <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+    <main style={{ flex: 1, overflowY: "auto", padding: "32px" }}>
+      <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
             <button 
               onClick={() => router.back()}
               style={{ 
@@ -170,7 +163,5 @@ export default function ApplicantsPage() {
             )}
           </div>
         </main>
-      </div>
-    </div>
   );
 }
