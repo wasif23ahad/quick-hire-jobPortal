@@ -40,12 +40,17 @@ export const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
     setErrors({});
     
     try {
-      // Use the NEXT_PUBLIC API URL for client side fetching
       const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+      const token = localStorage.getItem("token");
+      
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
       
       const res = await fetch(`${API_URL}/applications`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({
           jobId,
           ...formData

@@ -13,6 +13,13 @@ const latestJobs = [
   { id: '8', company: "Webflow", title: "HR Manager", location: "Lucern, Switzerland", tags: [{ name: "Full-Time", color: "#56CDAD", bgColor: "rgba(86,205,173,0.1)", borderColor: "#56CDAD" }, { name: "Marketing", color: "#FFB836", bgColor: "rgba(255,184,54,0.1)", borderColor: "#FFB836" }, { name: "Design", color: "#4640DE", bgColor: "rgba(70,64,222,0.1)", borderColor: "#4640DE" }] },
 ];
 
+const companyBrandColors: Record<string, string> = {
+  Nomad: "#0075EB", Netlify: "#00C7B7", Dropbox: "#0062FF", Maze: "#6C5CE7",
+  Terraform: "#7B42BC", Udacity: "#02B3E4", Packer: "#02A8EF", Webflow: "#4353FF",
+  Revolut: "#0075EB", Pitch: "#6C5CE7", Blinkist: "#2ECC71", ClassPass: "#FF6347",
+  Canva: "#00C4CC", GoDaddy: "#1BDBDB", Twitter: "#1DA1F2",
+};
+
 function LatestJobItem({ title, company, location, tags }: any) {
   return (
     <div 
@@ -30,14 +37,15 @@ function LatestJobItem({ title, company, location, tags }: any) {
         style={{ 
           width: '64px',
           height: '64px',
-          background: '#F8F8FD',
+          background: companyBrandColors[company] || '#4640DE',
+          borderRadius: '8px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           fontFamily: 'var(--font-clash-display)',
           fontWeight: 700,
           fontSize: '24px',
-          color: '#202430',
+          color: '#FFFFFF',
           flexShrink: 0
         }}
       >

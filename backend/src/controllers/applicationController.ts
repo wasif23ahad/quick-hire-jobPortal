@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import prisma from "../config/database";
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET = process.env.JWT_SECRET || "quickhire-secret-key-2024";
 
 // POST /api/applications — Submit a job application
 export const submitApplication = async (
@@ -21,6 +24,19 @@ export const submitApplication = async (
       return;
     }
 
+    // Try to extract userId from auth token if present
+    let userId: string | undefined;
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      try {
+        const token = authHeader.split(" ")[1];
+        const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+        userId = decoded.id;
+      } catch {
+        // Token invalid — proceed without userId
+      }
+    }
+
     const application = await prisma.application.create({
       data: {
         jobId,
@@ -28,6 +44,7 @@ export const submitApplication = async (
         email,
         resumeLink,
         coverNote,
+        ...(userId ? { userId } : {}),
       },
     });
 
