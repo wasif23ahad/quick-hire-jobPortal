@@ -37,6 +37,7 @@ export const fetchJobs = async (params?: {
   search?: string;
   category?: string;
   location?: string;
+  type?: string;
   page?: number;
   limit?: number;
 }): Promise<{ jobs: Job[]; pagination: PaginationInfo }> => {
@@ -47,6 +48,7 @@ export const fetchJobs = async (params?: {
       if (params.search) url.searchParams.append("search", params.search);
       if (params.category) url.searchParams.append("category", params.category);
       if (params.location) url.searchParams.append("location", params.location);
+      if (params.type) url.searchParams.append("type", params.type);
       if (params.page) url.searchParams.append("page", String(params.page));
       if (params.limit) url.searchParams.append("limit", String(params.limit));
     }

@@ -9,7 +9,7 @@ import Link from "next/link";
 export default async function JobsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ search?: string; category?: string; location?: string; page?: string }>;
+  searchParams: Promise<{ search?: string; category?: string; location?: string; type?: string; page?: string }>;
 }) {
   const params = await searchParams;
   const currentPage = parseInt(params?.page || "1") || 1;
@@ -18,6 +18,7 @@ export default async function JobsPage({
     search: params?.search,
     category: params?.category,
     location: params?.location,
+    type: params?.type,
     page: currentPage,
     limit: 12,
   });
@@ -28,6 +29,7 @@ export default async function JobsPage({
     if (params?.search) urlParams.set("search", params.search);
     if (params?.category) urlParams.set("category", params.category);
     if (params?.location) urlParams.set("location", params.location);
+    if (params?.type) urlParams.set("type", params.type);
     urlParams.set("page", String(page));
     return `/jobs?${urlParams.toString()}`;
   };
