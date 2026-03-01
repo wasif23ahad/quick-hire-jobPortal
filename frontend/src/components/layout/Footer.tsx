@@ -82,12 +82,12 @@ export const Footer = () => {
             >
               The latest job news, articles, sent to your inbox weekly.
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
               <input 
                 type="text" 
                 placeholder="Email Address" 
                 style={{ 
-                  width: '100%',
+                  width: '223px',
                   height: '50px',
                   padding: '12px 16px',
                   backgroundColor: '#FFFFFF',
@@ -95,22 +95,27 @@ export const Footer = () => {
                   fontFamily: 'var(--font-epilogue)',
                   fontSize: '16px',
                   color: '#25324B',
-                  outline: 'none'
+                  outline: 'none',
+                  transform: 'rotate(0deg)',
+                  opacity: 1
                 }}
               />
               <button 
                 style={{ 
-                  width: '100%',
+                  width: '131px',
                   height: '50px',
+                  padding: '12px 24px',
                   background: '#4640DE',
                   color: '#FFFFFF',
                   border: 'none',
                   fontFamily: 'var(--font-clash-display)',
                   fontWeight: 700,
                   fontSize: '16px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  transform: 'rotate(0deg)',
+                  opacity: 1
                 }}
-                className="hover:bg-opacity-90 transition-all"
+                className="hover:bg-opacity-90 transition-all flex items-center justify-center gap-[10px]"
               >
                 Subscribe
               </button>

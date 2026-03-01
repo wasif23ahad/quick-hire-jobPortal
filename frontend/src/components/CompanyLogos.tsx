@@ -7,7 +7,20 @@ export const CompanyLogos = () => {
     <section className="relative w-full flex justify-center bg-lightsgray pt-8 sm:pt-[40px] pb-12 sm:pb-[80px]">
       <div className="w-full max-w-[1440px] px-6 sm:px-12 lg:px-[125px]">
         {/* Title */}
-        <p className="font-body-normal-regular font-normal text-[length:var(--body-normal-regular-font-size)] leading-[var(--body-normal-regular-line-height)] text-colorblack opacity-50 m-0 mb-8 sm:mb-[64px]">
+        <p 
+          className="m-0 mb-8 sm:mb-[64px] text-colorblack"
+          style={{
+            width: "243px",
+            height: "29px",
+            transform: "rotate(0deg)",
+            opacity: 0.5,
+            fontFamily: "var(--font-epilogue)",
+            fontWeight: 400,
+            fontSize: "18px",
+            lineHeight: "160%",
+            letterSpacing: "0%"
+          }}
+        >
           Companies we helped grow
         </p>
 

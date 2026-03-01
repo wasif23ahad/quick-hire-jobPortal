@@ -79,13 +79,13 @@ export const Hero = () => {
         
         {/* Background Person Image — hidden on mobile */}
         <div
-          className="hidden lg:block absolute top-[9px] left-[812px] w-[838px] h-[1037px]"
+          className="hidden lg:block absolute top-[87px] left-[812px] w-[501px] h-[707px]"
           aria-hidden="true"
         >
           <img
             className="absolute top-0 left-0 w-[501px] h-[707px] object-cover"
             alt="Hero Person"
-            src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800&auto=format&fit=crop"
+            src="/happy-good-looking-man-glasses-pointing-finger-left.jpg"
           />
         </div>
 
@@ -203,7 +203,21 @@ export const Hero = () => {
               </button>
             </form>
 
-            <p className="m-0 mt-4 opacity-70 font-epilogue text-[#202430] text-sm sm:text-base">
+            <p 
+              className="m-0 mt-4 opacity-70 text-[#202430]"
+              style={{
+                width: "412px",
+                height: "26px",
+                transform: "rotate(0deg)",
+                opacity: 0.7,
+                fontFamily: "var(--font-epilogue)",
+                fontWeight: 400,
+                fontSize: "16px",
+                lineHeight: "160%",
+                letterSpacing: "0%",
+                verticalAlign: "middle"
+              }}
+            >
               <span className="font-normal text-[#202430]">
                 Popular :{" "}
               </span>
