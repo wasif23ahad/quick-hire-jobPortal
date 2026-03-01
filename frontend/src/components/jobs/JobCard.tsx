@@ -41,8 +41,8 @@ export const JobCard = ({ id, logo, companyLogo, title, company, location, descr
       href={`/jobs/${id || '#'}`}
       style={{
         display: 'block',
-        width: '273.5px',
-        height: '350px',
+        width: '100%',
+        minHeight: '350px',
         padding: '24px',
         border: hovered ? '1px solid #4640DE' : '1px solid #D6DDEB',
         background: '#FFFFFF',

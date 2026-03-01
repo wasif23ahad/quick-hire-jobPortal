@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
 import { FiChevronRight } from "react-icons/fi";
 import { JobCard } from "./JobCard";
@@ -16,51 +18,26 @@ const featuredJobs = [
 
 export const FeaturedJobs = () => {
   return (
-    <section 
-      style={{ 
-        width: '100%', 
-        backgroundColor: '#FFFFFF', 
-        display: 'flex', 
-        justifyContent: 'center',
-        paddingTop: '80px',
-        paddingBottom: '80px'
-      }}
-    >
-      <div 
-        style={{ 
-          width: '1440px', 
-          height: '850px', 
-          position: 'relative'
-        }}
-      >
+    <section className="w-full bg-white flex justify-center py-16 md:py-20 px-4 sm:px-6">
+      <div className="w-full max-w-[1190px]">
         {/* Title Content */}
-        <div 
-          style={{ 
-            position: 'absolute',
-            left: '125px',
-            top: '0px',
-            width: '1190px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}
-        >
-          <h2 
-            style={{ 
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10 md:mb-12">
+          <h2
+            style={{
               fontFamily: 'var(--font-clash-display)',
               fontWeight: 600,
-              fontSize: '48px',
+              fontSize: 'clamp(28px, 4vw, 48px)',
               lineHeight: '120%',
               color: '#202430',
-              margin: 0
+              margin: 0,
             }}
           >
             Featured <span style={{ color: '#26A4FF' }}>jobs</span>
           </h2>
-          
-          <Link 
+
+          <Link
             href="/jobs"
-            style={{ 
+            style={{
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
@@ -68,25 +45,15 @@ export const FeaturedJobs = () => {
               fontWeight: 600,
               fontSize: '16px',
               color: '#4640DE',
-              textDecoration: 'none'
+              textDecoration: 'none',
             }}
           >
             Show all jobs <FiChevronRight />
           </Link>
         </div>
 
-        {/* Grid Container — 4 cols, 2 rows */}
-        <div 
-          style={{ 
-            position: 'absolute',
-            left: '125px',
-            top: '96px',
-            width: '1190px',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '31.5px' // Calculated to fit 4 cards of 273.5px in 1190px
-          }}
-        >
+        {/* Responsive Grid — 1 col mobile, 2 cols tablet, 4 cols desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {featuredJobs.map((job) => (
             <JobCard key={job.id} {...job} />
           ))}

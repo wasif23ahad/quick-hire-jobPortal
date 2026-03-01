@@ -53,9 +53,9 @@ export default async function JobDetailPage({
 
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
             <div className="flex items-start gap-6">
-              <div className="w-20 h-20 bg-white border border-border rounded-xl p-3 shrink-0 flex items-center justify-center">
+              <div className="w-20 h-20 bg-white border border-border rounded-xl p-3 shrink-0 flex items-center justify-center overflow-hidden">
                 <img 
-                  src={job.companyLogo || "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"} 
+                  src={job.companyLogo || `https://ui-avatars.com/api/?name=${encodeURIComponent(job.company)}&background=4640DE&color=fff&size=128&font-size=0.4&bold=true&format=svg`} 
                   alt={`${job.company} logo`} 
                   className="w-full h-full object-contain"
                 />

@@ -13,8 +13,8 @@ export const JobTable = () => {
   const fetchJobs = async () => {
     try {
       setLoading(true);
-      const data = await getJobs();
-      setJobs(data);
+      const result = await getJobs({ limit: 100 });
+      setJobs(result.jobs);
     } catch (err) {
       setError("Failed to fetch jobs");
       console.error(err);

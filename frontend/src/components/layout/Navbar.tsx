@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { FiUser, FiChevronDown } from "react-icons/fi";
+import { FiUser, FiChevronDown, FiMenu, FiX } from "react-icons/fi";
 
 const navigationLinks = [
   { id: 1, label: "Find Jobs", href: "/jobs" },
@@ -19,6 +19,7 @@ interface UserInfo {
 export const Navbar = () => {
   const [user, setUser] = useState<UserInfo | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const checkAuth = () => {
@@ -44,14 +45,16 @@ export const Navbar = () => {
     localStorage.removeItem("user");
     setUser(null);
     setShowDropdown(false);
+    setMobileMenuOpen(false);
     window.location.href = "/";
   };
 
   return (
-    <div className="flex w-full justify-center bg-lightsgray border-b border-neutrals-20 h-[78px]">
-      <header className="flex w-[1440px] items-center justify-between px-[124px] py-0 relative">
+    <div className="flex w-full justify-center bg-lightsgray border-b border-neutrals-20 h-[78px] relative z-50">
+      <header className="flex w-full max-w-7xl items-center justify-between px-4 sm:px-8 md:px-16 lg:px-[124px] py-0 relative h-full">
+        {/* Logo and Desktop Nav */}
         <nav
-          className="inline-flex items-center justify-center gap-12 relative self-stretch flex-[0_0_auto]"
+          className="inline-flex items-center justify-start gap-12 relative h-full"
           aria-label="Main navigation"
         >
           <div className="relative w-[152px] h-9">
@@ -63,15 +66,15 @@ export const Navbar = () => {
             </Link>
           </div>
 
-          <ul className="inline-flex items-end justify-center gap-4 relative self-stretch flex-[0_0_auto]">
+          <ul className="hidden md:inline-flex items-center justify-center gap-6 m-0 p-0 h-full list-none">
             {navigationLinks.map((link) => (
               <li
                 key={link.id}
-                className="inline-flex flex-col items-start gap-6 px-0 py-6 relative flex-[0_0_auto]"
+                className="inline-flex items-center justify-center h-full"
               >
                 <Link
                   href={link.href}
-                  className="no-underline relative w-fit mt-[-1.00px] font-body-normal-medium font-[number:var(--body-normal-medium-font-weight)] text-neutrals-80 text-[length:var(--body-normal-medium-font-size)] tracking-[var(--body-normal-medium-letter-spacing)] leading-[var(--body-normal-medium-line-height)] whitespace-nowrap [font-style:var(--body-normal-medium-font-style)]"
+                  className="no-underline text-neutrals-80 font-body-normal-medium text-[16px] leading-[160%] hover:text-[#4640DE] transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -80,45 +83,26 @@ export const Navbar = () => {
           </ul>
         </nav>
 
-        <div className="inline-flex h-[78px] items-center justify-center gap-4 relative flex-[0_0_auto]">
+        {/* Desktop Auth / User Menu */}
+        <div className="hidden md:inline-flex h-[78px] items-center justify-end gap-4 relative">
           {user ? (
             /* Logged-in state */
             <div className="relative">
               <button
                 onClick={() => setShowDropdown(!showDropdown)}
-                className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
-                style={{ border: "none", background: "transparent" }}
+                className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer border-none bg-transparent"
               >
                 <div
-                  style={{
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "50%",
-                    background: "#4640DE",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#FFFFFF",
-                    fontFamily: "var(--font-clash-display)",
-                    fontWeight: 700,
-                    fontSize: "14px",
-                  }}
+                  className="w-9 h-9 rounded-full bg-[#4640DE] flex items-center justify-center text-white font-clash-display font-bold text-sm"
                 >
                   {user.name.charAt(0).toUpperCase()}
                 </div>
-                <span
-                  style={{
-                    fontFamily: "var(--font-epilogue)",
-                    fontWeight: 600,
-                    fontSize: "14px",
-                    color: "#25324B",
-                  }}
-                >
+                <span className="font-epilogue font-semibold text-sm text-[#25324B]">
                   {user.name}
                 </span>
                 <FiChevronDown
+                  className="text-[#7C8493]"
                   style={{
-                    color: "#7C8493",
                     transition: "transform 0.2s",
                     transform: showDropdown ? "rotate(180deg)" : "rotate(0)",
                   }}
@@ -127,53 +111,18 @@ export const Navbar = () => {
 
               {showDropdown && (
                 <div
-                  style={{
-                    position: "absolute",
-                    top: "100%",
-                    right: 0,
-                    marginTop: "4px",
-                    width: "200px",
-                    background: "#FFFFFF",
-                    border: "1px solid #D6DDEB",
-                    borderRadius: "8px",
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-                    zIndex: 100,
-                    overflow: "hidden",
-                  }}
+                  className="absolute top-full right-0 mt-1 w-[200px] bg-white border border-[#D6DDEB] rounded-lg shadow-lg z-50 overflow-hidden"
                 >
                   <Link
                     href="/dashboard"
                     onClick={() => setShowDropdown(false)}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "12px 16px",
-                      fontFamily: "var(--font-epilogue)",
-                      fontSize: "14px",
-                      color: "#25324B",
-                      textDecoration: "none",
-                      borderBottom: "1px solid #D6DDEB",
-                    }}
+                    className="flex items-center gap-2 px-4 py-3 font-epilogue text-sm text-[#25324B] no-underline border-b border-[#D6DDEB] hover:bg-gray-50 transition-colors"
                   >
                     <FiUser size={16} /> Dashboard
                   </Link>
                   <button
                     onClick={handleLogout}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "12px 16px",
-                      fontFamily: "var(--font-epilogue)",
-                      fontSize: "14px",
-                      color: "#DC2626",
-                      border: "none",
-                      background: "transparent",
-                      width: "100%",
-                      cursor: "pointer",
-                      textAlign: "left",
-                    }}
+                    className="flex items-center gap-2 px-4 py-3 font-epilogue text-sm text-[#DC2626] border-none bg-transparent w-full text-left cursor-pointer hover:bg-red-50 transition-colors"
                   >
                     Logout
                   </button>
@@ -185,28 +134,97 @@ export const Navbar = () => {
             <>
               <Link
                 href="/login"
-                className="no-underline all-[unset] box-border rounded inline-flex items-center justify-center gap-2.5 px-6 py-3 relative flex-[0_0_auto] cursor-pointer"
-                aria-label="Login to your account"
+                className="no-underline px-6 py-3 text-brandsprimary font-button-normal text-[16px] font-bold hover:bg-gray-50 rounded transition-colors"
               >
-                <span className="text-brandsprimary text-[length:var(--button-normal-font-size)] leading-[var(--button-normal-line-height)] relative w-fit mt-[-1.00px] font-button-normal font-[number:var(--button-normal-font-weight)] text-center tracking-[var(--button-normal-letter-spacing)] whitespace-nowrap [font-style:var(--button-normal-font-style)]">
-                  Login
-                </span>
+                Login
               </Link>
 
-              <div className="relative w-px h-12 bg-neutrals-20" aria-hidden="true" />
+              <div className="w-px h-12 bg-neutrals-20" aria-hidden="true" />
 
               <Link
                 href="/signup"
-                className="no-underline all-[unset] box-border bg-brandsprimary inline-flex items-center justify-center gap-2.5 px-6 py-3 relative flex-[0_0_auto] cursor-pointer"
-                aria-label="Sign up for an account"
+                className="no-underline bg-brandsprimary px-6 py-3 text-white font-button-normal text-[16px] font-bold hover:bg-opacity-90 transition-colors rounded"
               >
-                <span className="text-neutrals-0 text-[length:var(--button-normal-font-size)] leading-[var(--button-normal-line-height)] relative w-fit mt-[-1.00px] font-button-normal font-[number:var(--button-normal-font-weight)] text-center tracking-[var(--button-normal-letter-spacing)] whitespace-nowrap [font-style:var(--button-normal-font-style)]">
-                  Sign Up
-                </span>
+                Sign Up
               </Link>
             </>
           )}
         </div>
+
+        {/* Mobile Hamburger Menu Toggle */}
+        <button 
+          className="md:hidden flex items-center justify-center border-none bg-transparent text-[#202430] p-2 cursor-pointer"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle mobile menu"
+        >
+          {mobileMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+        </button>
+
+        {/* Mobile Header Dropdown */}
+        {mobileMenuOpen && (
+          <div className="absolute top-[78px] left-0 w-full bg-white shadow-lg border-t border-neutrals-20 flex flex-col items-stretch md:hidden z-50">
+            <nav className="flex flex-col border-b border-neutrals-20 p-4 gap-4">
+              {navigationLinks.map((link) => (
+                <Link
+                  key={link.id}
+                  href={link.href}
+                  className="no-underline text-neutrals-80 font-body-normal-medium text-[16px] hover:text-[#4640DE]"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+            <div className="flex flex-col p-4 gap-4 bg-gray-50">
+              {user ? (
+                <>
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-[#4640DE] flex items-center justify-center text-white font-clash-display font-bold text-sm">
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-epilogue font-semibold text-sm text-[#25324B]">
+                        {user.name}
+                      </span>
+                      <span className="font-epilogue text-xs text-[#7C8493]">
+                        {user.email}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="h-px w-full bg-neutrals-20 my-2" />
+                  <Link
+                    href="/dashboard"
+                    className="no-underline text-neutrals-80 font-body-normal-medium text-[16px] hover:text-[#4640DE] flex items-center gap-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <FiUser size={18} /> Dashboard
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="text-[#DC2626] text-left border-none bg-transparent p-0 font-body-normal-medium text-[16px] hover:text-red-700 cursor-pointer flex items-center"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <div className="flex flex-col gap-4 max-w-[300px] w-full mx-auto">
+                  <Link
+                    href="/login"
+                    className="no-underline px-6 text-center py-3 border border-brandsprimary text-brandsprimary font-button-normal text-[16px] font-bold hover:bg-gray-50 rounded transition-colors"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="no-underline bg-brandsprimary text-center px-6 py-3 text-white font-button-normal text-[16px] font-bold hover:bg-opacity-90 transition-colors rounded"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </header>
     </div>
   );

@@ -22,7 +22,7 @@ const categories = [
   { name: "Technology", jobs: "436 jobs available", Icon: FiCpu },
   { name: "Engineering", jobs: "542 jobs available", Icon: FiCode },
   { name: "Business", jobs: "211 jobs available", Icon: FiBriefcase },
-  { name: "Human Resource", jobs: "346 jobs available", Icon: FiUsers },
+  { name: "Human Resources", jobs: "346 jobs available", Icon: FiUsers },
 ];
 
 export const CategoryExplore = () => {
@@ -35,34 +35,27 @@ export const CategoryExplore = () => {
         backgroundColor: '#FFFFFF', 
         display: 'flex', 
         justifyContent: 'center',
-        paddingTop: '80px',
-        paddingBottom: '80px'
+        paddingTop: '48px',
+        paddingBottom: '48px'
       }}
     >
       <div 
-        style={{ 
-          width: '1440px', 
-          height: '680px', 
-          position: 'relative'
-        }}
+        className="w-full max-w-[1440px] px-6 sm:px-12 lg:px-[125px]"
       >
         {/* Title Content */}
         <div 
           style={{ 
-            position: 'absolute',
-            left: '125px',
-            top: '0px',
-            width: '1190px',
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginBottom: '32px'
           }}
         >
           <h2 
             style={{ 
               fontFamily: 'var(--font-clash-display)',
               fontWeight: 600,
-              fontSize: '48px',
+              fontSize: 'clamp(28px, 5vw, 48px)',
               lineHeight: '120%',
               color: '#202430',
               margin: 0
@@ -73,8 +66,8 @@ export const CategoryExplore = () => {
           
           <Link 
             href="/jobs"
+            className="hidden sm:flex"
             style={{ 
-              display: 'flex',
               alignItems: 'center',
               gap: '8px',
               fontFamily: 'var(--font-epilogue)',
@@ -88,93 +81,93 @@ export const CategoryExplore = () => {
           </Link>
         </div>
 
-        {/* Grid Container — 4 cols, 2 rows */}
+        {/* Grid Container — 1 col mobile, 2 cols tablet, 4 cols desktop */}
         <div 
-          style={{ 
-            position: 'absolute',
-            left: '125px',
-            top: '96px',
-            width: '1190px',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '32px'
-          }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
         >
           {categories.map((cat, index) => {
             const isActive = hoveredIndex === index;
             return (
               <Link
                 key={cat.name}
-                href={`/jobs?search=${encodeURIComponent(cat.name)}`}
+                href={`/jobs?category=${encodeURIComponent(cat.name)}`}
                 style={{ textDecoration: 'none' }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <div 
-                  style={{ 
-                    height: '240px',
-                    padding: '32px',
-                    border: isActive ? 'none' : '1px solid #D6DDEB',
-                    background: isActive ? '#4640DE' : '#FFFFFF',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    transform: isActive ? 'translateY(-6px)' : 'translateY(0)',
-                    boxShadow: isActive ? '0 12px 24px rgba(70, 64, 222, 0.3)' : 'none',
-                  }}
+                  className={`
+                    flex flex-row sm:flex-col items-center sm:items-start justify-between sm:justify-between
+                    p-4 sm:p-[clamp(20px,3vw,32px)] sm:min-h-[180px]
+                    transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                    ${isActive ? 'bg-[#4640DE] border-[#4640DE] sm:translate-y-[-6px] sm:shadow-[0_12px_24px_rgba(70,64,222,0.3)]' : 'bg-white border-[#D6DDEB]'}
+                    border
+                  `}
+                  style={{ cursor: 'pointer' }}
                 >
-                  <div 
-                    style={{ 
-                      width: '48px',
-                      height: '48px',
-                      color: isActive ? '#FFFFFF' : '#4640DE',
-                      fontSize: '32px',
-                      transition: 'color 0.3s ease, transform 0.3s ease',
-                      transform: isActive ? 'scale(1.1)' : 'scale(1)',
-                    }}
-                  >
-                    <cat.Icon size={40} />
+                  <div className="flex items-center sm:items-start sm:flex-col gap-4 sm:gap-0 flex-1 sm:h-full w-full">
+                    <div 
+                      style={{ 
+                        width: '48px',
+                        height: '48px',
+                        color: isActive ? '#FFFFFF' : '#4640DE',
+                        fontSize: '32px',
+                        transition: 'color 0.3s ease, transform 0.3s ease',
+                        transform: isActive ? 'scale(1.1)' : 'scale(1)',
+                      }}
+                      className="flex-shrink-0 flex items-center justify-center sm:block"
+                    >
+                      <cat.Icon size={40} className="w-8 h-8 sm:w-10 sm:h-10" />
+                    </div>
+                    
+                    <div className="flex flex-col sm:mt-auto flex-1">
+                      <h3 
+                        style={{ 
+                          fontFamily: 'var(--font-clash-display)',
+                          fontWeight: 600,
+                          fontSize: 'clamp(18px, 2vw, 24px)',
+                          color: isActive ? '#FFFFFF' : '#202430',
+                          margin: '0 0 4px 0',
+                          transition: 'color 0.3s ease',
+                        }}
+                        className="sm:mb-3"
+                      >
+                        {cat.name}
+                      </h3>
+                      <p 
+                        style={{ 
+                          fontFamily: 'var(--font-epilogue)',
+                          fontWeight: 400,
+                          fontSize: 'clamp(14px, 1.5vw, 18px)',
+                          color: isActive ? '#FFFFFF' : '#7C8493',
+                          opacity: isActive ? 0.8 : 1,
+                          margin: 0,
+                          transition: 'color 0.3s ease, opacity 0.3s ease',
+                        }}
+                        className="flex items-center justify-between sm:justify-start gap-2 w-full"
+                      >
+                        <span>{cat.jobs}</span>
+                        <FiChevronRight 
+                          className="sm:hidden"
+                          style={{ 
+                            color: isActive ? '#FFFFFF' : '#202430',
+                            transition: 'color 0.3s ease, transform 0.3s ease',
+                            transform: isActive ? 'translateX(4px)' : 'translateX(0)',
+                          }} 
+                        />
+                      </p>
+                    </div>
                   </div>
                   
-                  <div>
-                    <h3 
-                      style={{ 
-                        fontFamily: 'var(--font-clash-display)',
-                        fontWeight: 600,
-                        fontSize: '24px',
-                        color: isActive ? '#FFFFFF' : '#202430',
-                        margin: '0 0 12px 0',
-                        transition: 'color 0.3s ease',
-                      }}
-                    >
-                      {cat.name}
-                    </h3>
-                    <p 
-                      style={{ 
-                        fontFamily: 'var(--font-epilogue)',
-                        fontWeight: 400,
-                        fontSize: '18px',
-                        color: isActive ? '#FFFFFF' : '#7C8493',
-                        opacity: isActive ? 0.8 : 1,
-                        margin: 0,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        transition: 'color 0.3s ease, opacity 0.3s ease',
-                      }}
-                    >
-                      {cat.jobs} 
-                      <FiChevronRight 
-                        style={{ 
-                          color: isActive ? '#FFFFFF' : '#202430',
-                          transition: 'color 0.3s ease, transform 0.3s ease',
-                          transform: isActive ? 'translateX(4px)' : 'translateX(0)',
-                        }} 
-                      />
-                    </p>
-                  </div>
+                  {/* Desktop arrow (hidden on mobile, shown on right on desktop) */}
+                  <FiChevronRight 
+                    className="hidden sm:block absolute bottom-8 right-8"
+                    style={{ 
+                      color: isActive ? '#FFFFFF' : '#202430',
+                      transition: 'color 0.3s ease, transform 0.3s ease',
+                      transform: isActive ? 'translateX(4px)' : 'translateX(0)',
+                    }} 
+                  />
                 </div>
               </Link>
             );

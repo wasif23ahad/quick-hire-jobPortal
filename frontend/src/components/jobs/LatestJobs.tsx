@@ -39,7 +39,7 @@ function LatestJobItem({ title, company, location, tags }: any) {
         background: hovered ? '#FAFAFF' : '#FFFFFF',
         display: 'flex',
         alignItems: 'center',
-        gap: '24px',
+        gap: '16px',
         cursor: 'pointer',
         transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
         transform: hovered ? 'translateX(8px)' : 'translateX(0)',
@@ -56,8 +56,8 @@ function LatestJobItem({ title, company, location, tags }: any) {
       {/* Company Logo */}
       <div
         style={{
-          width: '64px',
-          height: '64px',
+          width: '56px',
+          height: '56px',
           borderRadius: '12px',
           overflow: 'hidden',
           flexShrink: 0,
@@ -73,12 +73,12 @@ function LatestJobItem({ title, company, location, tags }: any) {
         />
       </div>
 
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, minWidth: 0 }}>
         <h3
           style={{
             fontFamily: 'var(--font-clash-display)',
             fontWeight: 600,
-            fontSize: '20px',
+            fontSize: 'clamp(16px, 2vw, 20px)',
             lineHeight: '120%',
             color: hovered ? '#4640DE' : '#202430',
             margin: '0 0 4px 0',
@@ -91,26 +91,29 @@ function LatestJobItem({ title, company, location, tags }: any) {
           style={{
             fontFamily: 'var(--font-epilogue)',
             fontWeight: 400,
-            fontSize: '16px',
+            fontSize: '14px',
             color: '#515B6F',
-            margin: '0 0 16px 0',
+            margin: '0 0 12px 0',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
         >
           {company} • {location}
         </p>
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
           {tags.map((tag: any) => (
             <span
               key={tag.name}
               style={{
-                padding: '4px 12px',
+                padding: '3px 10px',
                 borderRadius: '80px',
                 background: tag.bgColor,
                 border: tag.borderColor === 'transparent' ? 'none' : `1px solid ${tag.borderColor}`,
                 color: tag.color,
                 fontFamily: 'var(--font-epilogue)',
                 fontWeight: 600,
-                fontSize: '12px',
+                fontSize: '11px',
               }}
             >
               {tag.name}
@@ -127,6 +130,7 @@ function LatestJobItem({ title, company, location, tags }: any) {
           transition: 'all 0.3s ease',
           color: '#4640DE',
           fontSize: '20px',
+          flexShrink: 0,
         }}
       >
         →
@@ -152,40 +156,15 @@ function LatestJobItem({ title, company, location, tags }: any) {
 
 export const LatestJobs = () => {
   return (
-    <section
-      style={{
-        width: '100%',
-        backgroundColor: '#FFFFFF',
-        display: 'flex',
-        justifyContent: 'center',
-        paddingTop: '80px',
-        paddingBottom: '80px',
-      }}
-    >
-      <div
-        style={{
-          width: '1440px',
-          height: '750px',
-          position: 'relative',
-        }}
-      >
+    <section className="w-full bg-white flex justify-center py-16 md:py-20 px-4 sm:px-6">
+      <div className="w-full max-w-[1190px]">
         {/* Title Content */}
-        <div
-          style={{
-            position: 'absolute',
-            left: '125px',
-            top: '0px',
-            width: '1190px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10 md:mb-12">
           <h2
             style={{
               fontFamily: 'var(--font-clash-display)',
               fontWeight: 600,
-              fontSize: '48px',
+              fontSize: 'clamp(28px, 4vw, 48px)',
               lineHeight: '120%',
               color: '#202430',
               margin: 0,
@@ -211,18 +190,8 @@ export const LatestJobs = () => {
           </Link>
         </div>
 
-        {/* List Grid — 2 columns */}
-        <div
-          style={{
-            position: 'absolute',
-            left: '125px',
-            top: '96px',
-            width: '1190px',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '32px',
-          }}
-        >
+        {/* Responsive Grid — 1 col mobile, 2 cols desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {latestJobs.map((job) => (
             <LatestJobItem key={job.id} {...job} />
           ))}

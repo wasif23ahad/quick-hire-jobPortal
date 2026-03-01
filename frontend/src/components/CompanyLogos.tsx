@@ -4,15 +4,15 @@ import React from "react";
 
 export const CompanyLogos = () => {
   return (
-    <section className="relative w-full flex justify-center bg-lightsgray pt-[40px] pb-[80px]">
-      <div className="relative w-[1440px] h-[150px]">
+    <section className="relative w-full flex justify-center bg-lightsgray pt-8 sm:pt-[40px] pb-12 sm:pb-[80px]">
+      <div className="w-full max-w-[1440px] px-6 sm:px-12 lg:px-[125px]">
         {/* Title */}
-        <p className="absolute left-[125px] top-0 font-body-normal-regular font-normal text-[length:var(--body-normal-regular-font-size)] leading-[var(--body-normal-regular-line-height)] text-colorblack opacity-50 m-0">
+        <p className="font-body-normal-regular font-normal text-[length:var(--body-normal-regular-font-size)] leading-[var(--body-normal-regular-line-height)] text-colorblack opacity-50 m-0 mb-8 sm:mb-[64px]">
           Companies we helped grow
         </p>
 
         {/* Logos Container */}
-        <div className="absolute w-[1190px] h-[40px] left-[125px] top-[64px] flex flex-row items-center justify-between">
+        <div className="flex flex-wrap items-center justify-center sm:justify-between gap-6 sm:gap-4">
           
           {/* Vodafone */}
           <div className="flex items-center gap-2 transition-all duration-300">
