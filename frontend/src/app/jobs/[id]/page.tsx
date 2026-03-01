@@ -24,7 +24,7 @@ const getVariant = (tag: string) => {
 export default async function JobDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }> | { id: string };
+  params: Promise<{ id: string }>;
 }) {
   // Await params in next 15 pattern:
   const resolvedParams = await params;

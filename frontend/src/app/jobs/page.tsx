@@ -9,7 +9,7 @@ import Link from "next/link";
 export default async function JobsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ search?: string; category?: string; location?: string; page?: string }> | { search?: string; category?: string; location?: string; page?: string };
+  searchParams: Promise<{ search?: string; category?: string; location?: string; page?: string }>;
 }) {
   const params = await searchParams;
   const currentPage = parseInt(params?.page || "1") || 1;
@@ -107,18 +107,18 @@ export default async function JobsPage({
                     type={job.type}
                     description={job.description}
                     tags={job.tags.map(tag => {
-                      let variant = "default";
-                      const t = tag.toLowerCase();
-                      if (t.includes('design')) variant = "design";
-                      else if (t.includes('market')) variant = "marketing";
-                      else if (t.includes('sale')) variant = "sales";
-                      else if (t.includes('finance')) variant = "finance";
-                      else if (t.includes('tech')) variant = "technology";
-                      else if (t.includes('engineer')) variant = "engineering";
-                      else if (t.includes('business')) variant = "business";
-                      else if (t.includes('hr')) variant = "hr";
+                      let color = "#515B6F";
+                      let bgColor = "rgba(81, 91, 111, 0.1)";
+                      let borderColor = "#D6DDEB";
                       
-                      return { name: tag, variant };
+                      const t = tag.toLowerCase();
+                      if (t.includes('design')) { color = "#4640DE"; bgColor = "rgba(70, 64, 222, 0.1)"; borderColor = "#4640DE"; }
+                      else if (t.includes('market')) { color = "#56CDAD"; bgColor = "rgba(86, 205, 173, 0.1)"; borderColor = "#56CDAD"; }
+                      else if (t.includes('sale')) { color = "#FFB836"; bgColor = "rgba(255, 184, 54, 0.1)"; borderColor = "#FFB836"; }
+                      else if (t.includes('finance')) { color = "#FF6550"; bgColor = "rgba(255, 101, 80, 0.1)"; borderColor = "#FF6550"; }
+                      else if (t.includes('tech') || t.includes('engineer')) { color = "#26A4FF"; bgColor = "rgba(38, 164, 255, 0.1)"; borderColor = "#26A4FF"; }
+                      
+                      return { name: tag, color, bgColor, borderColor };
                     })}
                   />
                 ))}
