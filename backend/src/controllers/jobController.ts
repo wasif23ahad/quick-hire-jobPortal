@@ -10,31 +10,42 @@ export const getAllJobs = async (
   try {
     const { search, category, location, type, page, limit } = req.query;
 
+    // Helper to extract a single string from query params (which can be string | string[] | ParsedQs etc.)
+    const getQueryString = (param: any): string | undefined => {
+      if (!param) return undefined;
+      return Array.isArray(param) ? (param[0] as string) : (param as string);
+    };
+
+    const searchQuery = getQueryString(search);
+    const categoryQuery = getQueryString(category);
+    const locationQuery = getQueryString(location);
+    const typeQuery = getQueryString(type);
+
     const where: any = {};
 
-    if (search) {
+    if (searchQuery) {
       where.OR = [
-        { title: { contains: search as string, mode: "insensitive" } },
-        { description: { contains: search as string, mode: "insensitive" } },
-        { company: { contains: search as string, mode: "insensitive" } },
+        { title: { contains: searchQuery, mode: "insensitive" } },
+        { description: { contains: searchQuery, mode: "insensitive" } },
+        { company: { contains: searchQuery, mode: "insensitive" } },
       ];
     }
 
-    if (category) {
-      where.category = { equals: category as string, mode: "insensitive" };
+    if (categoryQuery) {
+      where.category = { equals: categoryQuery, mode: "insensitive" };
     }
 
-    if (location) {
-      where.location = { contains: location as string, mode: "insensitive" };
+    if (locationQuery) {
+      where.location = { contains: locationQuery, mode: "insensitive" };
     }
 
-    if (type) {
-      where.type = { equals: type as string, mode: "insensitive" };
+    if (typeQuery) {
+      where.type = { equals: typeQuery, mode: "insensitive" };
     }
 
     // Pagination
-    const pageNum = Math.max(1, parseInt(page as string) || 1);
-    const pageSize = Math.min(100, Math.max(1, parseInt(limit as string) || 12));
+    const pageNum = Math.max(1, parseInt(getQueryString(page) || "1"));
+    const pageSize = Math.min(100, Math.max(1, parseInt(getQueryString(limit) || "12")));
     const skip = (pageNum - 1) * pageSize;
 
     const [jobs, totalCount] = await Promise.all([
@@ -77,7 +88,7 @@ export const getJobById = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
 
     const job = await prisma.job.findUnique({
       where: { id },
@@ -147,7 +158,7 @@ export const deleteJob = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
 
     const job = await prisma.job.findUnique({ where: { id } });
 
