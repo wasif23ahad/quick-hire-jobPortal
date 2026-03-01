@@ -108,14 +108,17 @@ export const Hero = () => {
           <div className="w-full">
             <form
               onSubmit={handleSearch}
-              className="flex flex-col sm:flex-row w-full max-w-[852px] sm:h-[89px] items-stretch sm:items-center justify-between bg-white shadow-sm gap-4 sm:gap-0 relative z-30"
-              style={{ padding: '16px' }}
+              className="flex flex-col sm:flex-row w-full max-w-[852px] sm:h-[89px] items-stretch sm:items-center sm:justify-center bg-[#FFFFFF] z-30 relative shrink-0"
+              style={{
+                padding: '16px',
+                boxShadow: '0px 79px 128px rgba(192, 192, 192, 0.09), 0px 28.8363px 46.7221px rgba(192, 192, 192, 0.0598508), 0px 13.9995px 22.6827px rgba(192, 192, 192, 0.0475723), 0px 6.86281px 11.1195px rgba(192, 192, 192, 0.0380675), 0px 2.71357px 4.39666px rgba(192, 192, 192, 0.0270615)',
+              }}
               role="search"
               aria-label="Job search form"
             >
-              <div className="flex items-center gap-3 sm:gap-4 px-2 sm:px-4 flex-1 h-full relative">
-                <FiSearch className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] flex-shrink-0 mb-2 sm:mb-0" aria-hidden="true" />
-                <div className="flex flex-col justify-center flex-1 h-full w-full relative">
+              <div className="flex items-center gap-3 sm:gap-4 flex-1 h-full px-[8px] py-[16px]">
+                <FiSearch className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] shrink-0" aria-hidden="true" />
+                <div className="flex flex-col justify-end flex-1 h-full w-full relative h-[38px]">
                   <label htmlFor="job-title-input" className="sr-only">
                     Job title or keyword
                   </label>
@@ -128,19 +131,19 @@ export const Hero = () => {
                     className="w-full font-epilogue text-[16px] text-[#25324B] placeholder:text-[#A8ADB7] bg-transparent border-none outline-none pb-2"
                     aria-label="Job title or keyword"
                   />
-                  <div className="absolute bottom-[4px] sm:bottom-[15px] left-0 right-0 h-[1px] bg-[#D6DDEB]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D6DDEB]" />
                 </div>
               </div>
 
               {/* Vertical Divider line between search segments (desktop only) */}
-              <div className="hidden sm:block w-px h-[57px] bg-[#D6DDEB] mx-2" />
+              <div className="hidden sm:block w-px h-[57px] bg-[#D6DDEB] shrink-0" />
 
-              <div className="flex items-center gap-3 sm:gap-4 px-2 sm:px-4 flex-1 h-full relative">
+              <div className="flex items-center gap-3 sm:gap-4 flex-1 h-full relative px-[8px] py-[16px]">
                 <FiMapPin
-                  className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] flex-shrink-0 mb-2 sm:mb-0"
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-[#25324B] shrink-0"
                   aria-hidden="true"
                 />
-                <div className="flex flex-col justify-center flex-1 h-full w-full relative">
+                <div className="flex flex-col justify-end flex-1 h-full w-full relative h-[38px]">
                   <div className="flex items-center justify-between w-full pb-2">
                     <input
                       id="location-input"
@@ -158,12 +161,12 @@ export const Hero = () => {
                       autoComplete="off"
                     />
                     <FiChevronDown 
-                      className="w-4 h-4 text-[#25324B] cursor-pointer hover:text-[#4640DE] transition-colors flex-shrink-0" 
+                      className="w-4 h-4 text-[#25324B] cursor-pointer hover:text-[#4640DE] transition-colors shrink-0" 
                       aria-hidden="true" 
                       onClick={() => setIsLocationOpen((prev) => !prev)}
                     />
                   </div>
-                  <div className="absolute bottom-[4px] sm:bottom-[15px] left-0 right-0 h-[1px] bg-[#D6DDEB]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-[#D6DDEB]" />
                   
                   {/* Autocomplete Dropdown */}
                   {isLocationOpen && filteredLocations.length > 0 && (
@@ -187,7 +190,7 @@ export const Hero = () => {
 
               <button
                 type="submit"
-                className="w-full sm:w-[209px] h-[57px] ml-0 sm:ml-4 flex items-center justify-center bg-[#4640DE] hover:bg-opacity-90 transition-colors flex-shrink-0"
+                className="w-full sm:w-[209px] h-[57px] flex items-center justify-center bg-[#4640DE] hover:bg-opacity-90 transition-colors shrink-0"
                 aria-label="Search for jobs"
               >
                 <span className="text-white font-epilogue font-bold text-[16px]">
