@@ -13,7 +13,7 @@ A modern, comprehensive, and responsive job board application built with **Next.
 - [**Frontend Live Link**](https://quick-hire-job-portal-frontend.vercel.app/)
 - [**Backend Live Link**](https://quick-hire-job-portal-seven.vercel.app/)
 - [**Live Demo Link**](https://www.loom.com/share/e01d621b55384142b87c2bf3a0d7d3cf/)
-Note: Watch the Demo video in 1.5x for better experience
+(*Note: Watch the Demo video in 1.5x for better experience*)
 ### Admin Access Credentials
 
 To access the Admin Moderation Dashboard (Bulk Approvals/Rejections, Job Deletion):
