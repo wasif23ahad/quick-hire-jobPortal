@@ -8,6 +8,28 @@ A modern, comprehensive, and responsive job board application built with **Next.
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)
 ![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma)
 
+## 🌐 Live Demo & Access
+
+- **Frontend Live Link:** [https://quick-hire-job-portal-frontend.vercel.app/]
+- **Backend Live Link:** [https://quick-hire-job-portal-seven.vercel.app/]
+- **Live Demo Link:** []
+
+### Admin Access Credentials
+
+To access the Admin Moderation Dashboard (Bulk Approvals/Rejections, Job Deletion):
+
+- **URL:** `/admin/login`
+- **Email:** `admin@quickhire.com`
+- **Password:** `admin12345`
+
+---
+
+## 🚀 Quick Start (Local Setup)
+
+If you wish to run the project locally, please jump to the **[Getting Started - Local Setup](#-getting-started)** section below for step-by-step instructions.
+
+---
+
 ## ✨ Core Features
 
 ### Job Seekers
