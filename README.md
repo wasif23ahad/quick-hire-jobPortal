@@ -175,7 +175,7 @@ The frontend will start at `http://localhost:3000`. Open this URL in your browse
 
 ## 🔌 API Endpoints Summary
 
-For complete, detailed instructions on how to use all the available endpoints including payloads, queries, and authentication mechanisms, please see the **[Full API Documentation (`API_Documents.md`)](./API_Documents.md)**.
+For complete, detailed instructions on how to use all the available endpoints including payloads, queries, and authentication mechanisms, please see the **[Full API Documentation](./API_Documents.md)**.
 
 ### Quick Reference
 
