@@ -71,14 +71,25 @@ export const getAllApplications = async (
             id: true,
             title: true,
             company: true,
+            postedBy: { select: { name: true } }
           },
         },
       },
     });
 
+    // Retroactively fix the company name for old/hardcoded jobs
+    const dynamicApplications = applications.map((app: any) => ({
+      ...app,
+      job: {
+        ...app.job,
+        company: app.job.postedBy?.name || app.job.company,
+        postedBy: undefined
+      }
+    }));
+
     res.json({
       success: true,
-      data: applications,
+      data: dynamicApplications,
       message: `Found ${applications.length} applications`,
     });
   } catch (error) {
@@ -109,14 +120,25 @@ export const getEmployerApplications = async (
             id: true,
             title: true,
             company: true,
+            postedBy: { select: { name: true } }
           },
         },
       },
     });
 
+    // Retroactively fix the company name for old/hardcoded jobs
+    const dynamicApplications = applications.map((app: any) => ({
+      ...app,
+      job: {
+        ...app.job,
+        company: app.job.postedBy?.name || app.job.company,
+        postedBy: undefined
+      }
+    }));
+
     res.json({
       success: true,
-      data: applications,
+      data: dynamicApplications,
       message: `Found ${applications.length} applications for your jobs`,
     });
   } catch (error) {

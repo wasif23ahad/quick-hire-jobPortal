@@ -49,6 +49,7 @@ export default function DashboardPage() {
         const API_URL = rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl.replace(/\/$/, '')}/api`;
         const res = await fetch(`${API_URL}/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
+          cache: "no-store"
         });
 
         if (!res.ok) {

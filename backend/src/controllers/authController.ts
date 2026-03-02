@@ -140,6 +140,7 @@ export const getMe = async (req: Request, res: Response, next: NextFunction) => 
                 location: true,
                 type: true,
                 companyLogo: true,
+                postedBy: { select: { name: true } },
               },
             },
           },
@@ -152,7 +153,22 @@ export const getMe = async (req: Request, res: Response, next: NextFunction) => 
       return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    res.json({ success: true, data: user });
+    // Retroactively fix the company name for old/hardcoded jobs
+    const dynamicApplications = user.applications.map((app: any) => ({
+      ...app,
+      job: {
+        ...app.job,
+        company: app.job.postedBy?.name || app.job.company,
+        postedBy: undefined // clean up response
+      }
+    }));
+
+    const dynamicUser = {
+      ...user,
+      applications: dynamicApplications
+    };
+
+    res.json({ success: true, data: dynamicUser });
   } catch (error: any) {
     if (error.name === "JsonWebTokenError") {
       return res.status(401).json({ success: false, message: "Invalid token" });
