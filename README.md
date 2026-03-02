@@ -10,8 +10,8 @@ A modern, comprehensive, and responsive job board application built with **Next.
 
 ## 🌐 Live Demo & Access
 
-- **Frontend Live Link:** [https://quick-hire-job-portal-frontend.vercel.app/]
-- **Backend Live Link:** [https://quick-hire-job-portal-seven.vercel.app/]
+- **Frontend Live Link:** (https://quick-hire-job-portal-frontend.vercel.app/)
+- **Backend Live Link:** (https://quick-hire-job-portal-seven.vercel.app/)
 - **Live Demo Link:** []
 
 ### Admin Access Credentials
